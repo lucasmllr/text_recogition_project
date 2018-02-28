@@ -27,7 +27,7 @@ def find_blobs(img):
                 if j < 0 or j >= size:
                     continue
 
-                if stencil[j] != 0 and stencil[i] == 0: # connected
+                if stencil[j] != 0 and stencil[i] == 0: # connection
                     stencil[i] = stencil[j]
                 elif stencil[j] != 0 and stencil[j] != stencil[i]: # conflict
                     labels.unite(stencil[i], stencil[j])
@@ -40,21 +40,28 @@ def find_blobs(img):
                 stencil[i] = new_label
                 labels.add(new_label)
 
-    # second pass
+    # second pass to eliminate equivalences
     eq = labels.get_equivalents()
-    print('equivalent labels:', eq)
-    print('parents', labels.parents)
     for label in eq.keys():
         stencil[stencil == label] = eq[label]
 
     # reshaping stencil
     stencil = stencil.reshape((height, width))
 
-    # Todo: construct boxes around letters
+    # construct boxes around letters
+    final_labels = labels.final_labels()
+    boxes = []
+    for label in final_labels:
+        pixels = np.argwhere(stencil == label)
+        x_min = np.min(pixels[:, 0])
+        x_max = np.max(pixels[:, 0]) + 1
+        y_min = np.min(pixels[:, 1])
+        y_max = np.max(pixels[:, 1]) + 1
+        boxes.append((x_min, x_max, y_min, y_max))
 
     # Todo: assure right order of letters in case of height difference
-    
-    return stencil
+
+    return stencil, boxes
 
 
 if __name__ == "__main__":
@@ -65,8 +72,16 @@ if __name__ == "__main__":
 
     img = processing.threshold(img, t=0.52)
 
-    img = find_blobs(img)
+    img, boxes = find_blobs(img)
     plt.imshow(img)
     plt.show()
+
+    print(boxes)
+    print(boxes[0][0], boxes[0][1], boxes[0][2], boxes[0][3])
+
+    box1 = img[boxes[0][0]:boxes[0][1], boxes[0][2]:boxes[0][3]]
+    plt.imshow(box1)
+    plt.show()
+
 
 

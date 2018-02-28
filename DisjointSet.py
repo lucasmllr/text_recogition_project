@@ -123,6 +123,15 @@ class DisjointSet():
         return eq
 
 
+    def final_labels(self):
+        """
+        Returns a list of remaining labels after eliminating equivalents.
+        In the returned list elements are labels now, not indices as before!
+        """
+        return [self.parents[i] for i in range(1, self.n) if i == self.parents[i]]
+
+
+
 
 
 if __name__ == "__main__":
