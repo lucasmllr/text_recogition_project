@@ -3,9 +3,10 @@ class DisjointSet():
     '''
     A class for a disjoint set data structure to manage the blob labels.
     Labels must be added in rising order starting from 1 and no integer value can be skipped.
-    inspired by https://gist.github.com/bruceoutdoors/3b99fd1c266b3718e1084352dbcb19c6
-    Contrary to the above sets are not joint according to their rank, but according to whose root is smaller, so that
-    set representatives are always the smallest labels.
+
+    inspired by: https://gist.github.com/bruceoutdoors/3b99fd1c266b3718e1084352dbcb19c6
+    Contrary to the above sets are not joint according to their rank, but according to whose root label is smaller,
+    so that set representatives are always the smallest labels.
     '''
 
     def __init__(self):
@@ -28,7 +29,7 @@ class DisjointSet():
             bool intdcating existance
         """
         n = len(self.parents)
-        if l < 0 or l >= n:
+        if l >= n:
             return False
         else:
             return True
@@ -106,7 +107,22 @@ class DisjointSet():
         else:
             self.parents[root_l] = root_m
 
-        self.n -= 1
+
+    def next(self):
+
+        return self.n
+
+
+    def get_equivalents(self):
+
+        eq = {}
+        for l in range(len(self.parents)):
+            if l != self.parents[l]:
+                eq[l] = self.find_root(l)
+
+        return eq
+
+
 
 
 if __name__ == "__main__":
