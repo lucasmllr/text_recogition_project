@@ -31,31 +31,60 @@ def make_image(shape=(400, 300), pos=(0.5, 0.5), string='blub blub bla bla. This
     return img
 
 
-def make_data(n, alphabet, shape, length, path):
+def make_data(n, alphabet, shape, length, path, writeContainer=True):
 
     if os.path.exists(path):
-        raise IOError('path exists')
+        r = input('Path exists. Do you want to override? Type "y" for yes: \n')
+        if r is not 'y':
+            return
     else:
         os.makedirs(path)
 
-    f = open('{}/truth.txt'.format(path), 'w')
+    if not writeContainer:
+        f = open('{}/truth.txt'.format(path), 'w')
 
-    for i in range(n):
+        for i in range(n):
 
-        string = make_string(alphabet, l=length)
-        img = make_image(shape, string=string)
-        img.save('{}/{}.jpg'.format(path, str(i)))
+            string = make_string(alphabet, l=length)
+            img = make_image(shape, string=string)
+            img.save('{}/{}.jpg'.format(path, str(i)))
 
-        truth = string + '\n'
-        f.write(truth)
+            truth = string + '\n'
+            f.write(truth)
 
-    f.close()
+        f.close()
 
-    return
+        return
+    else:
+        img_container = [None] * n
+        truth_container = [None] * n
+        for i in range(n):
+            string = make_string(alphabet, l=length)
+            img_container[i] = make_image(shape, string=string)
+            truth_container[i] = string
+
+        data, target, labels = convertToNumpy(img_container, truth_container)
+        np.save('{}/data'.format(path), data)
+        np.save('{}/target'.format(path), target)
+        np.save('{}/label'.format(path), labels)
+        return data, target, labels
+
+
+def convertToNumpy(data, target):
+    num_images = target.__len__()
+
+    labels = target
+    target = np.asarray(target)
+    _, target = np.unique(target, return_inverse=True)  # convert target to numbers
+
+    data = list(map(np.array, data))
+    data = np.array(data) / 255
+    # data = np.reshape(data, (data.shape[0], -1))
+
+    return data, target, labels
 
 if __name__ == "__main__":
 
-    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWZ0123456789"
-
+    alphabet = "0123456789"
     img = make_image()
-    make_data(10, alphabet, (100, 50), length=5, path='data')
+    make_data(100000, alphabet, (32, 32), length=1, path='data', writeContainer=True)
