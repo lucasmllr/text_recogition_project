@@ -20,7 +20,7 @@ def make_string(alphabet, l=5):
 def make_image(shape=(400, 300), pos=(0.5, 0.5), string='blub blub bla bla. This is text!', font='Arial'):
 
     x_pos = pos
-    img = Image.new('RGB', shape, color='white')
+    img = Image.new('L', shape, color='white')
     d = ImageDraw.Draw(img)
     fnt = ImageFont.truetype('Library/Fonts/{}.ttf'.format(font), 15)
 
@@ -83,8 +83,8 @@ def convertToNumpy(data, target):
 
     return data, target, labels
 
-if __name__ == "__main__":
+if __name__ == '__main__':
 
-    alphabet = "0123456789"
+    alphabet = '0123456789'
     img = make_image()
-    make_data(100000, alphabet, (32, 32), length=1, path='data', writeContainer=True)
+    make_data(100, alphabet, (32, 32), length=1, path='data', writeContainer=False)
