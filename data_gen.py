@@ -5,8 +5,9 @@ from PIL import Image, ImageDraw, ImageFont, ImageOps
 import os
 
 
-def make_string(alphabet, l=5):
+def make_string(alphabet, min_l=5, max_l=10):
 
+    l = random.randint(min_l, max_l)
     n_char = len(alphabet)
     string = ''
 
@@ -17,7 +18,7 @@ def make_string(alphabet, l=5):
     return string
 
 
-def make_image(shape=(400, 300), pos=(0.8, 0.3), max_angle=10, string='blub blub bla bla. This is text!', font='Arial'):
+def make_image(shape=(400, 300), pos=(0.8, 0.3), max_angle=10, string='This is text!', font='Arial'):
 
     fnt = ImageFont.truetype('Library/Fonts/{}.ttf'.format(font), 25)
 
@@ -37,7 +38,7 @@ def make_image(shape=(400, 300), pos=(0.8, 0.3), max_angle=10, string='blub blub
     return img
 
 
-def make_data(n, alphabet, shape, length, path):
+def make_data(n, alphabet, shape, min_l, max_l, path):
 
     if os.path.exists(path):
         raise IOError('path exists')
@@ -48,7 +49,7 @@ def make_data(n, alphabet, shape, length, path):
 
     for i in range(n):
 
-        string = make_string(alphabet, l=length)
+        string = make_string(alphabet, min_l, max_l)
         img = make_image(shape, string=string)
         img.save('{}/{}.jpg'.format(path, str(i)))
 
@@ -68,4 +69,4 @@ if __name__ == "__main__":
     #    plt.imshow(img)
     #    plt.show()
 
-    make_data(10, alphabet, shape=(400, 300), length=10, path='rotated_data')
+    make_data(10, alphabet, shape=(400, 300), min_l=5, max_l=10, path='data')
