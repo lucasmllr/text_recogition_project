@@ -58,17 +58,18 @@ def find_blobs(img, t=0.52):
     boxes = []
     for label in final_labels:
         pixels = np.argwhere(stencil == label)
-        x_min = np.min(pixels[:, 0])
-        x_max = np.max(pixels[:, 0]) + 1
-        y_min = np.min(pixels[:, 1])
-        y_max = np.max(pixels[:, 1]) + 1
+        y_min = np.min(pixels[:, 0])
+        y_max = np.max(pixels[:, 0]) + 1
+        x_min = np.min(pixels[:, 1])
+        x_max = np.max(pixels[:, 1]) + 1
         heappush(boxes, (x_min, x_max, y_min, y_max))
 
     # extract characters from image in correct order
     chars = []
     while boxes:
         box = heappop(boxes)
-        chars.append(raw[box[0]:box[1], box[2]:box[3]])
+        print(box)
+        chars.append(raw[box[2]:box[3], box[0]:box[1]])
 
     return chars
 
