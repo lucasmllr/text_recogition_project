@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import random
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageOps
 import os
 
 
@@ -17,16 +17,22 @@ def make_string(alphabet, l=5):
     return string
 
 
-def make_image(shape=(400, 300), pos=(0.5, 0.5), string='blub blub bla bla. This is text!', font='Arial'):
+def make_image(shape=(400, 300), pos=(0.8, 0.3), max_angle=10, string='blub blub bla bla. This is text!', font='Arial'):
 
-    x_pos = pos
+    fnt = ImageFont.truetype('Library/Fonts/{}.ttf'.format(font), 25)
+
     img = Image.new('RGB', shape, color='white')
-    d = ImageDraw.Draw(img)
-    fnt = ImageFont.truetype('Library/Fonts/{}.ttf'.format(font), 15)
+    text = Image.new('L', (250, 100))
+
+    angle = np.random.uniform(-max_angle, max_angle)
+    d = ImageDraw.Draw(text)
+    d.text((0, 0), string, font=fnt, fill=255)
+    text = text.rotate(angle, expand=True)
+    text = ImageOps.colorize(text, black=(255, 255 ,255), white=(0, 0, 0))
 
     x_pos = random.randint(0, int(shape[0] - pos[0] * shape[0]))
     y_pos = random.randint(0, int(shape[1] - pos[1] * shape[1]))
-    d.text((x_pos, y_pos), string, font=fnt, fill='black')
+    img.paste(text, (x_pos, y_pos))
 
     return img
 
@@ -55,7 +61,11 @@ def make_data(n, alphabet, shape, length, path):
 
 if __name__ == "__main__":
 
-    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWZ0123456789"
+    alphabet = " ABCDEFGHIJKLMNOPQRSTUVWZ0123456789"
 
-    img = make_image()
-    make_data(10, alphabet, (100, 50), length=5, path='data')
+    #for _ in range(15):
+    #    img = make_image()
+    #    plt.imshow(img)
+    #    plt.show()
+
+    make_data(10, alphabet, shape=(400, 300), length=10, path='rotated_data')

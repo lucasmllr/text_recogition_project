@@ -12,7 +12,7 @@ class ImageDataset(Dataset):
     subclass of pytorch's Dataset to provide extracted characters to a model.
     '''
 
-    def __init__(self, path='data', size=8):
+    def __init__(self, path='data', size=28):
         '''
         initiaizes an ImagaDataset instance
 

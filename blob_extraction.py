@@ -3,6 +3,7 @@ from DisjointSet import DisjointSet
 import processing
 import matplotlib.pyplot as plt
 from copy import deepcopy
+from heapq import heappush, heappop
 
 
 def find_blobs(img, t=0.52):
@@ -61,21 +62,20 @@ def find_blobs(img, t=0.52):
         x_max = np.max(pixels[:, 0]) + 1
         y_min = np.min(pixels[:, 1])
         y_max = np.max(pixels[:, 1]) + 1
-        boxes.append((x_min, x_max, y_min, y_max))
+        heappush(boxes, (x_min, x_max, y_min, y_max))
 
-    #extract characters from image
+    # extract characters from image in correct order
     chars = []
-    for box in boxes:
+    while boxes:
+        box = heappop(boxes)
         chars.append(raw[box[0]:box[1], box[2]:box[3]])
-
-    # Todo: assure right order of letters in case of height difference
 
     return chars
 
 
 if __name__ == "__main__":
 
-    img = processing.load_img('data/0.jpg')
+    img = processing.load_img('rotated_data/2.jpg')
     plt.imshow(img)
     plt.show()
 
