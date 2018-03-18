@@ -5,15 +5,18 @@ from PIL import Image, ImageDraw, ImageFont, ImageOps
 import os
 
 
-def make_string(alphabet, min_l=5, max_l=10):
+def make_string(alphabet, min_l=5, max_l=10, max_lines=10):
 
-    l = random.randint(min_l, max_l)
+    lines = random.randint(1, max_lines)
     n_char = len(alphabet)
     string = ''
 
-    for i in range(l):
-        rand = random.randint(0, n_char - 1)
-        string += alphabet[rand]
+    for line in range(lines):
+        l = random.randint(min_l, max_l)
+        for i in range(l):
+            rand = random.randint(0, n_char - 1)
+            string += alphabet[rand]
+        string += '\n'
 
     return string
 
@@ -38,7 +41,7 @@ def make_image(shape=(400, 300), pos=(0.8, 0.3), max_angle=10, string='This is t
     return img
 
 
-def make_data(n, alphabet, shape, min_l, max_l, path):
+def make_data(n, alphabet, shape, min_l, max_l, max_lines, path):
 
     if os.path.exists(path):
         raise IOError('path exists')
@@ -49,7 +52,7 @@ def make_data(n, alphabet, shape, min_l, max_l, path):
 
     for i in range(n):
 
-        string = make_string(alphabet, min_l, max_l)
+        string = make_string(alphabet, min_l, max_l, max_lines)
         img = make_image(shape, string=string)
         img.save('{}/{}.jpg'.format(path, str(i)))
 
@@ -69,4 +72,4 @@ if __name__ == "__main__":
     #    plt.imshow(img)
     #    plt.show()
 
-    make_data(10, alphabet, shape=(400, 300), min_l=5, max_l=10, path='data')
+    make_data(10, alphabet, shape=(400, 300), min_l=5, max_l=10, max_lines=3, path='data')

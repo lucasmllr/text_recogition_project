@@ -22,9 +22,8 @@ def correct_rot(img, n_angles=10, n_bins=11, angle=20.):
     height = img.shape[0]
     width = img.shape[1]
     size = height * width
-    O = np.array([height / 2, width / 2])  #origin
+    O = np.array([height / 2, width / 2])  # origin
     angle = angle * np.pi / 180
-
 
     # bins
     if n_bins % 2 == 0: n_bins += 1  # assure odd number of bins
@@ -64,10 +63,10 @@ def correct_rot(img, n_angles=10, n_bins=11, angle=20.):
     # normalization
     counts /= np.sum(img)
 
-    # entropy
+    # entropy (H = - Sum P * log(P), 0 if P=0)
     A = np.zeros((n_angles, n_bins))
     A[np.nonzero(counts)] = np.log(counts[np.nonzero(counts)])  # logarithms of non-zero normalized bin counts
-    H = -np.sum(np.multiply(counts, A), axis=1)
+    H = - np.sum(np.multiply(counts, A), axis=1)
 
     # turning angle
     angle = angles[np.argmin(H)]
@@ -82,10 +81,11 @@ def correct_rot(img, n_angles=10, n_bins=11, angle=20.):
 if __name__ == "__main__":
 
     img = load_img('data/4.jpg')
-    rotated = correct_rot(img, n_angles=10, n_bins=50)
+    rotated = correct_rot(img, n_angles=50, n_bins=70, angle=10.)
 
     plt.imshow(img)
     plt.show()
 
     plt.imshow(rotated)
+    plt.grid(True)
     plt.show()
