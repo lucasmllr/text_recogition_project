@@ -5,7 +5,7 @@ from PIL import Image, ImageDraw, ImageFont
 import os
 
 
-def make_string(alphabet, l=5):
+def make_string(alphabet, l=5, lowerCase=True):
 
     n_char = len(alphabet)
     string = ''
@@ -13,8 +13,10 @@ def make_string(alphabet, l=5):
     for i in range(l):
         rand = random.randint(0, n_char - 1)
         string += alphabet[rand]
-
-    return string
+    if lowerCase:
+        return string.lower()
+    else:
+        return string
 
 
 def make_image(shape=(400, 300), pos=(0.5, 0.5), string='blub blub bla bla. This is text!', font='Arial'):
@@ -22,10 +24,10 @@ def make_image(shape=(400, 300), pos=(0.5, 0.5), string='blub blub bla bla. This
     x_pos = pos
     img = Image.new('L', shape, color='white')
     d = ImageDraw.Draw(img)
-    fnt = ImageFont.truetype('Library/Fonts/{}.ttf'.format(font), 15)
+    fnt = ImageFont.truetype('Library/Fonts/{}.ttf'.format(font), 32)
 
-    x_pos = random.randint(0, int(shape[0] - pos[0] * shape[0]))
-    y_pos = random.randint(0, int(shape[1] - pos[1] * shape[1]))
+    x_pos = 0 #random.randint(0, int(shape[0] - pos[0] * shape[0]))
+    y_pos = 0 #random.randint(0, int(shape[1] - pos[1] * shape[1]))
     d.text((x_pos, y_pos), string, font=fnt, fill='black')
 
     return img
@@ -44,9 +46,8 @@ def make_data(n, alphabet, shape, length, path, writeContainer=True):
         f = open('{}/truth.txt'.format(path), 'w')
 
         for i in range(n):
-
             string = make_string(alphabet, l=length)
-            img = make_image(shape, string=string)
+            img = make_image(shape, string=string, pos=(0, 0))
             img.save('{}/{}.jpg'.format(path, str(i)))
 
             truth = string + '\n'
@@ -60,7 +61,7 @@ def make_data(n, alphabet, shape, length, path, writeContainer=True):
         truth_container = [None] * n
         for i in range(n):
             string = make_string(alphabet, l=length)
-            img_container[i] = make_image(shape, string=string)
+            img_container[i] = make_image(shape, string=string, pos=(0, 0))
             truth_container[i] = string
 
         data, target, labels = convertToNumpy(img_container, truth_container)
@@ -85,6 +86,6 @@ def convertToNumpy(data, target):
 
 if __name__ == '__main__':
 
-    alphabet = '0123456789'
+    alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
     img = make_image()
-    make_data(100, alphabet, (32, 32), length=1, path='data', writeContainer=False)
+    make_data(10, alphabet, (32, 32), length=1, path='data', writeContainer=False)
