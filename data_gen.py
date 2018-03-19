@@ -24,27 +24,30 @@ def make_string(alphabet, min_l=5, max_l=10, max_lines=10, lowerCase=False):
         return string
 
 
-def make_image(shape=(400, 300), pos=(0.8, 0.3), max_angle=0, string='This is text!', font='Arial', colorspace='RGB'):
+def make_image(shape=(400, 300), pos=None, max_angle=0, string='This is text!', font='Arial', colorspace='RGB'):
 
     fnt = ImageFont.truetype('Library/Fonts/{}.ttf'.format(font), 25)
 
     img = Image.new(colorspace, shape, color='white')
-    text = Image.new('L', (250, 100))
+    text = Image.new('L', (32, 32))
 
     angle = np.random.uniform(-max_angle, max_angle)
     d = ImageDraw.Draw(text)
     d.text((0, 0), string, font=fnt, fill=255)
     text = text.rotate(angle, expand=True)
     text = ImageOps.colorize(text, black=(255, 255, 255), white=(0, 0, 0))
-
-    x_pos = random.randint(0, int(shape[0] - pos[0] * shape[0]))
-    y_pos = random.randint(0, int(shape[1] - pos[1] * shape[1]))
+    if pos is not None:
+        x_pos = random.randint(0, int(shape[0] - pos[0] * shape[0]))
+        y_pos = random.randint(0, int(shape[1] - pos[1] * shape[1]))
+    else:
+        x_pos = 0
+        y_pos = 0
     img.paste(text, (x_pos, y_pos))
 
     return img
 
 
-def make_data(n, alphabet, shape, min_l, max_l, max_lines, path, writeContainer=True):
+def make_data(n, alphabet, shape, min_l, max_l, max_lines, path, pos=None, writeContainer=True):
 
     if os.path.exists(path):
         r = input('Path exists. Do you want to override? Type "y" for yes: \n')
@@ -58,7 +61,7 @@ def make_data(n, alphabet, shape, min_l, max_l, max_lines, path, writeContainer=
 
         for i in range(n):
             string = make_string(alphabet, min_l, max_l, max_lines)
-            img = make_image(shape, string=string)
+            img = make_image(shape, pos=pos, string=string)
             img.save('{}/{}.jpg'.format(path, str(i)))
 
             truth = string + '\n'
@@ -72,7 +75,7 @@ def make_data(n, alphabet, shape, min_l, max_l, max_lines, path, writeContainer=
         truth_container = [None] * n
         for i in range(n):
             string = make_string(alphabet, min_l, max_l, max_lines)
-            img_container[i] = make_image(shape, pos=(0, 0), string=string, colorspace='L')
+            img_container[i] = make_image(shape, pos=pos, string=string, colorspace='L')
             truth_container[i] = string
 
         data, target, labels = convertToNumpy(img_container, truth_container)
@@ -98,4 +101,4 @@ def convertToNumpy(data, target):
 if __name__ == '__main__':
 
     alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-    make_data(10, alphabet, shape=(400, 300), min_l=1, max_l=10, max_lines=2, path='data', writeContainer=False)
+    make_data(10, alphabet, shape=(32, 32), min_l=1, max_l=1, max_lines=1, path='data', writeContainer=True)
