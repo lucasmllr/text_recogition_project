@@ -1,3 +1,5 @@
 .idea/
-.data/
-.literature/
+data/
+literature/
+rotated_data/
+__pycache__/

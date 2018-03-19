@@ -1,39 +1,50 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import random
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageOps
 import os
 
 
-def make_string(alphabet, l=5, lowerCase=True):
+def make_string(alphabet, min_l=5, max_l=10, max_lines=10, lowerCase=False):
 
+    lines = random.randint(1, max_lines)
     n_char = len(alphabet)
     string = ''
 
-    for i in range(l):
-        rand = random.randint(0, n_char - 1)
-        string += alphabet[rand]
+    for line in range(lines):
+        l = random.randint(min_l, max_l)
+        for i in range(l):
+            rand = random.randint(0, n_char - 1)
+            string += alphabet[rand]
+        string += '\n'
+
     if lowerCase:
         return string.lower()
     else:
         return string
 
 
-def make_image(shape=(400, 300), pos=(0.5, 0.5), string='blub blub bla bla. This is text!', font='Arial'):
+def make_image(shape=(400, 300), pos=(0.8, 0.3), max_angle=0, string='This is text!', font='Arial', colorspace='RGB'):
 
-    x_pos = pos
-    img = Image.new('L', shape, color='white')
-    d = ImageDraw.Draw(img)
-    fnt = ImageFont.truetype('Library/Fonts/{}.ttf'.format(font), 32)
+    fnt = ImageFont.truetype('Library/Fonts/{}.ttf'.format(font), 25)
 
-    x_pos = 0 #random.randint(0, int(shape[0] - pos[0] * shape[0]))
-    y_pos = 0 #random.randint(0, int(shape[1] - pos[1] * shape[1]))
-    d.text((x_pos, y_pos), string, font=fnt, fill='black')
+    img = Image.new(colorspace, shape, color='white')
+    text = Image.new('L', (250, 100))
+
+    angle = np.random.uniform(-max_angle, max_angle)
+    d = ImageDraw.Draw(text)
+    d.text((0, 0), string, font=fnt, fill=255)
+    text = text.rotate(angle, expand=True)
+    text = ImageOps.colorize(text, black=(255, 255, 255), white=(0, 0, 0))
+
+    x_pos = random.randint(0, int(shape[0] - pos[0] * shape[0]))
+    y_pos = random.randint(0, int(shape[1] - pos[1] * shape[1]))
+    img.paste(text, (x_pos, y_pos))
 
     return img
 
 
-def make_data(n, alphabet, shape, length, path, writeContainer=True):
+def make_data(n, alphabet, shape, min_l, max_l, max_lines, path, writeContainer=True):
 
     if os.path.exists(path):
         r = input('Path exists. Do you want to override? Type "y" for yes: \n')
@@ -46,8 +57,8 @@ def make_data(n, alphabet, shape, length, path, writeContainer=True):
         f = open('{}/truth.txt'.format(path), 'w')
 
         for i in range(n):
-            string = make_string(alphabet, l=length)
-            img = make_image(shape, string=string, pos=(0, 0))
+            string = make_string(alphabet, min_l, max_l, max_lines)
+            img = make_image(shape, string=string)
             img.save('{}/{}.jpg'.format(path, str(i)))
 
             truth = string + '\n'
@@ -60,8 +71,8 @@ def make_data(n, alphabet, shape, length, path, writeContainer=True):
         img_container = [None] * n
         truth_container = [None] * n
         for i in range(n):
-            string = make_string(alphabet, l=length)
-            img_container[i] = make_image(shape, string=string, pos=(0, 0))
+            string = make_string(alphabet, min_l, max_l, max_lines)
+            img_container[i] = make_image(shape, pos=(0, 0), string=string, colorspace='L')
             truth_container[i] = string
 
         data, target, labels = convertToNumpy(img_container, truth_container)
@@ -87,5 +98,4 @@ def convertToNumpy(data, target):
 if __name__ == '__main__':
 
     alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-    img = make_image()
-    make_data(10, alphabet, (32, 32), length=1, path='data', writeContainer=False)
+    make_data(10, alphabet, shape=(400, 300), min_l=1, max_l=10, max_lines=2, path='data', writeContainer=False)

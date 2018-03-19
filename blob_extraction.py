@@ -2,9 +2,14 @@ import numpy as np
 from DisjointSet import DisjointSet
 import processing
 import matplotlib.pyplot as plt
+from copy import deepcopy
+from heapq import heappush, heappop
 
 
-def find_blobs(img):
+def find_blobs(img, t=0.52):
+
+    raw = deepcopy(img)
+    img = processing.threshold(img, t)
 
     height = img.shape[0]
     width = img.shape[1]
@@ -53,35 +58,32 @@ def find_blobs(img):
     boxes = []
     for label in final_labels:
         pixels = np.argwhere(stencil == label)
-        x_min = np.min(pixels[:, 0])
-        x_max = np.max(pixels[:, 0]) + 1
-        y_min = np.min(pixels[:, 1])
-        y_max = np.max(pixels[:, 1]) + 1
-        boxes.append((x_min, x_max, y_min, y_max))
+        y_min = np.min(pixels[:, 0])
+        y_max = np.max(pixels[:, 0]) + 1
+        x_min = np.min(pixels[:, 1])
+        x_max = np.max(pixels[:, 1]) + 1
+        heappush(boxes, (x_min, x_max, y_min, y_max))
 
-    # Todo: assure right order of letters in case of height difference
+    # extract characters from image in correct order
+    chars = []
+    while boxes:
+        box = heappop(boxes)
+        print(box)
+        chars.append(raw[box[2]:box[3], box[0]:box[1]])
 
-    return stencil, boxes
+    return chars
 
 
 if __name__ == "__main__":
 
-    img = processing.load_img('data/9.jpg')
-    #plt.imshow(img)
-    #plt.show()
-
-    img = processing.threshold(img, t=0.52)
-
-    img, boxes = find_blobs(img)
+    img = processing.load_img('rotated_data/2.jpg')
     plt.imshow(img)
     plt.show()
 
-    print(boxes)
-    print(boxes[0][0], boxes[0][1], boxes[0][2], boxes[0][3])
-
-    box1 = img[boxes[0][0]:boxes[0][1], boxes[0][2]:boxes[0][3]]
-    plt.imshow(box1)
-    plt.show()
+    blobs = find_blobs(img)
+    for blob in blobs:
+        plt.imshow(blob)
+        plt.show()
 
 
 

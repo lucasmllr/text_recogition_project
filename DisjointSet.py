@@ -131,9 +131,6 @@ class DisjointSet():
         return [self.parents[i] for i in range(1, self.n) if i == self.parents[i]]
 
 
-
-
-
 if __name__ == "__main__":
 
     labels = DisjointSet()
