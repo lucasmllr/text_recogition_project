@@ -58,7 +58,7 @@ def correct_rot(img, n_angles=10, n_bins=11, angle=20.):
     for i in range(n_angles):
         for j in range(min_bin, max_bin+1):
             bin_pixels = np.argwhere(bins[i, :] == j).reshape(-1).tolist()
-            counts[i, j] = np.sum(flat_img[bin_pixels])
+            counts[i, j - min_bin] = np.sum(flat_img[bin_pixels])  # smallest bin indx gets array inx zero
 
     # normalization
     counts /= np.sum(img)
@@ -90,3 +90,7 @@ if __name__ == "__main__":
     plt.imshow(rotated)
     plt.grid(True)
     plt.show()
+
+    print(proj)
+    x = np.arange(len(proj))
+    plt.bar(x, proj)

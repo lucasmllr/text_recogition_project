@@ -24,12 +24,12 @@ def make_string(alphabet, min_l=5, max_l=10, max_lines=10, lowerCase=False):
         return string
 
 
-def make_image(shape=(400, 300), pos=None, max_angle=0, string='This is text!', font='Arial', colorspace='RGB'):
+def make_image(shape=(400, 300), pos=(0.8, 0.3), max_angle=15, string='This is text!', font='Arial', colorspace='RGB'):
 
     fnt = ImageFont.truetype('Library/Fonts/{}.ttf'.format(font), 25)
 
     img = Image.new(colorspace, shape, color='white')
-    text = Image.new('L', (32, 32))
+    text = Image.new('L', (250, 250))
 
     angle = np.random.uniform(-max_angle, max_angle)
     d = ImageDraw.Draw(text)
@@ -101,4 +101,4 @@ def convertToNumpy(data, target):
 if __name__ == '__main__':
 
     alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-    make_data(10, alphabet, shape=(32, 32), min_l=1, max_l=1, max_lines=1, path='data', writeContainer=True)
+    make_data(10, alphabet, shape=(400, 300), min_l=5, max_l=10, max_lines=5, path='data', writeContainer=False)
