@@ -4,21 +4,33 @@ from rot_correction import correct_rot
 from processing import load_img
 
 
-def extract_lines(img, proj, t):
+def extract_lines(img, t):
 
     # dimensions
-    bin_width = img.shape[0] / len(proj)
+    height = img.shape[0]
+    width = img.shape[1]
+    size = height * width
+
+    # projection in horizontal direction
+    hor_proj = np.sum(img, axis=1) / np.sum(img)
+
+    # visualization of line separatation
+    x = np.arange(height)
+    plt.plot(x, hor_proj)
+    plt.plot(x, np.array([t] * height), 'r--')
+    plt.title('horizontal projection and threshold for separation')
+    plt.show()
 
     # threshold projection
-    proj[proj < t] = 0
+    hor_proj[hor_proj < t] = 0
 
-    # finding lines with 1d blob extraction
-    labels = np.zeros(len(proj))
+    # finding vertical boundaries of lines with 1d blob extraction
+    labels = np.zeros(height)
     next_label = 1
-    for i in range(len(proj)):
+    for i in range(height):
 
         # blank part of image
-        if proj[i] == 0:
+        if hor_proj[i] == 0:
             continue
 
         # special case of first bin
@@ -37,33 +49,46 @@ def extract_lines(img, proj, t):
     # line coordinates
     boxes = []
     for i in range(1, next_label):
-        min_bin = min(np.argwhere(labels == i).reshape(-1))
-        max_bin = max(np.argwhere(labels == i).reshape(-1))
-        min_pixel = min_bin * bin_width
-        max_pixel = max_bin * bin_width
-        boxes.append([min_pixel, max_pixel])
+        mi = min(np.argwhere(labels == i).reshape(-1))
+        ma = max(np.argwhere(labels == i).reshape(-1))
+        buffer = int(np.ceil((ma - mi) / 10))
+        boxes.append([mi - buffer, ma + buffer])
 
-    return labels, boxes
+    lines = []
+    # find vertical boundaries for each line
+    for i, box in enumerate(boxes):
+        line = img[box[0]:box[1]]
+
+        # vertical projection
+        vert_proj = np.sum(line, axis=0) / np.sum(line)
+        vert_proj[vert_proj < t] = 0
+
+        # vertical boundaries
+        hor_max = np.max(np.argwhere(vert_proj != 0)) + 1
+        hor_min = np.min(np.argwhere(vert_proj != 0))
+
+        boxes[i] += [hor_min, hor_max]
+        lines.append(img[box[0]:box[1], box[2]:box[3]])
+
+    return lines, boxes
 
 
 if __name__ == "__main__":
 
-    img = load_img('data/4.jpg')
-    rotated, proj = correct_rot(img, n_angles=50, n_bins=100, angle=10.)
+    img = load_img('data/1.jpg')
 
-    x = np.arange(len(proj))
-    plt.bar(x, proj)
+    plt.imshow(img)
+    plt.title('original image as ndarray')
     plt.show()
 
-    labels, boxes = extract_lines(rotated, proj, t=0.01)
-    print(labels)
-    print(boxes)
+    rotated = correct_rot(img, n_angles=50, n_bins=100, angle=10.)
 
-    xx = np.arange(rotated.shape[1])
     plt.imshow(rotated)
-    for box in boxes:
-        mi = np.full(len(xx), box[0])
-        ma = np.full(len(xx), box[1])
-        plt.plot(xx, mi)
-        plt.plot(xx, ma)
+    plt.title('corrected for rotation')
     plt.show()
+
+    lines, boxes = extract_lines(rotated, t=0.002)
+
+    for i, line in enumerate(lines):
+        plt.imshow(line)
+        plt.show()

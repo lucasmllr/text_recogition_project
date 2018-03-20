@@ -74,15 +74,14 @@ def correct_rot(img, n_angles=10, n_bins=11, angle=20.):
 
     # rotating image
     img = rotate(img, angle)
-    proj = counts[np.argmin(H)]
 
-    return img, proj
+    return img
 
 
 if __name__ == "__main__":
 
     img = load_img('data/4.jpg')
-    rotated, proj = correct_rot(img, n_angles=50, n_bins=70, angle=10.)
+    rotated = correct_rot(img, n_angles=50, n_bins=70, angle=10.)
 
     plt.imshow(img)
     plt.show()
@@ -94,3 +93,4 @@ if __name__ == "__main__":
     print(proj)
     x = np.arange(len(proj))
     plt.bar(x, proj)
+    plt.show()
