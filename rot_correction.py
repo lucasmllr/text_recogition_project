@@ -13,7 +13,7 @@ def correct_rot(img, n_angles=10, n_bins=11, angle=20.):
         img (ndarray): 2d image array
         n_angles (int): number of projection angles
         n_bins (int): number of bins for projection histograms. Should be odd.
-        angle (float): min and max angle (degrees) in whose boundaries n_angles projections are evaluated.
+        angle (float): abs of min and max angle (degrees) in whose boundaries n_angles projections are evaluated.
     Returns:
         An ndarray of the rotated image padded with zeros
     '''
@@ -74,14 +74,15 @@ def correct_rot(img, n_angles=10, n_bins=11, angle=20.):
 
     # rotating image
     img = rotate(img, angle)
+    proj = counts[np.argmin(H)]
 
-    return img
+    return img, proj
 
 
 if __name__ == "__main__":
 
     img = load_img('data/4.jpg')
-    rotated = correct_rot(img, n_angles=50, n_bins=70, angle=10.)
+    rotated, proj = correct_rot(img, n_angles=50, n_bins=70, angle=10.)
 
     plt.imshow(img)
     plt.show()

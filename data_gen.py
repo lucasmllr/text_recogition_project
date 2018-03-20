@@ -32,7 +32,7 @@ def make_image(shape=(400, 300), pos=(0.8, 0.3), max_angle=10, string='This is t
     d = ImageDraw.Draw(text)
     d.text((0, 0), string, font=fnt, fill=255)
     text = text.rotate(angle, expand=True)
-    text = ImageOps.colorize(text, black=(255, 255 ,255), white=(0, 0, 0))
+    text = ImageOps.colorize(text, black=(255, 255, 255), white=(0, 0, 0))
 
     x_pos = random.randint(0, int(shape[0] - pos[0] * shape[0]))
     y_pos = random.randint(0, int(shape[1] - pos[1] * shape[1]))
@@ -72,4 +72,4 @@ if __name__ == "__main__":
     #    plt.imshow(img)
     #    plt.show()
 
-    make_data(10, alphabet, shape=(400, 300), min_l=5, max_l=10, max_lines=3, path='data')
+    make_data(10, alphabet, shape=(400, 300), min_l=5, max_l=10, max_lines=1, path='data')
