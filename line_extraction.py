@@ -15,11 +15,11 @@ def extract_lines(img, t):
     hor_proj = np.sum(img, axis=1) / np.sum(img)
 
     # visualization of line separatation
-    x = np.arange(height)
-    plt.plot(x, hor_proj)
-    plt.plot(x, np.array([t] * height), 'r--')
-    plt.title('horizontal projection and threshold for separation')
-    plt.show()
+    #x = np.arange(height)
+    #plt.plot(x, hor_proj)
+    #plt.plot(x, np.array([t] * height), 'r--')
+    #plt.title('horizontal projection and threshold for separation')
+    #plt.show()
 
     # threshold projection
     hor_proj[hor_proj < t] = 0
