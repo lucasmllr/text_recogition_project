@@ -12,7 +12,7 @@ def find_blobs(img, args):
     t = args.blob_t
 
     raw = deepcopy(img)
-    img = processing.threshold(img, t)
+    img = processing.threshold(img, args)
 
     height = img.shape[0]
     width = img.shape[1]
