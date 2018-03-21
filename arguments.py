@@ -4,6 +4,9 @@ class Arguments():
 
     def __init__(self):
 
+        # documentation mode
+        self.documentation = False
+
         # data generation
         self.n = 10
         self.alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'

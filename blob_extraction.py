@@ -11,13 +11,25 @@ def find_blobs(img, args):
 
     t = args.blob_t
 
+    # dimensions
+    height = img.shape[0]
+    width = img.shape[1]
+
     raw = deepcopy(img)
     img = processing.threshold(img, args)
 
-    height = img.shape[0]
-    width = img.shape[1]
-    size = height * width
+    # adding column of zeros to prevent left and right most blob
+    # form being mistaken as one
+    zeros = np.zeros((height, 1))
+    img = np.concatenate((img, zeros), axis=1)
+    width += 1
 
+    if args.documentation:
+        plt.imshow(img)
+        plt.title('thresholded image with t={}'.format(t))
+        plt.show()
+
+    size = height * width
     img = img.reshape(size)
     stencil = np.zeros(size, dtype=int)
     labels = DisjointSet()
@@ -69,12 +81,13 @@ def find_blobs(img, args):
 
     # extract characters from image in correct order
     chars = []
+    bounding_boxes = []
     while boxes:
         box = heappop(boxes)
-        print(box)
         chars.append(raw[box[2]:box[3], box[0]:box[1]])
+        bounding_boxes.append(box)
 
-    return chars
+    return chars, bounding_boxes
 
 
 if __name__ == "__main__":
@@ -85,7 +98,7 @@ if __name__ == "__main__":
 
     args = Arguments()
 
-    blobs = find_blobs(img, args)
+    blobs, boxes= find_blobs(img, args)
     for blob in blobs:
         plt.imshow(blob)
         plt.show()

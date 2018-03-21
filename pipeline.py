@@ -6,9 +6,9 @@ from line_extraction import extract_lines
 from blob_extraction import find_blobs
 
 
-def read(img, args, documentation=False):
+def read(img, args):
 
-    if documentation:
+    if args.documentation:
         plt.imshow(img)
         plt.title('original image as ndarray')
         plt.show()
@@ -16,7 +16,7 @@ def read(img, args, documentation=False):
     # rotation correction
     rotated = correct_rot(img, args)
 
-    if documentation:
+    if args.documentation:
         plt.imshow(rotated)
         plt.title('corrected for rotation')
         plt.show()
@@ -24,7 +24,7 @@ def read(img, args, documentation=False):
     # line extraction
     lines, _ = extract_lines(rotated, args)
 
-    if documentation:
+    if args.documentation:
         for i, line in enumerate(lines):
             plt.imshow(line)
             plt.title('line {}'.format(i))
@@ -32,11 +32,12 @@ def read(img, args, documentation=False):
 
     # character extraction
     chars = []
-    for line in lines:
-        line_chars = find_blobs(line, args)
+    for i, line in enumerate(lines):
+        line_chars, boxes = find_blobs(line, args)
         chars.append(line_chars)
+        print('character boxes of line {}: {}'.format(i, boxes))
 
-    if documentation:
+    if args.documentation:
         for i, line in enumerate(chars):
             for j, char in enumerate(line):
                 plt.imshow(char)
@@ -51,7 +52,8 @@ def read(img, args, documentation=False):
 if __name__ == '__main__':
 
     args = Arguments()
+    args.documentation = True
 
     img = load_img('data/6.jpg')
-    chars = read(img, args, documentation=True)
+    chars = read(img, args)
 
