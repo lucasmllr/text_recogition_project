@@ -4,9 +4,12 @@ import processing
 import matplotlib.pyplot as plt
 from copy import deepcopy
 from heapq import heappush, heappop
+from arguments import Arguments
 
 
-def find_blobs(img, t=0.52):
+def find_blobs(img, args):
+
+    t = args.blob_t
 
     raw = deepcopy(img)
     img = processing.threshold(img, t)
@@ -76,11 +79,13 @@ def find_blobs(img, t=0.52):
 
 if __name__ == "__main__":
 
-    img = processing.load_img('rotated_data/2.jpg')
+    img = processing.load_img('data/2.jpg')
     plt.imshow(img)
     plt.show()
 
-    blobs = find_blobs(img)
+    args = Arguments()
+
+    blobs = find_blobs(img, args)
     for blob in blobs:
         plt.imshow(blob)
         plt.show()

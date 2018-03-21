@@ -2,9 +2,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 from rot_correction import correct_rot
 from processing import load_img
+from arguments import Arguments
 
 
-def extract_lines(img, t):
+def extract_lines(img, args):
+
+    t = args.line_t
 
     # dimensions
     height = img.shape[0]
@@ -75,19 +78,21 @@ def extract_lines(img, t):
 
 if __name__ == "__main__":
 
+    args = Arguments()
+
     img = load_img('data/1.jpg')
 
     plt.imshow(img)
     plt.title('original image as ndarray')
     plt.show()
 
-    rotated = correct_rot(img, n_angles=50, n_bins=100, angle=10.)
+    rotated = correct_rot(img, args)
 
     plt.imshow(rotated)
     plt.title('corrected for rotation')
     plt.show()
 
-    lines, boxes = extract_lines(rotated, t=0.002)
+    lines, boxes = extract_lines(rotated, args)
 
     for i, line in enumerate(lines):
         plt.imshow(line)

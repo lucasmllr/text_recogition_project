@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.ndimage import imread
 from skimage.transform import resize
+from arguments import Arguments
 
 
 def load_img(path):
@@ -17,20 +18,22 @@ def load_img(path):
     return img
 
 
-def threshold(img, t, top=True, bottom=True):
+def threshold(img, args):
 
-    below = img <= t
-    above = img > t
+    below = img <= args.blob_t
+    above = img > args.blob_t
 
-    if bottom:
+    if args.cut_bottom:
         img[below] = 0
-    if top:
+    if args.cut_top:
         img[above] = 1
 
     return img
 
 
-def rescale(img, size=10):
+def rescale(img, args):
+
+    size = args.input_shape
 
     # add zeros to make img square
     max_edge = max(img.shape[0], img.shape[1])
@@ -50,6 +53,7 @@ def rescale(img, size=10):
 
 if __name__ == '__main__':
 
+    args = Arguments()
     a = np.array([[1, 1], [1, 1], [1, 1]])
-    padded = rescale(a)
+    padded = rescale(a, args)
     print(padded.shape)

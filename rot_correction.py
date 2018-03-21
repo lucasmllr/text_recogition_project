@@ -2,9 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from processing import load_img
 from scipy.ndimage import rotate
+from arguments import Arguments
 
 
-def correct_rot(img, n_angles=10, n_bins=11, angle=20.):
+def correct_rot(img, args):
     '''
     Function to rotate an input image according to the minimum entropy of its projection along the horizontal axis.
     Entropy is evaluated on a grid.
@@ -17,6 +18,11 @@ def correct_rot(img, n_angles=10, n_bins=11, angle=20.):
     Returns:
         An ndarray of the rotated image padded with zeros
     '''
+
+    # arguments
+    angle = args.angle
+    n_angles = args.n_angles
+    n_bins = args.n_bins
 
     # dimensions
     height = img.shape[0]
@@ -80,17 +86,16 @@ def correct_rot(img, n_angles=10, n_bins=11, angle=20.):
 
 if __name__ == "__main__":
 
-    img = load_img('data/4.jpg')
-    rotated = correct_rot(img, n_angles=50, n_bins=70, angle=10.)
+    args = Arguments()
+    args.n_angles = 50
+    args.n_bins = 100
+
+    img = load_img('data/5.jpg')
+    rotated = correct_rot(img, args)
 
     plt.imshow(img)
     plt.show()
 
     plt.imshow(rotated)
     plt.grid(True)
-    plt.show()
-
-    print(proj)
-    x = np.arange(len(proj))
-    plt.bar(x, proj)
     plt.show()
