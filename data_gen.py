@@ -23,7 +23,7 @@ def make_string(alphabet, min_l=5, max_l=10, max_lines=10):
 
 def make_image(shape=(400, 300), pos=None, max_angle=0, string='This is text!', font='Arial', colorspace='RGB'):
 
-    fnt = ImageFont.truetype('Library/Fonts/{}.ttf'.format(font), 25)
+    fnt = ImageFont.truetype('/home/ubuntu/text_recogition_project/fonts/{}.ttf'.format(font), 25)
 
     img = Image.new(colorspace, shape, color='white')
     text = Image.new('L', (32, 32))

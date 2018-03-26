@@ -26,7 +26,7 @@ class Args:
         self.log_interval = 100
         self.shuffle = True
         self.no_cuda = False
-        self.cuda = not args.no_cuda and torch.cuda.is_available()
+        self.cuda = not self.no_cuda and torch.cuda.is_available()
 
 
 class Chardata(Dataset):
