@@ -5,7 +5,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageOps
 import os
 
 
-def make_string(alphabet, min_l=5, max_l=10, max_lines=10, lowerCase=False):
+def make_string(alphabet, min_l=5, max_l=10, max_lines=10):
 
     lines = random.randint(1, max_lines)
     n_char = len(alphabet)
@@ -18,10 +18,7 @@ def make_string(alphabet, min_l=5, max_l=10, max_lines=10, lowerCase=False):
             string += alphabet[rand]
         string += '\n'
 
-    if lowerCase:
-        return string.lower()
-    else:
-        return string
+    return string
 
 
 def make_image(shape=(400, 300), pos=None, max_angle=0, string='This is text!', font='Arial', colorspace='RGB'):
@@ -47,7 +44,7 @@ def make_image(shape=(400, 300), pos=None, max_angle=0, string='This is text!', 
     return img
 
 
-def make_data(n, alphabet, shape, min_l, max_l, max_lines, path, pos=None, writeContainer=True):
+def make_data(n, alphabet, shape, min_l, max_l, max_lines, path, pos=None, outputformat=None, lowercase=True):
 
     if os.path.exists(path):
         r = input('Path exists. Do you want to override? Type "y" for yes: \n')
@@ -56,7 +53,7 @@ def make_data(n, alphabet, shape, min_l, max_l, max_lines, path, pos=None, write
     else:
         os.makedirs(path)
 
-    if not writeContainer:
+    if outputformat is 'image':
         f = open('{}/truth.txt'.format(path), 'w')
 
         for i in range(n):
@@ -64,7 +61,10 @@ def make_data(n, alphabet, shape, min_l, max_l, max_lines, path, pos=None, write
             img = make_image(shape, pos=pos, string=string)
             img.save('{}/{}.jpg'.format(path, str(i)))
 
-            truth = string + '\n'
+            if lowercase:
+                truth = (string + '\n').lower()
+            else:
+                truth = string + '\n'
             f.write(truth)
 
         f.close()
@@ -76,12 +76,16 @@ def make_data(n, alphabet, shape, min_l, max_l, max_lines, path, pos=None, write
         for i in range(n):
             string = make_string(alphabet, min_l, max_l, max_lines)
             img_container[i] = make_image(shape, pos=pos, string=string, colorspace='L')
-            truth_container[i] = string
+            if lowercase:
+                truth_container[i] = string.lower()
+            else:
+                truth_container[i] = string
 
         data, target, labels = convertToNumpy(img_container, truth_container)
-        np.save('{}/data'.format(path), data)
-        np.save('{}/target'.format(path), target)
-        np.save('{}/label'.format(path), labels)
+        if outputformat is 'container':
+            np.save('{}/data'.format(path), data)
+            np.save('{}/target'.format(path), target)
+            np.save('{}/label'.format(path), labels)
         return data, target, labels
 
 
@@ -101,4 +105,4 @@ def convertToNumpy(data, target):
 if __name__ == '__main__':
 
     alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-    make_data(10, alphabet, shape=(32, 32), min_l=1, max_l=1, max_lines=1, path='data', writeContainer=True)
+    make_data(100000, alphabet, shape=(32, 32), min_l=1, max_l=1, max_lines=1, path='data', outputformat='container', lowercase=True)

@@ -25,6 +25,8 @@ class Args:
         self.seed = np.random.randint(32000)
         self.log_interval = 100
         self.shuffle = True
+        self.no_cuda = False
+        self.cuda = not args.no_cuda and torch.cuda.is_available()
 
 
 class Chardata(Dataset):
@@ -52,6 +54,8 @@ def train(epoch, data_iterator, criterion, optimizer):
     model.train()
     for batch_idx, (data, target) in enumerate(data_iterator):
         data, target = Variable(data.view(data.shape[0],1,32,32)), Variable(target)
+        if args.cuda:
+            data, target = data.cuda(), target.cuda()
         optimizer.zero_grad
         output = model(data)
         loss = criterion(output, target)
@@ -70,6 +74,8 @@ def test(data_iterator, criterion):
     accu = lambda x: x / len(data_iterator.dataset)
     for data, target in data_iterator:
         data, target = Variable(data.view(data.shape[0], 1, 32, 32)), Variable(target)
+        if args.cuda:
+            data, target = data.cuda(), target.cuda()
         output = model(data)
         test_loss += criterion(output, target).data[0]  # sum up batch loss
         pred = output.data.max(1, keepdim=True)[1]  # get the index of the max log-probability
@@ -85,6 +91,8 @@ def test(data_iterator, criterion):
 if __name__ == '__main__':
     args = Args()
     torch.manual_seed(args.seed)
+    if args.cuda:
+        torch.cuda.manual_seed(args.seed)
 
     # load the dataset
     data = np.load('data/data.npy')
@@ -121,6 +129,8 @@ if __name__ == '__main__':
     img_dim = 32 * 32
 
     model = ConvolutionalNN()
+    if args.cuda:
+        model.cuda()
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
     criterion = nn.NLLLoss()
 
