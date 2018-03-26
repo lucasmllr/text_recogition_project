@@ -17,16 +17,16 @@ from model import ConvolutionalNN
 
 class Args:
     def __init__(self):
-        self.batch_size = 300
-        self.epochs = 50
-        self.lr = 0.001
+        self.batch_size = 500
+        self.epochs = 500
+        self.lr = 0.0001
         self.momentum = 0.5
         self.test_size = 0.1
         self.seed = np.random.randint(32000)
         self.log_interval = 100
         self.shuffle = True
         self.no_cuda = False
-        self.cuda = not args.no_cuda and torch.cuda.is_available()
+        self.cuda = not self.no_cuda and torch.cuda.is_available()
 
 
 class Chardata(Dataset):
