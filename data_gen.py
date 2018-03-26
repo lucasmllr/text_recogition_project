@@ -23,7 +23,7 @@ def make_string(alphabet, min_l=5, max_l=10, max_lines=10):
 
 def make_image(shape=(400, 300), pos=None, max_angle=0, string='This is text!', font='Arial', colorspace='RGB'):
 
-    fnt = ImageFont.truetype('Library/Fonts/{}.ttf'.format(font), 30)
+    fnt = ImageFont.truetype('fonts/{}.ttf'.format(font), 30)
 
     img = Image.new(colorspace, shape, color='white')
     text = Image.new('L', (32, 32))
@@ -105,4 +105,4 @@ def convertToNumpy(data, target):
 if __name__ == '__main__':
 
     alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-    make_data(100000, alphabet, shape=(32, 32), min_l=1, max_l=1, max_lines=1, path='data', outputformat='container', lowercase=True)
+    make_data(10, alphabet, shape=(32, 32), min_l=1, max_l=1, max_lines=1, path='data', outputformat='image', lowercase=True)
