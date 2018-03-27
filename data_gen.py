@@ -3,39 +3,39 @@ import matplotlib.pyplot as plt
 import random
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 import os
+from arguments import Arguments
 
+def make_string(args):
 
-def make_string(alphabet, min_l=5, max_l=10, max_lines=10):
-
-    lines = random.randint(1, max_lines)
-    n_char = len(alphabet)
+    lines = random.randint(1, args.max_lines)
+    n_char = len(args.alphabet)
     string = ''
 
     for line in range(lines):
-        l = random.randint(min_l, max_l)
+        l = random.randint(args.min_l, args.max_l)
         for i in range(l):
             rand = random.randint(0, n_char - 1)
-            string += alphabet[rand]
+            string += args.alphabet[rand]
         string += '\n'
 
     return string
 
 
-def make_image(shape=(400, 300), pos=None, max_angle=0, string='This is text!', font='Arial', colorspace='RGB'):
+def make_image(args, string):
 
-    fnt = ImageFont.truetype('fonts/{}.ttf'.format(font), 30)
+    fnt = ImageFont.truetype('fonts/{}.ttf'.format(args.font), 30)
 
-    img = Image.new(colorspace, shape, color='white')
-    text = Image.new('L', (32, 32))
+    img = Image.new(args.colorspace, args.shape, color='white')
+    text = Image.new('L', (250, 250))
 
-    angle = np.random.uniform(-max_angle, max_angle)
+    angle = np.random.uniform(- args.max_angle, args.max_angle)
     d = ImageDraw.Draw(text)
     d.text((0, 0), string, font=fnt, fill=255)
     text = text.rotate(angle, expand=True)
     text = ImageOps.colorize(text, black=(255, 255, 255), white=(0, 0, 0))
-    if pos is not None:
-        x_pos = random.randint(0, int(shape[0] - pos[0] * shape[0]))
-        y_pos = random.randint(0, int(shape[1] - pos[1] * shape[1]))
+    if args.pos is not None:
+        x_pos = random.randint(0, int(args.shape[0] - args.pos[0] * args.shape[0]))
+        y_pos = random.randint(0, int(args.shape[1] - args.pos[1] * args.shape[1]))
     else:
         x_pos = 0
         y_pos = 0
@@ -44,24 +44,24 @@ def make_image(shape=(400, 300), pos=None, max_angle=0, string='This is text!', 
     return img
 
 
-def make_data(n, alphabet, shape, min_l, max_l, max_lines, path, pos=None, outputformat=None, lowercase=True):
+def make_data(args):
 
-    if os.path.exists(path):
+    if os.path.exists(args.path):
         r = input('Path exists. Do you want to override? Type "y" for yes: \n')
         if r is not 'y':
             return
     else:
-        os.makedirs(path)
+        os.makedirs(args.path)
 
-    if outputformat is 'image':
-        f = open('{}/truth.txt'.format(path), 'w')
+    if args.outputformat is 'image':
+        f = open('{}/truth.txt'.format(args.path), 'w')
 
-        for i in range(n):
-            string = make_string(alphabet, min_l, max_l, max_lines)
-            img = make_image(shape, pos=pos, string=string)
-            img.save('{}/{}.jpg'.format(path, str(i)))
+        for i in range(args.n):
+            string = make_string(args)
+            img = make_image(args, string=string)
+            img.save('{}/{}.jpg'.format(args.path, str(i)))
 
-            if lowercase:
+            if args.lower_case:
                 truth = (string + '\n').lower()
             else:
                 truth = string + '\n'
@@ -74,15 +74,15 @@ def make_data(n, alphabet, shape, min_l, max_l, max_lines, path, pos=None, outpu
         img_container = [None] * n
         truth_container = [None] * n
         for i in range(n):
-            string = make_string(alphabet, min_l, max_l, max_lines)
-            img_container[i] = make_image(shape, pos=pos, string=string, colorspace='L')
-            if lowercase:
+            string = make_string(alphabet, args.min_l, args.max_l, args.max_lines)
+            img_container[i] = make_image(args.shape, pos=args.pos, string=string, colorspace='L')
+            if args.lower_case:
                 truth_container[i] = string.lower()
             else:
                 truth_container[i] = string
 
         data, target, labels = convertToNumpy(img_container, truth_container)
-        if outputformat is 'container':
+        if args.outputformat is 'container':
             np.save('{}/data'.format(path), data)
             np.save('{}/target'.format(path), target)
             np.save('{}/label'.format(path), labels)
@@ -104,5 +104,6 @@ def convertToNumpy(data, target):
 
 if __name__ == '__main__':
 
-    alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-    make_data(10, alphabet, shape=(32, 32), min_l=1, max_l=1, max_lines=1, path='data', outputformat='image', lowercase=True)
+    args = Arguments()
+    args.path = 'data'
+    make_data(args)

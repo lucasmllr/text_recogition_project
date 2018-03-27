@@ -4,17 +4,32 @@ import processing
 import matplotlib.pyplot as plt
 from copy import deepcopy
 from heapq import heappush, heappop
+from arguments import Arguments
 
 
-def find_blobs(img, t=0.52):
+def find_blobs(img, args):
 
-    raw = deepcopy(img)
-    img = processing.threshold(img, t)
+    t = args.blob_t
 
+    # dimensions
     height = img.shape[0]
     width = img.shape[1]
-    size = height * width
 
+    raw = deepcopy(img)
+    img = processing.threshold(img, args)
+
+    # adding column of zeros to prevent left and right most blob
+    # form being mistaken as one
+    zeros = np.zeros((height, 1))
+    img = np.concatenate((img, zeros), axis=1)
+    width += 1
+
+    if args.documentation:
+        plt.imshow(img)
+        plt.title('thresholded image with t={}'.format(t))
+        plt.show()
+
+    size = height * width
     img = img.reshape(size)
     stencil = np.zeros(size, dtype=int)
     labels = DisjointSet()
@@ -66,21 +81,24 @@ def find_blobs(img, t=0.52):
 
     # extract characters from image in correct order
     chars = []
+    bounding_boxes = []
     while boxes:
         box = heappop(boxes)
-        print(box)
         chars.append(raw[box[2]:box[3], box[0]:box[1]])
+        bounding_boxes.append(box)
 
-    return chars
+    return chars, bounding_boxes
 
 
 if __name__ == "__main__":
 
-    img = processing.load_img('rotated_data/2.jpg')
+    img = processing.load_img('data/2.jpg')
     plt.imshow(img)
     plt.show()
 
-    blobs = find_blobs(img)
+    args = Arguments()
+
+    blobs, boxes= find_blobs(img, args)
     for blob in blobs:
         plt.imshow(blob)
         plt.show()
