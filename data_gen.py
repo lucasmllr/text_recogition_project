@@ -23,7 +23,7 @@ def make_string(args):
 
 def make_image(args, string):
 
-    fnt = ImageFont.truetype('fonts/{}.ttf'.format(args.font), 30)
+    fnt = ImageFont.truetype('fonts/{}'.format(args.font), args.font_size)
 
     img = Image.new(args.colorspace, args.shape, color='white')
     text = Image.new('L', (250, 250))
@@ -41,7 +41,12 @@ def make_image(args, string):
         y_pos = 0
     img.paste(text, (x_pos, y_pos))
 
-    return img
+    '''
+    add functionality to assign image to trash when specific conditions are met,
+    e.g. most of the character is outside the frameself.
+    '''
+
+    return img, string
 
 
 def make_data(args):
@@ -53,12 +58,17 @@ def make_data(args):
     else:
         os.makedirs(args.path)
 
+    fonts_list = os.listdir('fonts/')
+
     if args.outputformat is 'image':
         f = open('{}/truth.txt'.format(args.path), 'w')
 
         for i in range(args.n):
             string = make_string(args)
-            img = make_image(args, string=string)
+            if args.font_randomise:
+                args.font = np.random.choice(fonts_list)  # pick one of the available fonts
+            args.font_size = random.randint(args.font_size_range[0], args.font_size_range[1])
+            img, string = make_image(args, string=string)
             img.save('{}/{}.jpg'.format(args.path, str(i)))
 
             if args.lower_case:
@@ -71,11 +81,14 @@ def make_data(args):
 
         return
     else:
-        img_container = [None] * n
-        truth_container = [None] * n
-        for i in range(n):
-            string = make_string(alphabet, args.min_l, args.max_l, args.max_lines)
-            img_container[i] = make_image(args.shape, pos=args.pos, string=string, colorspace='L')
+        img_container = [None] * args.n
+        truth_container = [None] * args.n
+        for i in range(args.n):
+            string = make_string(args)
+            if args.font_randomise:
+                args.font = np.random.choice(fonts_list)  # pick one of the available fonts
+            args.font_size = random.randint(args.font_size_range[0], args.font_size_range[1])
+            img_container[i], string = make_image(args, string=string)
             if args.lower_case:
                 truth_container[i] = string.lower()
             else:

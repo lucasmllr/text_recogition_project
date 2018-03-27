@@ -8,19 +8,22 @@ class Arguments():
         self.documentation = False
 
         # data generation
-        self.n = 10
+        self.n = 100000
         self.alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-        self.min_l = 5
-        self.max_l = 10
-        self.max_lines = 5
-        self.lower_case = False
-        self.shape = (400, 300)
-        self.text_box = (250, 250)
-        self.pos = (0.8, 0.3)
-        self.max_angle = 15
-        self.font = 'Arial'
-        self.colorspace = 'RGB'
-        self.outputformat = 'image'
+        self.min_l = 1
+        self.max_l = 1
+        self.max_lines = 1
+        self.lower_case = True
+        self.shape = (32, 32)
+        self.text_box = (32, 32)
+        self.pos = None
+        self.max_angle = 1
+        self.font = 'Arial.ttf'
+        self.font_size_range = (30, 35)
+        self.font_size = None
+        self.font_randomise = True
+        self.colorspace = 'L'
+        self.outputformat = 'container'
         self.path = 'data'
 
         # data loading and processing
