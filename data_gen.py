@@ -29,7 +29,7 @@ def make_image(args, string):
     fnt = ImageFont.truetype('fonts/{}.ttf'.format(args.font), args.font_size)
 
     img = Image.new(args.colorspace, args.shape, color='white')
-    text = Image.new('L', (250, 250))
+    text = Image.new('L', args.text_box)
 
     angle = np.random.uniform(- args.max_angle, args.max_angle)
     d = ImageDraw.Draw(text)
@@ -74,7 +74,7 @@ def make_data(args):
         img_container = [None] * args.n
         truth_container = [None] * args.n
         for i in range(args.n):
-            string = make_string(alphabet, args.min_l, args.max_l, args.max_lines)
+            string = make_string(args.alphabet, args.min_l, args.max_l, args.max_lines)
             img_container[i] = make_image(args.shape, pos=args.pos, string=string, colorspace='L')
             truth_container[i] = string
 
@@ -102,4 +102,5 @@ if __name__ == '__main__':
 
     args = Arguments()
     args.path = 'data_test'
+    args.n = 10
     make_data(args)

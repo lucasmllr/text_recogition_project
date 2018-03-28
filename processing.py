@@ -44,7 +44,7 @@ def rescale(img, args):
     right = int(np.ceil(diff_1 / 2))
     top = int(np.floor(diff_0 / 2))
     bottom = int(np.ceil(diff_0 / 2))
-    padded = np.pad(img, ((bottom, top), (left, right)), 'constant', constant_values=0)
+    padded = np.pad(img, ((bottom, top), (left, right)), mode='constant', constant_values=0)
 
     resized = resize(padded, (size, size))
 

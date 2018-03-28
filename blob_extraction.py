@@ -160,10 +160,11 @@ def get_rotation_corrected_blobs(img, stencil, angle, labels, args):
 
         lines.append(get_chars_from_boxes(rotated_image, line_boxes))
 
-    print(f'{len(lines)} lines in total')
-    for i, line in enumerate(lines):
-        print(f'line {i}: {len(line)} chars')
-    print()
+    if args.documentation:
+        print(f'{len(lines)} lines in total')
+        for i, line in enumerate(lines):
+            print(f'line {i}: {len(line)} chars')
+        print()
 
     #for char in lines[0]:
     #    plt.imshow(char)
@@ -172,13 +173,81 @@ def get_rotation_corrected_blobs(img, stencil, angle, labels, args):
     return lines
 
 
+def get_rescaled_chars(img, args=None, separate_lines=False):
+    if args is None:
+        args = Arguments()
+    char_res = args.input_shape
+    boxes, stencil = find_blobs(img, args)
+    angle, labels = correction_angle(boxes, args, False)
+    lines = get_rotation_corrected_blobs(img, stencil, angle, labels, args)
+
+    rescaled_lines = []
+    for line in lines:
+        n_chars = len(line)
+        chars = np.empty((n_chars, char_res, char_res), dtype=np.float32)
+        for i, char in enumerate(line):
+            chars[i] = processing.rescale(char, args)
+        rescaled_lines.append(chars)
+
+    if separate_lines:
+        return rescaled_lines
+    else:
+        return np.concatenate(rescaled_lines, axis=0)
+
+
+def generate_char_data(load_path, args=None):
+    if args is None:
+        args = Arguments()
+    # load alphabet
+    alphabet = args.alphabet
+    char_dict = args.char_dict
+    # load truth
+    with open(os.path.join(load_path, 'truth.txt')) as f:
+        content = f.readlines()
+    content = [x.strip() for x in content]
+    truth_blocks = []
+    current_block = []
+    for line in content:
+        if line == '':
+            truth_blocks.append(current_block)
+            current_block = []
+        else:
+            current_block.append(np.array([char_dict[char] for char in line], dtype=np.int32))
+    # process images
+    char_images = []
+    char_truths = []
+    for i in range(args.n):
+        file = str(i)+'.jpg'
+        if file.endswith('.jpg'):
+            file_path = os.path.join(load_path, file)
+            img = processing.load_img(file_path)
+            chars = get_rescaled_chars(img, args)
+            diff = sum(len(line) for line in truth_blocks[i]) - len(chars)
+            print(diff)
+            if diff == 0:
+                char_images.append(chars)
+                char_truths.append(np.concatenate(truth_blocks[i]))
+                print('image is valid')
+    return np.concatenate(char_images, axis=0), np.concatenate(char_truths, axis=0)
+
+
+def save_char_data(load_path, save_path, args=None):
+    if args is None:
+        args = Arguments()
+    if not(os.path.exists(save_path)):
+        os.mkdir(save_path)
+    char_images, char_truth = generate_char_data(load_path, args)
+    print(f'saving {len(char_truth)} images')
+    np.save(os.path.join(save_path, 'images.npy'), char_images)
+    np.save(os.path.join(save_path, 'gt.npy'), char_truth)
+
+
 # function for testing
 def show_rotated(load_path, args=None):
     if args is None:
         args = Arguments()
-    i = 0
     for i, file in enumerate(os.listdir(load_path)):
-        if file.endswith('.jpg'):  # and i==3:
+        if file.endswith('.jpg') and i==2:
             file_path = os.path.join(load_path, file)
             img = processing.load_img(file_path)
             boxes, stencil = find_blobs(img, args)
@@ -189,7 +258,14 @@ def show_rotated(load_path, args=None):
             plt.show()
             get_rotation_corrected_blobs(img, stencil, angle, labels, args)
 
+
 if __name__ == "__main__":
+    save_char_data('data_test', 'char_data')
+    #chars = get_rescaled_chars('data_test/5.jpg')
+    #for char in chars:
+    #    plt.imshow(char)
+    #    plt.show()
+    #show_rotated('data_test')
 
     #img = processing.load_img('data_test/5.jpg')
     #plt.imshow(img)
@@ -197,7 +273,6 @@ if __name__ == "__main__":
 
     #args = Arguments()
     #blobs, boxes, stencil = find_blobs(img, args)
-    show_rotated('data_test')
     #for blob in blobs:
     #    plt.imshow(blob)
     #   plt.show()

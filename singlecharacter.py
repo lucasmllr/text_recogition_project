@@ -27,7 +27,7 @@ class Args:
         self.shuffle = True
 
 
-class Chardata(Dataset):
+class CharDataset(Dataset):
     def __init__(self, data, target, label=None, transform=None):
         self.data_tensor = torch.from_numpy(data).type(torch.FloatTensor)
         self.target_tensor = torch.from_numpy(target).type(torch.LongTensor)
@@ -35,13 +35,13 @@ class Chardata(Dataset):
         self.transform = transform
 
     def __len__(self):
-        return self.target_tensor.shape[0]
+        return self.target_tensor.size()[0]
 
     def __getitem__(self, idx):
 
         data_sample = self.data_tensor[idx]
         if self.transform:
-            data_sample = self.transform(sample)
+            data_sample = self.transform(data_sample)
 
         target_sample = self.target_tensor[idx]
 
@@ -51,8 +51,8 @@ class Chardata(Dataset):
 def train(epoch, data_iterator, criterion, optimizer):
     model.train()
     for batch_idx, (data, target) in enumerate(data_iterator):
-        data, target = Variable(data.view(data.shape[0],1,32,32)), Variable(target)
-        optimizer.zero_grad
+        data, target = Variable(data.view(data.size()[0],1,32,32)), Variable(target)
+        optimizer.zero_grad()
         output = model(data)
         loss = criterion(output, target)
         loss.backward()
@@ -69,10 +69,10 @@ def test(data_iterator, criterion):
     correct = 0
     accu = lambda x: x / len(data_iterator.dataset)
     for data, target in data_iterator:
-        data, target = Variable(data.view(data.shape[0], 1, 32, 32)), Variable(target)
+        data, target = Variable(data.view(data.size()[0], 1, 32, 32)), Variable(target)
         output = model(data)
         test_loss += criterion(output, target).data[0]  # sum up batch loss
-        pred = output.data.max(1, keepdim=True)[1]  # get the index of the max log-probability
+        pred = output.data.max(1)[1]  # get the index of the max log-probability
         correct += pred.eq(target.data.view_as(pred)).cpu().sum()
 
     test_loss /= len(test_loader.sampler)
@@ -87,10 +87,10 @@ if __name__ == '__main__':
     torch.manual_seed(args.seed)
 
     # load the dataset
-    data = np.load('data/data.npy')
-    target = np.load('data/target.npy')
+    data = np.load('char_data/images.npy')
+    target = np.load('char_data/gt.npy')
 
-    data_character = Chardata(data=data, target=target)
+    data_character = CharDataset(data=data, target=target)
 
     num_samples = len(data_character)
     indices = list(range(num_samples))
@@ -128,4 +128,4 @@ if __name__ == '__main__':
         train(epoch, train_loader, criterion, optimizer)
         test(test_loader, criterion)
         # Save results.
-        torch.save(model.state_dict(), 'data/ocr_torchdict.pth')
+        torch.save(model.state_dict(), 'model_weights/weights.pth')
