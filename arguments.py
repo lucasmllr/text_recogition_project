@@ -14,11 +14,12 @@ class Arguments():
         self.max_l = 10
         self.max_lines = 5
         self.lower_case = False
-        self.shape = (400, 300)
-        self.text_box = (250, 250)
+        self.shape = (800, 600)
+        self.text_box = (500, 500)
         self.pos = (0.8, 0.3)
         self.max_angle = 15
-        self.font = 'Arial'
+        self.font = 'arial'
+        self.font_size = 50
         self.colorspace = 'RGB'
         self.container = False
         self.path = 'data'
@@ -30,7 +31,8 @@ class Arguments():
         self.cut_top = True
 
         # blob extraction
-        self.blob_t = 0.52
+        self.blob_t = .52#0.52
+        self.min_pixels = 50
 
         # line extraction
         self.line_t = 0.002

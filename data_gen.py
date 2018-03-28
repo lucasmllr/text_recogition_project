@@ -26,7 +26,7 @@ def make_string(args):
 
 def make_image(args, string):
 
-    fnt = ImageFont.truetype('Library/Fonts/{}.ttf'.format(args.font), 25)
+    fnt = ImageFont.truetype('fonts/{}.ttf'.format(args.font), args.font_size)
 
     img = Image.new(args.colorspace, args.shape, color='white')
     text = Image.new('L', (250, 250))

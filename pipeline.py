@@ -54,6 +54,6 @@ if __name__ == '__main__':
     args = Arguments()
     args.documentation = True
 
-    img = load_img('data/6.jpg')
+    img = load_img('data_test/6.jpg')
     chars = read(img, args)
 
