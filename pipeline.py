@@ -45,9 +45,9 @@ def read(img, args):
 if __name__ == '__main__':
 
     args = Arguments()
-    #args.documentation = True
+    args.documentation = True
 
-    img = load_img('data_test/3.jpg')
+    img = load_img('data_test/lang.jpg')
     result = read(img, args)
     title = ''
     for line in result:

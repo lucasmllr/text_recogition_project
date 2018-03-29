@@ -260,7 +260,8 @@ def show_rotated(load_path, args=None):
 
 
 if __name__ == "__main__":
-    save_char_data('data_test', 'char_data')
+    args = Arguments()
+    save_char_data(args.path, 'char_data')
     #chars = get_rescaled_chars('data_test/5.jpg')
     #for char in chars:
     #    plt.imshow(char)

@@ -23,7 +23,7 @@ class Arguments():
         self.text_box = (1500, 1500)
         self.pos = (0.9, 0.9) #(0.8, 0.3)
         self.max_angle = 15
-        self.font = 'arial'
+        self.font = 'all'
         self.font_size = 50
         self.colorspace = 'RGB'
         self.container = False

@@ -19,7 +19,7 @@ class Args:
     def __init__(self):
         self.batch_size = 300
         self.epochs = 50
-        self.lr = 0.001
+        self.lr = 0.0003
         self.momentum = 0.5
         self.test_size = 0.1
         self.seed = np.random.randint(32000)

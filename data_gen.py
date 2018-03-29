@@ -24,9 +24,12 @@ def make_string(args):
         return string
 
 
-def make_image(args, string):
+def make_image(args, string, font=None):
 
-    fnt = ImageFont.truetype('fonts/{}.ttf'.format(args.font), args.font_size)
+    if font is None:
+        font = args.font
+
+    fnt = ImageFont.truetype(font, args.font_size)
 
     img = Image.new(args.colorspace, args.shape, color='white')
     text = Image.new('L', args.text_box)
@@ -59,9 +62,20 @@ def make_data(args):
     if not args.container:
         f = open('{}/truth.txt'.format(args.path), 'w')
 
+        if args.font == 'all':
+            font_files = []
+            for path, subdirs, files in os.walk('fonts'):
+                for name in files:
+                    if name.endswith('.ttf'):
+                        font_files.append(os.path.join(path, name))
+
         for i in range(args.n):
             string = make_string(args)
-            img = make_image(args, string=string)
+            if args.font == 'all':
+                font = font_files[i % len(font_files)]
+            else:
+                font = None
+            img = make_image(args, string=string, font=font)
             img.save('{}/{}.jpg'.format(args.path, str(i)))
 
             truth = string + '\n'
@@ -101,6 +115,6 @@ def convertToNumpy(data, target):
 if __name__ == '__main__':
 
     args = Arguments()
-    args.path = 'data_test'
-    args.n = 10
+    #args.font = 'all'
+    #args.path = 'data_test'
     make_data(args)
