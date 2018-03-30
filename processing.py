@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.ndimage import imread
 from skimage.transform import resize
+from skimage.filters import threshold_sauvola as sauvola
 from arguments import Arguments
 
 
@@ -31,6 +32,14 @@ def threshold(img, args):
     return img
 
 
+def sauvola_threshold(img, args):
+
+    t = sauvola(img, args.window, args.k, args.r)
+    binary = img > t
+
+    return binary
+
+
 def rescale(img, args):
 
     size = args.input_shape
@@ -54,6 +63,19 @@ def rescale(img, args):
 if __name__ == '__main__':
 
     args = Arguments()
-    a = np.array([[1, 1], [1, 1], [1, 1]])
-    padded = rescale(a, args)
-    print(padded.shape)
+    img = load_img('data/1.jpg')
+
+    plt.imshow(img)
+    plt.show()
+
+    print(img.shape)
+
+    binary = sauvola_threshold(img, args)
+
+    plt.imshow(binary)
+    plt.show()
+
+    thresholded = threshold(img, args)
+
+    plt.imshow(thresholded)
+    plt.show()

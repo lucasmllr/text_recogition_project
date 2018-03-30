@@ -32,7 +32,7 @@ def find_blobs(img, args):
     size = height * width
     img = img.reshape(size)
     stencil = np.zeros(size, dtype=int)
-    labels = DisjointSet()
+    labels = DisjointSet(n_labels=1)
 
     # first pass
     for i in range(size):
@@ -49,9 +49,11 @@ def find_blobs(img, args):
 
                 if stencil[j] != 0 and stencil[i] == 0: # connection
                     stencil[i] = stencil[j]
+
                 elif stencil[j] != 0 and stencil[j] != stencil[i]: # conflict
                     labels.unite(stencil[i], stencil[j])
-                else: # no connection nor conflict
+
+                else:  # no connection nor conflict
                     continue
 
             # if no neighboring pixel is labeled the investigated pixel is give a new label
@@ -59,6 +61,8 @@ def find_blobs(img, args):
                 new_label = labels.next()
                 stencil[i] = new_label
                 labels.add(new_label)
+
+    first_pass = deepcopy(stencil.reshape((height, width)))
 
     # second pass to eliminate equivalences
     eq = labels.get_equivalents()
@@ -87,21 +91,33 @@ def find_blobs(img, args):
         chars.append(raw[box[2]:box[3], box[0]:box[1]])
         bounding_boxes.append(box)
 
-    return chars, bounding_boxes
+    return chars, bounding_boxes, stencil, first_pass
 
 
 if __name__ == "__main__":
 
-    img = processing.load_img('data/2.jpg')
-    plt.imshow(img)
-    plt.show()
-
     args = Arguments()
+    args.documentation = True
 
-    blobs, boxes= find_blobs(img, args)
-    for blob in blobs:
-        plt.imshow(blob)
-        plt.show()
+    #for i in range(args.n):
+
+    img = processing.load_img('data/41.jpg')
+    orig = deepcopy(img)
+
+    blobs, boxes, stencil, first_pass = find_blobs(img, args)
+
+    fig = plt.figure()
+    fig.suptitle('iamge 41')
+    o = fig.add_subplot(131)
+    f = fig.add_subplot(132)
+    t = fig.add_subplot(133)
+    o.imshow(orig, cmap='gray')
+    o.set_title('original')
+    f.imshow(first_pass)
+    f.set_title('first pass')
+    t.imshow(stencil)
+    t.set_title('second pass')
+    plt.show()
 
 
 

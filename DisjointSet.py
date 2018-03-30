@@ -9,13 +9,12 @@ class DisjointSet():
     so that set representatives are always the smallest labels.
     '''
 
-    def __init__(self):
+    def __init__(self, n_labels=1):
         """
         initializing a single set with label 0
         """
-
-        self.n = 1
-        self.parents = [0]
+        self.n = n_labels
+        self.parents = [i for i in range(n_labels)]
 
 
     def exists(self, l):
@@ -26,7 +25,7 @@ class DisjointSet():
             l (int): label to be checked
 
         Returns:
-            bool intdcating existance
+            bool indicating existence
         """
         n = len(self.parents)
         if l >= n:
@@ -66,7 +65,7 @@ class DisjointSet():
 
         # if leaf is not connected directly to the root or is the root itself, connect it directly to the root
         # (path compression)
-        if self.parents[l] != self.parents[l]:
+        if self.parents[l] != l:
             self.parents[l] = self.find_root(self.parents[l])
 
         return self.parents[l]
@@ -103,8 +102,12 @@ class DisjointSet():
         root_m = self.find_root(m)
 
         if root_l < root_m:
+            print('\nroot of {}: {} becomes root of {}'.format(l, root_l, m))
+            print(self.get_equivalents())
             self.parents[root_m] = root_l
         else:
+            print('\nroot of {}: {} becomes root of {}'.format(m, root_m, l))
+            print(self.get_equivalents())
             self.parents[root_l] = root_m
 
 
@@ -117,8 +120,8 @@ class DisjointSet():
 
         eq = {}
         for l in range(len(self.parents)):
-            if l != self.parents[l]:
-                eq[l] = self.find_root(l)
+            #if l != self.parents[l]:
+            eq[l] = self.find_root(l)
 
         return eq
 

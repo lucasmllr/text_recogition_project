@@ -8,15 +8,15 @@ class Arguments():
         self.documentation = False
 
         # data generation
-        self.n = 10
+        self.n = 50
         self.alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-        self.min_l = 5
-        self.max_l = 10
-        self.max_lines = 5
+        self.min_l = 1
+        self.max_l = 1
+        self.max_lines = 1
         self.lower_case = False
-        self.shape = (400, 300)
-        self.text_box = (250, 250)
-        self.pos = (0.8, 0.3)
+        self.shape = (30, 30)
+        self.text_box = (30, 30)
+        self.pos = None
         self.max_angle = 15
         self.font = 'Arial'
         self.colorspace = 'RGB'
@@ -25,9 +25,14 @@ class Arguments():
 
         # data loading and processing
         self.input_shape = 28
-        self.load_path = 'data'
+        self.load_path = 'test_data'
         self.cut_bottom = True
         self.cut_top = True
+        # sauvola
+        self.window = 31
+        self.k = 0.1
+        self.r = 128
+
 
         # blob extraction
         self.blob_t = 0.52
