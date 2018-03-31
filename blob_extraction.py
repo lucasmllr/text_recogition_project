@@ -2,6 +2,7 @@ import numpy as np
 from DisjointSet import DisjointSet
 import processing
 import matplotlib.pyplot as plt
+from matplotlib.patches import Rectangle
 from copy import deepcopy
 from heapq import heappush, heappop
 from arguments import Arguments
@@ -77,17 +78,18 @@ def find_blobs(img, args):
         y_max = np.max(pixels[:, 0]) + 1
         x_min = np.min(pixels[:, 1])
         x_max = np.max(pixels[:, 1]) + 1
+
         heappush(boxes, (x_min, x_max, y_min, y_max))
 
     # extract characters from image in correct order
     chars = []
-    bounding_boxes = []
+    bboxes = []
     while boxes:
         box = heappop(boxes)
         chars.append(raw[box[2]:box[3], box[0]:box[1]])
-        bounding_boxes.append(box)
+        bboxes.append([box[0], box[2], box[1] - box[0], box[3] - box[2]])
 
-    return chars, bounding_boxes, stencil
+    return chars, bboxes, stencil
 
 
 if __name__ == "__main__":
@@ -101,8 +103,14 @@ if __name__ == "__main__":
 
         blobs, boxes, stencil = find_blobs(img, args)
 
-        plt.imshow(stencil)
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        ax.imshow(orig)
+        for box in boxes:
+            rect = Rectangle((box[0], box[1]), box[2], box[3], fill=False, edgecolor='red')
+            ax.add_patch(rect)
         plt.show()
+
 
 
 

@@ -5,6 +5,8 @@ import cv2 as cv
 from heapq import heappop, heappush
 import processing
 from DisjointSet import DisjointSet
+from arguments import Arguments
+from bbox_evaluation import is_inside
 
 
 def extract_mser(img, args):
@@ -36,7 +38,6 @@ def extract_mser(img, args):
         b = (- box[2] * box[3], count, box)
         heappush(heap, b)
     boxes_by_size = [heappop(heap) for _ in range(len(heap))]
-    print(boxes_by_size)
 
     box_labels = DisjointSet(n_labels=len(boxes_by_size))
 
@@ -52,44 +53,35 @@ def extract_mser(img, args):
         if eq[i] not in survivors:
             survivors.append(eq[i])
 
-    return [boxes_by_size[i][2] for i in survivors]
+    box_candidates = [boxes_by_size[i][2] for i in survivors]
 
+    # extracting character candidates
+    chars = []
+    for box in box_candidates:
+        x_min = box[0]
+        y_min = box[1]
+        x_max = x_min + box[2]
+        y_max = y_min + box[3]
+        chars.append(img[y_min:y_max, x_min:x_max])
 
-def is_inside(a, b):
-    '''
-    helper function to determine whether bounding box b lies inside a
-    '''
-
-    # box coordinates
-    a_x = a[0]
-    a_y = a[1]
-    a_w = a[2]
-    a_h = a[3]
-    b_x = b[0]
-    b_y = b[1]
-    b_w = b[2]
-    b_h = b[3]
-
-    if a_x <= b_x and a_y <= b_y:  # bottom left
-        # top right
-        if a_x + a_w >= b_x + b_w:
-            if a_y + a_h >= b_y + b_h:
-                return True
-
-    return False
+    return chars, box_candidates
 
 
 if __name__ == '__main__':
 
-    img = cv.imread('data/.jpg')
+    args = Arguments()
+
+    img = cv.imread('data/2.jpg')
     gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
 
-    regions = extract_mser(gray)
+    chars, boxes = extract_mser(gray, args)
+
+    print(boxes)
 
     fig = plt.figure()
     ax = fig.add_subplot(111)
     ax.imshow(gray, cmap='gray')
-    for region in regions:
+    for region in boxes:
         #print(region)
         x = region[0]
         y = region[1]
@@ -98,3 +90,7 @@ if __name__ == '__main__':
         rect = Rectangle((x, y), width, height, edgecolor='red', fill=False)
         ax.add_patch(rect)
     plt.show()
+
+    for char in chars:
+        plt.imshow(char)
+        plt.show()

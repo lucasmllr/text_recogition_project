@@ -102,12 +102,8 @@ class DisjointSet():
         root_m = self.find_root(m)
 
         if root_l < root_m:
-            print('\nroot of {}: {} becomes root of {}'.format(l, root_l, m))
-            print(self.get_equivalents())
             self.parents[root_m] = root_l
         else:
-            print('\nroot of {}: {} becomes root of {}'.format(m, root_m, l))
-            print(self.get_equivalents())
             self.parents[root_l] = root_m
 
 
