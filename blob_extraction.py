@@ -103,6 +103,7 @@ if __name__ == "__main__":
 
         blobs, boxes, stencil = find_blobs(img, args)
 
+        print()
         fig = plt.figure()
         ax = fig.add_subplot(111)
         ax.imshow(orig)

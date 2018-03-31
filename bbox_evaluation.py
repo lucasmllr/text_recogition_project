@@ -1,3 +1,4 @@
+import numpy as np
 
 
 def is_inside(a, b):
@@ -22,3 +23,26 @@ def is_inside(a, b):
                 return True
 
     return False
+
+
+def bbox_stats(bboxes):
+
+    widths = np.array([bboxes[i][2] for i in range(len(bboxes))])
+    heights = np.array([bboxes[i][3] for i in range(len(bboxes))])
+    areas = widths * heights
+    aspects = widths / heights
+
+    mean_width = np.mean(widths)
+    std_width = np.std(widths)
+
+    mean_height = np.mean(heights)
+    std_height = np.std(heights)
+
+    mean_area = np.mean(areas)
+    std_area = (np.std(areas))
+
+    mean_aspect = np.mean(aspects)
+    std_aspects = np.mean(aspects)
+
+    return { 'width':(mean_width, std_width, widths), 'height':(mean_height, std_height, heights),
+            'area':(mean_area, std_area, areas), 'aspects':(mean_aspect, std_aspects, aspects)}

@@ -6,7 +6,7 @@ from heapq import heappop, heappush
 import processing
 from DisjointSet import DisjointSet
 from arguments import Arguments
-from bbox_evaluation import is_inside
+from bbox_evaluation import is_inside, bbox_stats
 
 
 def extract_mser(img, args):
@@ -77,6 +77,7 @@ if __name__ == '__main__':
     chars, boxes = extract_mser(gray, args)
 
     print(boxes)
+    print(bbox_stats(boxes))
 
     fig = plt.figure()
     ax = fig.add_subplot(111)
