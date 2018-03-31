@@ -24,11 +24,6 @@ def find_blobs(img, args):
     img = np.concatenate((img, zeros), axis=1)
     width += 1
 
-    if args.documentation:
-        plt.imshow(img)
-        plt.title('thresholded image with t={}'.format(t))
-        plt.show()
-
     size = height * width
     img = img.reshape(size)
     stencil = np.zeros(size, dtype=int)
@@ -62,7 +57,8 @@ def find_blobs(img, args):
                 stencil[i] = new_label
                 labels.add(new_label)
 
-    first_pass = deepcopy(stencil.reshape((height, width)))
+    # unomment to print show labels after first pass
+    #first_pass = deepcopy(stencil.reshape((height, width)))
 
     # second pass to eliminate equivalences
     eq = labels.get_equivalents()
@@ -91,33 +87,22 @@ def find_blobs(img, args):
         chars.append(raw[box[2]:box[3], box[0]:box[1]])
         bounding_boxes.append(box)
 
-    return chars, bounding_boxes, stencil, first_pass
+    return chars, bounding_boxes, stencil
 
 
 if __name__ == "__main__":
 
     args = Arguments()
-    args.documentation = True
 
-    #for i in range(args.n):
+    for i in range(args.n):
 
-    img = processing.load_img('data/41.jpg')
-    orig = deepcopy(img)
+        img = processing.load_img('data/{}.jpg'.format(i))
+        orig = deepcopy(img)
 
-    blobs, boxes, stencil, first_pass = find_blobs(img, args)
+        blobs, boxes, stencil = find_blobs(img, args)
 
-    fig = plt.figure()
-    fig.suptitle('iamge 41')
-    o = fig.add_subplot(131)
-    f = fig.add_subplot(132)
-    t = fig.add_subplot(133)
-    o.imshow(orig, cmap='gray')
-    o.set_title('original')
-    f.imshow(first_pass)
-    f.set_title('first pass')
-    t.imshow(stencil)
-    t.set_title('second pass')
-    plt.show()
+        plt.imshow(stencil)
+        plt.show()
 
 
 

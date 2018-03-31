@@ -7,13 +7,24 @@ import processing
 from DisjointSet import DisjointSet
 
 
-def extract_mser(img):
+def extract_mser(img, args):
+    '''
+    Function using mser module from the openCV library to extract maximally stabel extremal regions.
+    Additionally MSERs that ly inside others are omitted.
+
+    Args:
+        img (openCV image): input image
+        args (Arguments opbject): args.min_are, args.max_area and args.delta are needed
+
+    Returns:
+        bounding boxes of filtered MSERs
+    '''
 
     # find MSERs
     mser = cv.MSER_create()
-    mser.setMinArea(5)
-    mser.setMaxArea(500)
-    mser.setDelta(15)
+    mser.setMinArea(args.min_area)
+    mser.setMaxArea(args.max_area)
+    mser.setDelta(args.delta)
     _, bboxes = mser.detectRegions(img)
 
     # filter MSERs
@@ -46,7 +57,7 @@ def extract_mser(img):
 
 def is_inside(a, b):
     '''
-    helper function to determine wheter bounding box b lies inside a
+    helper function to determine whether bounding box b lies inside a
     '''
 
     # box coordinates
@@ -67,9 +78,10 @@ def is_inside(a, b):
 
     return False
 
+
 if __name__ == '__main__':
 
-    img = cv.imread('data/4.jpg')
+    img = cv.imread('data/.jpg')
     gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
 
     regions = extract_mser(gray)
