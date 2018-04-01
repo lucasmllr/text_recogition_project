@@ -49,6 +49,8 @@ class Arguments():
         self.min_area = 5
         self.max_area = 500
         self.delta = 15
+        self.normalize = True
+        self.invert = True
 
 
 if __name__ == '__main__':

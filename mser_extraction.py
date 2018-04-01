@@ -16,10 +16,10 @@ def extract_mser(img, args):
 
     Args:
         img (openCV image): input image
-        args (Arguments opbject): args.min_are, args.max_area and args.delta are needed
+        args (Arguments opbject): args.min_area, args.max_area, args.delta, args.invert, args.normalize are needed
 
     Returns:
-        bounding boxes of filtered MSERs
+        extracted characters and bboxes in the format (x_min, y_min, width, height)
     '''
 
     # find MSERs
@@ -54,6 +54,12 @@ def extract_mser(img, args):
             survivors.append(eq[i])
 
     box_candidates = [boxes_by_size[i][2] for i in survivors]
+
+    if args.normalize:
+        img = np.divide(img, np.max(img))
+
+    if args.invert:
+        img = np.max(img) - img
 
     # extracting character candidates
     chars = []

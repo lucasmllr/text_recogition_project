@@ -7,14 +7,8 @@ def is_inside(a, b):
     '''
 
     # box coordinates
-    a_x = a[0]
-    a_y = a[1]
-    a_w = a[2]
-    a_h = a[3]
-    b_x = b[0]
-    b_y = b[1]
-    b_w = b[2]
-    b_h = b[3]
+    a_x, a_y, a_w, a_h = a
+    b_x, b_y, b_w, b_h = b
 
     if a_x <= b_x and a_y <= b_y:  # bottom left
         # top right
