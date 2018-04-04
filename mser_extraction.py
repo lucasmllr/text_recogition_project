@@ -3,20 +3,21 @@ from matplotlib.patches import Rectangle
 import numpy as np
 import cv2 as cv
 from heapq import heappop, heappush
+from skimage.transform import rescale
 import processing
 from DisjointSet import DisjointSet
 from arguments import Arguments
-from bbox_evaluation import is_inside, bbox_stats
+from bbox_evaluation import is_inside, distances, neighbors
 
 
 def extract_mser(img, args):
     '''
-    Function using mser module from the openCV library to extract maximally stabel extremal regions.
+    Function using mser module from the openCV library to extract maximally stable extremal regions.
     Additionally MSERs that ly inside others are omitted.
 
     Args:
         img (openCV image): input image
-        args (Arguments opbject): args.min_area, args.max_area, args.delta, args.invert, args.normalize are needed
+        args (Arguments object): args.min_area, args.max_area, args.delta, args.invert, args.normalize are needed
 
     Returns:
         extracted characters and bboxes in the format (x_min, y_min, width, height)
@@ -27,7 +28,7 @@ def extract_mser(img, args):
     mser.setMinArea(args.min_area)
     mser.setMaxArea(args.max_area)
     mser.setDelta(args.delta)
-    _, bboxes = mser.detectRegions(img)
+    msers, bboxes = mser.detectRegions(img)
 
     # filter MSERs
 
@@ -77,19 +78,21 @@ if __name__ == '__main__':
 
     args = Arguments()
 
-    img = cv.imread('data/2.jpg')
+    img = cv.imread('fotos/ex02.jpg')
     gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
 
-    chars, boxes = extract_mser(gray, args)
+    scaled = cv.resize(gray, None, fx=0.5, fy=0.5)
 
-    print(boxes)
-    print(bbox_stats(boxes))
+    chars, boxes = extract_mser(scaled, args)
+
+    n, n_c = neighbors(boxes, args)
+    print('number of neighbors', n_c)
 
     fig = plt.figure()
     ax = fig.add_subplot(111)
-    ax.imshow(gray, cmap='gray')
-    for region in boxes:
-        #print(region)
+    ax.imshow(scaled, cmap='gray')
+    for i, region in enumerate(boxes):
+        if n_c[i] == 0: continue
         x = region[0]
         y = region[1]
         width = region[2]
@@ -97,7 +100,3 @@ if __name__ == '__main__':
         rect = Rectangle((x, y), width, height, edgecolor='red', fill=False)
         ax.add_patch(rect)
     plt.show()
-
-    for char in chars:
-        plt.imshow(char)
-        plt.show()

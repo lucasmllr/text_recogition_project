@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 from copy import deepcopy
 from heapq import heappush, heappop
+from skimage.transform import rescale
 from arguments import Arguments
 
 
@@ -98,15 +99,16 @@ if __name__ == "__main__":
 
     for i in range(args.n):
 
-        img = processing.load_img('data/{}.jpg'.format(i))
-        orig = deepcopy(img)
+        img = processing.load_img('fotos/ex02.jpg'.format(i))
+        orig = rescale(deepcopy(img), 0.1)
 
+        img = rescale(img, 0.1)
         blobs, boxes, stencil = find_blobs(img, args)
 
         print()
         fig = plt.figure()
         ax = fig.add_subplot(111)
-        ax.imshow(orig)
+        ax.imshow(orig, cmap='gray')
         for box in boxes:
             rect = Rectangle((box[0], box[1]), box[2], box[3], fill=False, edgecolor='red')
             ax.add_patch(rect)

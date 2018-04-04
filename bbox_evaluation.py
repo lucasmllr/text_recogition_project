@@ -19,24 +19,71 @@ def is_inside(a, b):
     return False
 
 
-def bbox_stats(bboxes):
+def bbox_dims(bboxes):
 
     widths = np.array([bboxes[i][2] for i in range(len(bboxes))])
     heights = np.array([bboxes[i][3] for i in range(len(bboxes))])
     areas = widths * heights
     aspects = widths / heights
 
-    mean_width = np.mean(widths)
-    std_width = np.std(widths)
+    return {'width':widths, 'height':heights, 'area':areas, 'aspects':aspects}
 
-    mean_height = np.mean(heights)
-    std_height = np.std(heights)
 
-    mean_area = np.mean(areas)
-    std_area = (np.std(areas))
+def distances(bboxes):
 
-    mean_aspect = np.mean(aspects)
-    std_aspects = np.mean(aspects)
+    size = len(bboxes)
+    dist = np.zeros((size, size))
 
-    return { 'width':(mean_width, std_width, widths), 'height':(mean_height, std_height, heights),
-            'area':(mean_area, std_area, areas), 'aspects':(mean_aspect, std_aspects, aspects)}
+    for i in range(size):
+        for j in range(i + 1, size):
+
+            x_i, y_i = bboxes[i][0], bboxes[i][1]
+            x_j, y_j = bboxes[j][0], bboxes[j][1]
+            d = np.sqrt((x_i - x_j)**2 + (y_i - y_j)**2)
+            dist[i, j] = d
+            dist[j, i] = d
+
+    return dist
+
+
+def neighbors(bboxes, args):
+
+    size = len(bboxes)
+    n = np.zeros((size, size), dtype=np.int)
+    dist = distances(bboxes)
+
+    if not (args.distance or args.color or args.dims):
+        raise('No measure whether components are neighbors is enabled. Check arguments.')
+
+    for i in range(size):
+        for j in range(i + 1, size):
+
+            w_i, h_i = bboxes[i][2], bboxes[i][3]
+            w_j, h_j = bboxes[j][2], bboxes[j][3]
+
+            if args.distance:
+
+                t = 2 * min(max(w_i, h_i), max(w_j, h_j))
+
+                if dist[i, j] > t:
+                    continue
+
+            if args.dims:
+
+                A_i = w_i * h_i
+                A_j = w_j * h_j
+                r_i = w_i / h_i
+                r_j = w_j / h_j
+
+                if max(A_i, A_j) / min(A_i, A_j) > args.t_A:
+                    continue
+
+                if max(r_i, r_j) / min(r_i, r_j) > args.t_r:
+                    continue
+
+            n[i, j] = 1
+            n[j, i] = 1
+
+    n_count = np.sum(n, axis=0)
+
+    return n, n_count
