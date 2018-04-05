@@ -2,12 +2,9 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 import numpy as np
 import cv2 as cv
-from heapq import heappop, heappush
-from skimage.transform import rescale
-import processing
-from DisjointSet import DisjointSet
 from arguments import Arguments
-from bbox_evaluation import is_inside, distances, neighbors
+from components import Components
+from component_evaluation import eliminate_insiders, filter_neighbors
 
 
 def extract_mser(img, args):
@@ -30,48 +27,13 @@ def extract_mser(img, args):
     mser.setDelta(args.delta)
     msers, bboxes = mser.detectRegions(img)
 
-    # filter MSERs
+    components = Components(msers, bboxes, img)
 
-    # ordering boxes by size b/c in DisjointSet the smallest label becomes the equivalence class' representative
-    # labels will be indices of boxes_by_size
-    heap = []
-    for count, box in enumerate(bboxes):
-        b = (- box[2] * box[3], count, box)
-        heappush(heap, b)
-    boxes_by_size = [heappop(heap) for _ in range(len(heap))]
+    eliminate_insiders(components)
 
-    box_labels = DisjointSet(n_labels=len(boxes_by_size))
+    filter_neighbors(components, args)
 
-    # pairwise check of bounding boxes. once per pair.
-    for a in range(len(boxes_by_size)):
-        for b in range(a+1, len(boxes_by_size)):
-            if is_inside(boxes_by_size[a][2], boxes_by_size[b][2]):
-                box_labels.unite(a, b)
-
-    survivors = []
-    eq = box_labels.get_equivalents()
-    for i in range(len(eq)):
-        if eq[i] not in survivors:
-            survivors.append(eq[i])
-
-    box_candidates = [boxes_by_size[i][2] for i in survivors]
-
-    if args.normalize:
-        img = np.divide(img, np.max(img))
-
-    if args.invert:
-        img = np.max(img) - img
-
-    # extracting character candidates
-    chars = []
-    for box in box_candidates:
-        x_min = box[0]
-        y_min = box[1]
-        x_max = x_min + box[2]
-        y_max = y_min + box[3]
-        chars.append(img[y_min:y_max, x_min:x_max])
-
-    return chars, box_candidates
+    return components
 
 
 if __name__ == '__main__':
@@ -82,17 +44,17 @@ if __name__ == '__main__':
     gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
 
     scaled = cv.resize(gray, None, fx=0.5, fy=0.5)
+    print('scaled image:', scaled.shape)
 
-    chars, boxes = extract_mser(scaled, args)
+    components = extract_mser(scaled, args)
+    boxes = components.bboxes()
 
-    n, n_c = neighbors(boxes, args)
-    print('number of neighbors', n_c)
+    print('#boxes', len(boxes))
 
     fig = plt.figure()
     ax = fig.add_subplot(111)
     ax.imshow(scaled, cmap='gray')
     for i, region in enumerate(boxes):
-        if n_c[i] == 0: continue
         x = region[0]
         y = region[1]
         width = region[2]
@@ -100,3 +62,11 @@ if __name__ == '__main__':
         rect = Rectangle((x, y), width, height, edgecolor='red', fill=False)
         ax.add_patch(rect)
     plt.show()
+
+    chars, pos = components.extract()
+    fig = plt.figure()
+    for i in range(50):
+        ax = fig.add_subplot(5, 10, i+1)
+        ax.imshow(chars[i])
+    plt.show()
+

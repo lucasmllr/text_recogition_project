@@ -56,10 +56,10 @@ class Arguments():
         #neighbors
         self.distance = True
         self.dims = True
-        self.color = False
+        self.color = True
         self.t_A = 5
-        self.t_r = 5
-
+        self.t_asp = 5
+        self.t_color = 20
 
 if __name__ == '__main__':
 

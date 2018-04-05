@@ -116,7 +116,6 @@ class DisjointSet():
 
         eq = {}
         for l in range(len(self.parents)):
-            #if l != self.parents[l]:
             eq[l] = self.find_root(l)
 
         return eq
@@ -127,7 +126,9 @@ class DisjointSet():
         Returns a list of remaining labels after eliminating equivalents.
         In the returned list elements are labels now, not indices as before!
         """
-        return [self.parents[i] for i in range(1, self.n) if i == self.parents[i]]
+        #Todo: ignore label zero in blob extraction
+
+        return [self.parents[i] for i in range(self.n) if i == self.parents[i]]
 
 
 if __name__ == "__main__":
