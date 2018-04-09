@@ -24,9 +24,12 @@ def make_string(args):
         return string
 
 
-def make_image(args, string):
+def make_image(args, string, font=None):
 
-    fnt = ImageFont.truetype('Library/Fonts/{}.ttf'.format(args.font), 25)
+    if font is None:
+        font = args.font
+
+    fnt = ImageFont.truetype(font, args.font_size)
 
     img = Image.new(args.colorspace, args.shape, color='white')
     text = Image.new('L', args.text_box)
@@ -59,9 +62,20 @@ def make_data(args):
     if not args.container:
         f = open('{}/truth.txt'.format(args.path), 'w')
 
+        if args.font == 'all':
+            font_files = []
+            for path, subdirs, files in os.walk('fonts'):
+                for name in files:
+                    if name.endswith('.ttf'):
+                        font_files.append(os.path.join(path, name))
+
         for i in range(args.n):
             string = make_string(args)
-            img = make_image(args, string=string)
+            if args.font == 'all':
+                font = font_files[i % len(font_files)]
+            else:
+                font = None
+            img = make_image(args, string=string, font=font)
             img.save('{}/{}.jpg'.format(args.path, str(i)))
 
             truth = string + '\n'
@@ -74,8 +88,8 @@ def make_data(args):
         img_container = [None] * args.n
         truth_container = [None] * args.n
         for i in range(args.n):
-            string = make_string(args)
-            img_container[i] = make_image(args)
+            string = make_string(args.alphabet, args.min_l, args.max_l, args.max_lines)
+            img_container[i] = make_image(args.shape, pos=args.pos, string=string, colorspace='L')
             truth_container[i] = string
 
         data, target, labels = convertToNumpy(img_container, truth_container)

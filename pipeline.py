@@ -3,7 +3,11 @@ from arguments import Arguments
 from processing import load_img, threshold, rescale
 from rot_correction import correct_rot
 from line_extraction import extract_lines
-from blob_extraction import find_blobs
+import blob_extraction
+import model
+import numpy as np
+import torch
+from torch.autograd import Variable
 
 
 def read(img, args):
@@ -13,40 +17,29 @@ def read(img, args):
         plt.title('original image as ndarray')
         plt.show()
 
-    # rotation correction
-    rotated = correct_rot(img, args)
-
-    if args.documentation:
-        plt.imshow(rotated)
-        plt.title('corrected for rotation')
-        plt.show()
-
-    # line extraction
-    lines, _ = extract_lines(rotated, args)
+    # rotation correction, line and char extraction
+    lines = blob_extraction.get_rescaled_chars(img, args, separate_lines=True)
 
     if args.documentation:
         for i, line in enumerate(lines):
-            plt.imshow(line)
-            plt.title('line {}'.format(i))
+            plt.imshow(np.concatenate(line, axis=1))
+            plt.title(f'Line {i}')
             plt.show()
 
-    # character extraction
-    chars = []
-    for i, line in enumerate(lines):
-        line_chars, boxes = find_blobs(line, args)
-        chars.append(line_chars)
-        print('character boxes of line {}: {}'.format(i, boxes))
+    # feed through NN:
+    net = model.ConvolutionalNN()
+    net.train(False)
+    net.load_state_dict(torch.load('model_weights/weights.pth'))
 
-    if args.documentation:
-        for i, line in enumerate(chars):
-            for j, char in enumerate(line):
-                plt.imshow(char)
-                plt.title('character {} in line {}'.format(j, i))
-                plt.show()
+    result = []
+    for line in lines:
+        chars = ''
+        for char_img in line:
+            inp = Variable(torch.FloatTensor(char_img[None, None, :, :]))
+            chars += args.int_dict[np.argmax(net(inp).data.numpy())]
+        result.append(chars)
 
-    #Todo: feed chars through the NN
-
-    return chars
+    return result
 
 
 if __name__ == '__main__':
@@ -54,6 +47,14 @@ if __name__ == '__main__':
     args = Arguments()
     args.documentation = True
 
-    img = load_img('data/6.jpg')
-    chars = read(img, args)
-
+    img = load_img('data_test/lang.jpg')
+    result = read(img, args)
+    title = ''
+    for line in result:
+        print(line)
+        title += line
+        title += ', '
+    title = title[:-2]
+    plt.title(title)
+    plt.imshow(img)
+    plt.show()

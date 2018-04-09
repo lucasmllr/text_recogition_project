@@ -1,4 +1,7 @@
 .idea/
 data/
+fonts/
+char_data/
 literature/
 __pycache__/
+test.py

@@ -1,20 +1,23 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from arguments import Arguments
 
 from torchvision import datasets, transforms
 from torch.autograd import Variable
 
 
 class ConvolutionalNN(nn.Module):
-    def __init__(self):
+    def __init__(self, args=None):
         super(ConvolutionalNN, self).__init__()
+        if args == None:
+            args = Arguments()
         self.conv1 = nn.Conv2d(in_channels=1, out_channels=6, kernel_size=5)
         self.conv2 = nn.Conv2d(6, 16, 5)
         self.fc1 = nn.Linear(16 * 5 * 5, 120)
         self.fc2 = nn.Linear(120, 84)
         self.fc3 = nn.Linear(84, 63)  # 2 * 26 characters + 10 numbers + 1 trash
-        self.fc4 = nn.Linear(63, 37)  # 26 characters + 10 numbers + 1 trash
+        self.fc4 = nn.Linear(63, len(args.alphabet))  # 26 characters + 10 numbers + 1 trash
 
     def forward(self, x):
         out = F.relu(self.conv1(x))
