@@ -7,6 +7,7 @@ from copy import deepcopy
 from heapq import heappush, heappop
 from skimage.transform import rescale
 from arguments import Arguments
+from components import Components
 
 
 def find_blobs(img, args):
@@ -59,8 +60,12 @@ def find_blobs(img, args):
                 stencil[i] = new_label
                 labels.add(new_label)
 
-    # unomment to print show labels after first pass
-    #first_pass = deepcopy(stencil.reshape((height, width)))
+    # uncomment to show labels after first pass
+    first_pass = deepcopy(stencil.reshape((height, width)))
+
+    # components
+    regions = []
+    bboxes = []
 
     # second pass to eliminate equivalences
     eq = labels.get_equivalents()
@@ -74,45 +79,61 @@ def find_blobs(img, args):
     final_labels = labels.final_labels()
     boxes = []
     for label in final_labels:
+        if label == 0: continue  # background
         pixels = np.argwhere(stencil == label)
-        y_min = np.min(pixels[:, 0])
-        y_max = np.max(pixels[:, 0]) + 1
-        x_min = np.min(pixels[:, 1])
-        x_max = np.max(pixels[:, 1]) + 1
+        x_min = np.min(pixels[:, 0])
+        x_max = np.max(pixels[:, 0]) + 1
+        y_min = np.min(pixels[:, 1])
+        y_max = np.max(pixels[:, 1]) + 1
+        width = x_max - x_min
+        height = y_max - y_min
+        regions.append(pixels)
+        bboxes.append([y_min, x_min, height, width])
 
-        heappush(boxes, (x_min, x_max, y_min, y_max))
-
-    # extract characters from image in correct order
-    chars = []
-    bboxes = []
-    while boxes:
-        box = heappop(boxes)
-        chars.append(raw[box[2]:box[3], box[0]:box[1]])
-        bboxes.append([box[0], box[2], box[1] - box[0], box[3] - box[2]])
-
-    return chars, bboxes, stencil
+    return comps, stencil, first_pass
 
 
 if __name__ == "__main__":
 
     args = Arguments()
 
-    for i in range(args.n):
+    #for i in range(args.n):
 
-        img = processing.load_img('fotos/ex02.jpg'.format(i))
-        orig = rescale(deepcopy(img), 0.1)
+    img = processing.load_img('plot_data/6.jpg')
+    orig = deepcopy(img)
+    zeros = np.zeros((img.shape[0], 1))
+    orig = np.concatenate((orig, zeros), axis=1)
 
-        img = rescale(img, 0.1)
-        blobs, boxes, stencil = find_blobs(img, args)
+    #img = rescale(img, 0.1)
+    comps, stencil, first_pass = find_blobs(img, args)
 
-        print()
-        fig = plt.figure()
-        ax = fig.add_subplot(111)
-        ax.imshow(orig, cmap='gray')
-        for box in boxes:
-            rect = Rectangle((box[0], box[1]), box[2], box[3], fill=False, edgecolor='red')
-            ax.add_patch(rect)
-        plt.show()
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.imshow(orig)
+    for i, box in enumerate(comps.bboxes()):
+        rect = Rectangle((box[0], box[1]), box[2], box[3], fill=False, edgecolor='red')
+        ax.add_patch(rect)
+    ax.set_xticks([])
+    ax.set_yticks([])
+    #fig.savefig('plots/cc_bboxes.pdf', bbox_inches='tight')
+    plt.show()
+
+    fig2 = plt.figure()
+    ax2 = fig2.add_subplot(111)
+    ax2.imshow(first_pass)
+    ax2.set_xticks([])
+    ax2.set_yticks([])
+    plt.show()
+    #fig2.savefig('plots/cc_first_pass.pdf', bbox_inches='tight')
+
+    fig3 = plt.figure()
+    ax3 = fig3.add_subplot(111)
+    ax3.imshow(stencil)
+    ax3.set_xticks([])
+    ax3.set_yticks([])
+    plt.show()
+    #fig3.savefig('plots/cc_stencil.pdf', bbox_inches='tight')
+
 
 
 

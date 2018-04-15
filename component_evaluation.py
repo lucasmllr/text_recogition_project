@@ -4,6 +4,7 @@ from DisjointSet import DisjointSet
 
 
 def by_bbox_size(components):
+    '''returns a list of the components ordered by bbox size'''
 
     heap = []
     for count, comp in enumerate(components.candidates):
@@ -14,9 +15,7 @@ def by_bbox_size(components):
 
 
 def is_inside(a, b):
-    '''
-    helper function to determine whether bounding box of component b lies inside that of a
-    '''
+    '''determines whether the bounding box of component b lies inside that of a'''
 
     if a.x <= b.x and a.y <= b.y:  # bottom left
         # top right
@@ -28,6 +27,7 @@ def is_inside(a, b):
 
 
 def eliminate_insiders(components):
+    '''eliminates all components whose bounding boxes lie inside of others. The components object is manipulated in place'''
 
     by_size = by_bbox_size(components)
 
@@ -47,6 +47,8 @@ def eliminate_insiders(components):
 
 
 def filter_neighbors(components, args):
+    '''eliminates all components that have no neighbors as specified by the corresponding parameters in args.
+    The components object is manipulated in place.'''
 
     size = len(components)
     n = np.zeros((size, size), dtype=np.int)
@@ -61,7 +63,7 @@ def filter_neighbors(components, args):
             b = components.candidates[j]
 
             if args.distance:
-                t = 2 * min(max(a.w, a.h), max(b.w, b.h))
+                t = args.C_d * min(max(a.w, a.h), max(b.w, b.h))
                 if np.sqrt((a.x - b.x)**2 + (a.y - b.y)**2) > t:
                     continue
 
