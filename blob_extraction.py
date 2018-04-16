@@ -2,8 +2,10 @@ import numpy as np
 from DisjointSet import DisjointSet
 import processing
 import matplotlib.pyplot as plt
+from matplotlib.patches import Rectangle
 from copy import deepcopy
 from heapq import heappush, heappop
+from skimage.transform import rescale
 from arguments import Arguments
 
 from sklearn.cluster import MeanShift, estimate_bandwidth
@@ -65,9 +67,6 @@ def find_blobs(img, args):
         stencil[stencil == label] = eq[label]
 
     stencil = stencil.reshape((height, width))
-    print(np.max(stencil))
-    plt.imshow(stencil)
-    plt.show()
     # SCIPY VARIANT
     #stencil = measure.label(img, background=0)
 
@@ -77,7 +76,7 @@ def find_blobs(img, args):
     for label in final_labels:
         pixel_counts.append(np.sum(stencil == label))
     pixel_counts = np.array(pixel_counts)
-    min_allowed_pixels = np.median(pixel_counts) / 5  # arbitrary; seems to work well
+    min_allowed_pixels = np.median(pixel_counts[pixel_counts > 0]) / 5  # arbitrary; seems to work well
 
     # filter final lables and stencil
     final_labels = np.array(final_labels)[pixel_counts >= min_allowed_pixels]
@@ -112,6 +111,7 @@ def get_bboxes(stencil, labels=None):
         y_max = np.max(pixels[:, 0]) + 1
         x_min = np.min(pixels[:, 1])
         x_max = np.max(pixels[:, 1]) + 1
+        #heappush(boxes, (x_min, x_max, y_min, y_max))
         boxes.append((x_min, x_max, y_min, y_max))
     return np.array(boxes, dtype=np.int32)
 
@@ -125,7 +125,6 @@ def get_chars_from_boxes(img, boxes, padding=1):
 
 def correction_angle(boxes, args, verbose=False):
     n_blobs = len(boxes)
-
     boxes = np.array(boxes)
 
     # calculate centers and heights of boxes
@@ -288,11 +287,11 @@ def save_char_data(load_path, save_path, args=None):
 
 
 # function for testing
-def show_rotated(load_path, args=None):
+def show_rotated(load_path, args=None, indices='all'):
     if args is None:
         args = Arguments()
     for i, file in enumerate(os.listdir(load_path)):
-        if file.endswith('.jpg') and i==2:
+        if file.endswith('.jpg') and (indices == 'all' or i in indices):
             file_path = os.path.join(load_path, file)
             img = processing.load_img(file_path)
             boxes, stencil = find_blobs(img, args)
@@ -306,7 +305,11 @@ def show_rotated(load_path, args=None):
 
 if __name__ == "__main__":
     args = Arguments()
-    save_char_data(args.path, 'char_data', args)
+    show_rotated('data_test', args, indices=[0,1,2])
+    #
+    #save_char_data(args.path, 'char_data', args)
+    #
+
 
     #chars = get_rescaled_chars('data_test/5.jpg')
     #for char in chars:
@@ -333,6 +336,23 @@ if __name__ == "__main__":
     #
     #     plt.imshow(stencil)
     #     plt.show()
+
+    img = processing.load_img('data_test/2.jpg')
+
+    scale = 1
+    orig = rescale(deepcopy(img), scale)
+    img = rescale(img, scale)
+    boxes, stencil = find_blobs(img, args)
+
+    print()
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.imshow(orig, cmap='gray')
+    for box in boxes:
+        rect = Rectangle((box[0], box[2]), box[1]-box[0], box[3]-box[2], fill=False, edgecolor='red')
+        ax.add_patch(rect)
+    plt.show()
+
 
 
 

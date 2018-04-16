@@ -53,10 +53,20 @@ class Arguments():
         self.angle = 20.
 
         # MSER extraction
-        self.min_area = 5
-        self.max_area = 500
+        self.min_area = 25
+        self.max_area = 50000
         self.delta = 15
+        self.normalize = True
+        self.invert = True
 
+        #component evaluation
+        #neighbors
+        self.distance = True
+        self.dims = True
+        self.color = True
+        self.t_A = 5
+        self.t_asp = 5
+        self.t_color = 20
 
 if __name__ == '__main__':
 
