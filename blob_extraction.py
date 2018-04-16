@@ -49,6 +49,13 @@ def find_blobs(img, args):
 
                 else:  # no connection nor conflict
                     continue
+
+            # if no neighboring pixel is labeled the investigated pixel is give a new label
+            if stencil[i] == 0:
+                new_label = labels.next()
+                stencil[i] = new_label
+                labels.add(new_label)
+
     # unomment to print show labels after first pass
     # first_pass = deepcopy(stencil.reshape((height, width)))
 
@@ -57,6 +64,10 @@ def find_blobs(img, args):
     for label in eq.keys():
         stencil[stencil == label] = eq[label]
 
+    stencil = stencil.reshape((height, width))
+    print(np.max(stencil))
+    plt.imshow(stencil)
+    plt.show()
     # SCIPY VARIANT
     #stencil = measure.label(img, background=0)
 
@@ -86,7 +97,6 @@ def find_blobs(img, args):
     #    chars.append(raw[box[2]:box[3], box[0]:box[1]])
     #    bounding_boxes.append(box)
     return bounding_boxes, stencil
-
 
 
 def get_bboxes(stencil, labels=None):

@@ -47,7 +47,7 @@ if __name__ == '__main__':
     args = Arguments()
     args.documentation = True
 
-    img = load_img('data_test/lang.jpg')
+    img = load_img('data_test/wifi.jpg')
     result = read(img, args)
     title = ''
     for line in result:
