@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from processing import load_img
 from scipy.ndimage import rotate
 from arguments import Arguments
+from matplotlib2tikz import save
 
 
 def correct_rot(img, args):
@@ -74,6 +75,17 @@ def correct_rot(img, args):
     A[np.nonzero(counts)] = np.log(counts[np.nonzero(counts)])  # logarithms of non-zero normalized bin counts
     H = - np.sum(np.multiply(counts, A), axis=1)
 
+    # plotting a histogram
+    #x = np.arange(-args.angle, args.angle, 2*args.angle/(len(H)))
+    #plt.ylabel('H', fontsize=20)
+    #plt.xlabel('Angle / °', fontsize=20)
+    #plt.tick_params(direction='in')
+    #plt.xticks([-20, 0, 20], fontsize=20)
+    #plt.yticks([])
+    #plt.plot(x, H)
+    #plt.savefig('plots/entropy.pdf', bbox_inches='tight')
+    #save('plots/entropy.tex')
+
     # turning angle
     angle = angles[np.argmin(H)]
     angle = - angle * 180 / np.pi
@@ -93,9 +105,15 @@ if __name__ == "__main__":
     img = load_img('data/5.jpg')
     rotated = correct_rot(img, args)
 
-    plt.imshow(img)
+    plt.imshow(img[0:150, 0:200], cmap='gray')
+    plt.xticks([])
+    plt.yticks([])
+    #plt.savefig('plots/to_be_rotated.pdf', bbox_inches='tight')
     plt.show()
 
-    plt.imshow(rotated)
+    plt.imshow(rotated[50:200, 50:250], cmap='gray')
     plt.grid(True)
+    plt.xticks([])
+    plt.yticks([])
+    #plt.savefig('plots/rotated.pdf', bbox_inches='tight')
     plt.show()

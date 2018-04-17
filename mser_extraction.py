@@ -21,7 +21,14 @@ def extract_mser(img, args, filter=True):
     mser.setDelta(args.delta)
     msers, bboxes = mser.detectRegions(img)
 
-    components = Components(msers, bboxes, img)
+    # reshping region indices to numpy coordinates
+    regions = []
+    for i in range(len(msers)):
+        mser = np.array(msers[i])
+        region = (mser[:, 1], mser[:, 0])  # openCV uses corrdinates in opposite order as numpy...
+        regions.append(region)
+
+    components = Components(regions, bboxes, img)
 
     if filter:
         eliminate_insiders(components)
@@ -56,8 +63,8 @@ if __name__ == '__main__':
         ax1.add_patch(rect)
     ax1.set_xticks([])
     ax1.set_yticks([])
-    #plt.show()
-    plt.savefig('plots/cvimg_mser_unfiltered.pdf', bbox_inches='tight')
+    plt.show()
+    #plt.savefig('plots/cvimg_mser_unfiltered.pdf', bbox_inches='tight')
 
     fig2 = plt.figure()
     ax2 = fig2.add_subplot(111)
@@ -71,6 +78,6 @@ if __name__ == '__main__':
         ax2.add_patch(rect)
     ax2.set_xticks([])
     ax2.set_yticks([])
-    #plt.show()
-    plt.savefig('plots/cvimg_mser_filtered.pdf', bbox_inches='tight')
+    plt.show()
+    #plt.savefig('plots/cvimg_mser_filtered.pdf', bbox_inches='tight')
 

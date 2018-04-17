@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from scipy.ndimage import imread
 from skimage.transform import resize
 from skimage.filters import threshold_sauvola as sauvola
+import cv2 as cv
 from arguments import Arguments
 
 
@@ -63,19 +64,12 @@ def rescale(img, args):
 if __name__ == '__main__':
 
     args = Arguments()
-    img = load_img('data/1.jpg')
+    img = cv.imread('fotos/ex02.jpg')
+    gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+    gray = cv.resize(gray, None, fx=0.25, fy=0.25)
+    gray = np.divide(gray, np.max(gray))
 
-    plt.imshow(img)
-    plt.show()
-
-    print(img.shape)
-
-    binary = sauvola_threshold(img, args)
+    binary = sauvola_threshold(gray, args)
 
     plt.imshow(binary)
-    plt.show()
-
-    thresholded = threshold(img, args)
-
-    plt.imshow(thresholded)
     plt.show()

@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.patches import Rectangle
 from rot_correction import correct_rot
 from processing import load_img
 from arguments import Arguments
@@ -18,11 +19,12 @@ def extract_lines(img, args):
     hor_proj = np.sum(img, axis=1) / np.sum(img)
 
     # visualization of line separatation
-    #x = np.arange(height)
-    #plt.plot(x, hor_proj)
-    #plt.plot(x, np.array([t] * height), 'r--')
-    #plt.title('horizontal projection and threshold for separation')
-    #plt.show()
+    x = np.arange(height)
+    plt.plot(hor_proj[50:200], -x[50:200])
+    plt.plot(np.array([t] * height)[50:200], -x[50:200], 'r--')
+    plt.xticks([])
+    plt.yticks([])
+    plt.savefig('plots/rotated_good_yhist.pdf', bbox_inches='tight')
 
     # threshold projection
     hor_proj[hor_proj < t] = 0
@@ -73,27 +75,37 @@ def extract_lines(img, args):
         boxes[i] += [hor_min, hor_max]
         lines.append(img[box[0]:box[1], box[2]:box[3]])
 
-    return lines, boxes
+    # bounding boxes in shape [x_min, y_min, width, height]
+    bboxes = [[box[2], box[0], box[3] - box[2], box[1] - box[0]] for box in boxes]
+
+    return lines, bboxes
 
 
 if __name__ == "__main__":
 
     args = Arguments()
+    args.n_angles = 50
+    args.n_bins = 30
 
-    img = load_img('data/1.jpg')
-
-    plt.imshow(img)
-    plt.title('original image as ndarray')
-    plt.show()
-
+    img = load_img('data/5.jpg')
     rotated = correct_rot(img, args)
 
-    plt.imshow(rotated)
-    plt.title('corrected for rotation')
+    lines, bboxes = extract_lines(rotated, args)
+
+    plt.imshow(img[0:150, 0:200], cmap='gray')
+    plt.xticks([])
+    plt.yticks([])
+    #plt.savefig('plots/to_be_rotated.pdf', bbox_inches='tight')
     plt.show()
 
-    lines, boxes = extract_lines(rotated, args)
-
-    for i, line in enumerate(lines):
-        plt.imshow(line)
-        plt.show()
+    o = 50
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.imshow(rotated[o:200, o:250], cmap='gray')
+    ax.grid(True)
+    ax.set_xticks([])
+    ax.set_yticks([])
+    for b in bboxes:
+        ax.add_patch(Rectangle((b[0]-o, b[1]-o), b[2], b[3], edgecolor='red', fill=False))
+    plt.savefig('plots/rotated_good.pdf', bbox_inches='tight')
+    plt.show()

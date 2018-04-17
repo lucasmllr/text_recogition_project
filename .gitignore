@@ -1,4 +1,8 @@
 .idea/
 data/
 literature/
+fotos/
+plot_data/
+plots/
+report/
 __pycache__/

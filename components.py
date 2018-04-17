@@ -16,7 +16,7 @@ class Component():
         self.h = self.bbox[3]
         self.A = self.w * self.h
         self.asp = self.w / self.h
-        self.color = np.mean(img[self.region[:, 1], self.region[:, 0]])
+        self.color = np.mean(img[self.region])
 
 
 class Components():

@@ -29,13 +29,12 @@ class Arguments():
         self.cut_bottom = True
         self.cut_top = True
         # sauvola
-        self.window = 31
+        self.window = 51
         self.k = 0.1
         self.r = 128
 
-
         # blob extraction
-        self.blob_t = 0.52
+        self.blob_t = 0.5
 
         # line extraction
         self.line_t = 0.002
