@@ -7,6 +7,16 @@ from arguments import Arguments
 
 
 def extract_lines(img, args):
+    '''extracts lines from an image with horizontally orientated text.
+
+    Args:
+        img (ndarray): image from which to extract lines
+        args (Arguments instance)
+
+    Returns:
+        a list of ndarrays containing the extracted lines,
+        a list of bounding boxes of the lines in the original image in the format [x_min, y_min, height, width]
+    '''
 
     t = args.line_t
 

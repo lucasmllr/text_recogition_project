@@ -12,15 +12,23 @@ from component_evaluation import eliminate_insiders, filter_neighbors
 
 
 def find_blobs(img, args):
+    '''function performing two dimensional connected component analysis on an image.
 
-    t = args.blob_t
+    Args:
+        img (ndarray): original image to be analyzed
+        args (Arguments instance): defined the threshold value to binarze the image
+
+    Returns:
+        an instance of the Components class, a stencil containing the final labels of components,
+        and a stencil containing the labels before eliminating equivalences
+    '''
 
     # dimensions
     height = img.shape[0]
     width = img.shape[1]
 
     raw = deepcopy(img)
-    img = processing.sauvola_threshold(img, args)
+    img = processing.threshold(img, args)
 
     # adding column of zeros to prevent left and right most blob
     # form being mistaken as one

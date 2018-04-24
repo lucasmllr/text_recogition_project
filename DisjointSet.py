@@ -11,7 +11,7 @@ class DisjointSet():
 
     def __init__(self, n_labels=1):
         """
-        initializing a single set with label 0
+        initializing a single set with label n_labels initial labels.
         """
         self.n = n_labels
         self.parents = [i for i in range(n_labels)]
@@ -108,11 +108,14 @@ class DisjointSet():
 
 
     def next(self):
+        '''returns the next unused label.'''
 
         return self.n
 
 
     def get_equivalents(self):
+        '''returns a list in which the index represents the actual label and the entry at an index is the representative
+        label for this labels equivalence class.'''
 
         eq = {}
         for l in range(len(self.parents)):

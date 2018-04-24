@@ -10,6 +10,14 @@ from blob_extraction import find_blobs
 class ImageDataset(Dataset):
     '''
     subclass of pytorch's Dataset to provide extracted characters to a model.
+
+    Attributes:
+        path (String): path containing the data
+        raws (list of ndarrays): images stored in a list
+        truth (list of strings): ground truth strings of images
+        size (integer): height and width of input size for the model
+        blobs (list of ndarrays): contains size x size images of extracted letters
+        blob_truth (list of strings): ground truth for characters in blobs
     '''
 
     def __init__(self, path='data', size=28):

@@ -12,6 +12,14 @@ def extract_mser(img, args, filter=True):
     '''
     Function using mser module from the openCV library to extract maximally stable extremal regions.
     Additionally MSERs that lie inside others or have no neighbors are eliminated.
+
+    Args:
+        img (ndarray): image from which MSERs are to be extracted
+        args (Arguments instance):
+        filter (Bool): whether to filter the extracted MSERs
+
+    Returns:
+        an instance of the Components class
     '''
 
     # find MSERs

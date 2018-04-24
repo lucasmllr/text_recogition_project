@@ -8,6 +8,7 @@ from arguments import Arguments
 
 
 def load_img(path):
+    '''loads an image, normalizes and inverts it and returs it as an ndarray'''
 
     img = imread(path)
     #average channels to reduce to one channel
@@ -21,6 +22,7 @@ def load_img(path):
 
 
 def threshold(img, args):
+    '''returs a binary image of img with parameters defined in args.'''
 
     below = img <= args.blob_t
     above = img > args.blob_t
@@ -34,6 +36,7 @@ def threshold(img, args):
 
 
 def sauvola_threshold(img, args):
+    '''returns a binary image resulting from performing sauvola thresholding on img with parameters defined in args.'''
 
     t = sauvola(img, args.window, args.k, args.r)
     binary = img > t
@@ -42,6 +45,7 @@ def sauvola_threshold(img, args):
 
 
 def rescale(img, args):
+    '''rescales img to the inout shape of the model defined in args.'''
 
     size = args.input_shape
 

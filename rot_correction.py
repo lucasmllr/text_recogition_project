@@ -13,9 +13,10 @@ def correct_rot(img, args):
 
     Args:
         img (ndarray): 2d image array
-        n_angles (int): number of projection angles
-        n_bins (int): number of bins for projection histograms. Should be odd.
-        angle (float): abs of min and max angle (degrees) in whose boundaries n_angles projections are evaluated.
+        args (Arguments instance): out of which the following are required
+            args.n_angles (int): number of projection angles
+            args.n_bins (int): number of bins for projection histograms. Should be odd.
+            args.angle (float): abs of min and max angle (degrees) in whose boundaries n_angles projections are evaluated.
     Returns:
         An ndarray of the rotated image padded with zeros
     '''

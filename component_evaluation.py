@@ -15,7 +15,15 @@ def by_bbox_size(components):
 
 
 def is_inside(a, b):
-    '''determines whether the bounding box of component b lies inside that of a'''
+    '''determines whether the bounding box of component b lies inside that of a
+
+    Args:
+        a (Component objects): the outer one
+        b (Component objects): the inner one
+
+    Returns:
+         Boolean whether bbox of component b lies inside that of component a
+'''
 
     if a.x <= b.x and a.y <= b.y:  # bottom left
         # top right

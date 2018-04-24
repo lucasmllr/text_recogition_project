@@ -7,6 +7,15 @@ from blob_extraction import find_blobs
 
 
 def read(img, args):
+    '''functon to runn the entire segmentation and classifiation routine.
+
+    Args:
+        img (ndarray): image to perform recognitin on
+        args (Arguments instance):
+
+    Returns:
+        a string of the text in the image
+        '''
 
     if args.documentation:
         plt.imshow(img)
