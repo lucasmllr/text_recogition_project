@@ -189,8 +189,8 @@ def save_char_data(args=None):
 if __name__ == '__main__':
 
     args = Arguments()
-    args.n = 10
-    args.image_path = 'test_data'
-    args.train_path = 'test_data'
+    #args.n = 10
+    #args.image_path = 'test_data'
+    #args.train_path = 'test_data'
     make_data(args)
     save_char_data(args)

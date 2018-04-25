@@ -46,6 +46,12 @@ def eliminate_insiders(components):
     return
 
 
+def eliminate_tiny(components, threshold_factor=.2):
+
+    threshold = np.median(np.array([len(c.region) for c in components.chars])) * threshold_factor
+    components.chars = [c for c in components.chars if len(c.region) >= threshold]
+
+
 def filter_neighbors(components, args):
 
     size = len(components)

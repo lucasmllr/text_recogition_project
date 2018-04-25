@@ -113,6 +113,11 @@ def train_and_test(args):
     criterion = nn.NLLLoss()
 
     for epoch in range(args.epochs):
+        if epoch % 3 == 0 and epoch > 0:
+            print('reducing lr')
+            print()
+            for param_group in optimizer.param_groups:
+                param_group['lr'] *= .2
         train(epoch, model, train_loader, criterion, optimizer, args)
         test(model, test_loader, criterion)
         # Save results.
@@ -120,7 +125,7 @@ def train_and_test(args):
 
 if __name__ == '__main__':
     args = Arguments()
-    args.n = 100
-    args.image_path = 'test_data'
-    args.train_path = 'test_data'
+    #args.n = 100
+    #args.image_path = 'test_data'
+    #args.train_path = 'test_data'
     train_and_test(args)

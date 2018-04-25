@@ -24,8 +24,9 @@ class Component():
     def get_rect(self):
         return Rectangle((self.y-1, self.x-1), self.h+1, self.w+1, edgecolor='red', fill=False)
 
-    def extract(self, padding=1):
-        char_img = self.img[max(0, self.x - padding):min(self.x + self.w + padding, self.img.shape[0]),
+    def extract(self, padding=1, min_height=0):
+        off = max(0, min_height - (self.w + padding))
+        char_img = self.img[max(0, self.x - padding - off):min(self.x + self.w + padding, self.img.shape[0]),
                             max(0, self.y - padding):min(self.y + self.h + padding, self.img.shape[1])]
         # scale image such that char is approximately 1, background is approximately 0
         color = self.color
@@ -61,18 +62,38 @@ class Components():
         assert sum(len(l) for l in lines) == len(self.chars)
         self.lines = lines
 
-    def extract(self, args=None):
+    def extract(self, args=None, use_line_heights=True):
         if args is None:
             return [c.extract() for c in self.chars]
         else:
-            return [processing.rescale(c.extract(), args) for c in self.chars]
+            if not use_line_heights:
+                return [processing.rescale(c.extract(), args) for c in self.chars]
+            else:
+                return [c for line in self.extract_lines(args, use_line_heights) for c in line]
 
-    def extract_lines(self, args=None):
+    def extract_lines(self, args=None, use_line_heights=True):
         assert self.lines is not None
         if args is None:
             return [[self.chars[i].extract() for i in line] for line in self.lines]
+        if use_line_heights:
+            line_heights = [max([self.chars[i].w for i in line]) for line in self.lines]
         else:
-            return [[processing.rescale(self.chars[i].extract(), args) for i in line] for line in self.lines]
+            line_heights = [0]*len(self.lines)
+        return [[processing.rescale(self.chars[i].extract(min_height=line_heights[line_id]), args) for i in line]
+                for line_id, line in enumerate(self.lines)]
+
+    def get_spaces(self, threshold_factor=.25):
+        spaces = []
+        space_threshold = self.median_bbox_width() * threshold_factor
+        for line in self.lines:
+            current = []
+            for i in range(len(line)-1):
+                c1 = self.chars[line[i]]
+                c2 = self.chars[line[i+1]]
+                if c2.y - (c1.y + c1.h) > space_threshold:
+                    current.append(i)
+            spaces.append(current)
+        return spaces
 
     def regions_from_stencil(self):
         regions = []
@@ -91,6 +112,9 @@ class Components():
         if self.stencil is None:
             self.generate_stencil()
         return self.stencil
+
+    def median_bbox_width(self):
+        return np.median([c.h for c in self.chars])
 
     def show_img(self, axes=None):
         if axes is None:

@@ -32,10 +32,10 @@ def read(img, args):
     else:
         assert False
 
-    if args.documentation:
-        plt.figure()
-        plt.title('Original Image with detected Bounding-Boxes')
-        components.show_img()
+    #if args.documentation:
+    #    plt.figure()
+    #    plt.title('Original Image with detected Bounding-Boxes')
+    #    components.show_img()
 
     # rotation correction, line and char extraction
     components = bbox_based_rot_correction.rotation_correct_and_line_order(components)
@@ -46,18 +46,22 @@ def read(img, args):
         components.show_img()
 
     lines = components.extract_lines(args)
+    spaces = components.get_spaces(args.space_threshold)
 
     # feed through NN:
     net = model.ConvolutionalNN()
     net.train(False)
+    torch.load(os.path.join(args.model_path, 'weights.pth'))
     net.load_state_dict(torch.load(os.path.join(args.model_path, 'weights.pth')))
 
     result = []
     for i, line in enumerate(lines):
         chars = ''
-        for char_img in line:
+        for j, char_img in enumerate(line):
             inp = Variable(torch.FloatTensor(char_img[None, None, :, :]))
             chars += args.int_dict[np.argmax(net(inp).data.numpy())]
+            if j in spaces[i]:
+                chars += ' '
         result.append(chars)
 
         if args.documentation:

@@ -16,7 +16,7 @@ def load_img(path, args):
         gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
         img = cv.resize(gray, None, fx=0.5, fy=0.5)
         #inverting
-        img = 255 - img
+        #img = 255 - img
     else:
         img = imread(path)
         #average channels to reduce to one channel

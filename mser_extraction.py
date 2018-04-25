@@ -4,7 +4,7 @@ import numpy as np
 import cv2 as cv
 from arguments import Arguments
 from components import Components
-from component_evaluation import eliminate_insiders, filter_neighbors
+from component_evaluation import eliminate_insiders, filter_neighbors, eliminate_tiny
 
 
 def extract_mser(img, args):
@@ -36,6 +36,8 @@ def extract_mser(img, args):
     #components.show_img()
 
     filter_neighbors(components, args)
+
+    eliminate_tiny(components, args.pixel_threshold_factor)
 
     return components
 

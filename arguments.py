@@ -6,8 +6,8 @@ class Arguments():
         self.documentation = False
 
         # data generation
-        self.n = 100
-        self.alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+        self.n = 3000
+        self.alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@()'#'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@()#-'#'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
         self.char_dict = {}
         self.int_dict = {}
         for i, char in enumerate(self.alphabet):
@@ -49,6 +49,7 @@ class Arguments():
 
         # line extraction
         self.line_t = 0.002
+        self.space_threshold = 0.7
 
         # rotation correction
         self.n_angles = 50
@@ -58,6 +59,7 @@ class Arguments():
         # MSER extraction
         self.min_area = 25
         self.max_area = 50000
+        self.pixel_threshold_factor = .2
         self.delta = 15
         self.normalize = True
         self.invert = True
@@ -79,7 +81,7 @@ class Arguments():
         self.momentum = 0.5
         self.test_size = 0.2
         self.seed = 123
-        self.log_interval = 1#100
+        self.log_interval = 100
         self.shuffle = True
         self.model_path = 'model_weights'
 
