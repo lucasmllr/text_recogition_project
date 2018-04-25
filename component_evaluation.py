@@ -6,7 +6,7 @@ from DisjointSet import DisjointSet
 def by_bbox_size(components):
 
     heap = []
-    for count, comp in enumerate(components.candidates):
+    for count, comp in enumerate(components.chars):
         b = (- comp.A, count, comp)
         heappush(heap, b)
 
@@ -41,7 +41,7 @@ def eliminate_insiders(components):
 
     survivors = labels.final_labels()
 
-    components.candidates = [by_size[i] for i in survivors]
+    components.chars = [by_size[i] for i in survivors]
 
     return
 
@@ -57,8 +57,8 @@ def filter_neighbors(components, args):
     for i in range(size):
         for j in range(i + 1, size):
 
-            a = components.candidates[i]
-            b = components.candidates[j]
+            a = components.chars[i]
+            b = components.chars[j]
 
             if args.distance:
                 t = 2 * min(max(a.w, a.h), max(b.w, b.h))
@@ -79,6 +79,6 @@ def filter_neighbors(components, args):
             n[j, i] = 1
 
     n_count = np.sum(n, axis=0)
-    components.candidates = [components.candidates[i] for i in range(size) if n_count[i] != 0]
+    components.chars = [components.chars[i] for i in range(size) if n_count[i] != 0]
 
     return

@@ -4,17 +4,27 @@ from scipy.ndimage import imread
 from skimage.transform import resize
 from skimage.filters import threshold_sauvola as sauvola
 from arguments import Arguments
+import cv2 as cv
+import warnings
 
 
-def load_img(path):
+def load_img(path, args):
 
-    img = imread(path)
-    #average channels to reduce to one channel
-    img = np.mean(img, axis=2)
-    #normalization
-    img /= np.max(img)
-    #inverting
-    img = 1 - img
+    if args.method == 'mser':
+        img = cv.imread(path)
+        #average channels to reduce to one channel
+        gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+        img = cv.resize(gray, None, fx=0.5, fy=0.5)
+        #inverting
+        img = 255 - img
+    else:
+        img = imread(path)
+        #average channels to reduce to one channel
+        img = np.mean(img, axis=2)
+        #normalization
+        img /= np.max(img)
+        #inverting
+        img = 1 - img
 
     return img
 
@@ -24,12 +34,13 @@ def threshold(img, args):
     below = img <= args.blob_t
     above = img > args.blob_t
 
+    result = np.empty(img.shape, dtype=img.dtype)
     if args.cut_bottom:
-        img[below] = 0
+        result[below] = 0
     if args.cut_top:
-        img[above] = 1
+        result[above] = 1
 
-    return img
+    return result
 
 
 def sauvola_threshold(img, args):
@@ -53,12 +64,14 @@ def rescale(img, args):
     right = int(np.ceil(diff_1 / 2))
     top = int(np.floor(diff_0 / 2))
     bottom = int(np.ceil(diff_0 / 2))
-    padded = np.pad(img, ((bottom, top), (left, right)), mode='constant', constant_values=0)
 
-    resized = resize(padded, (size, size))
+
+    padded = np.pad(img, ((bottom, top), (left, right)), mode='constant', constant_values=0)
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        resized = resize(padded, (size, size))
 
     return resized
-
 
 if __name__ == '__main__':
 

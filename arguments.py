@@ -1,5 +1,3 @@
-
-
 class Arguments():
 
     def __init__(self):
@@ -8,7 +6,7 @@ class Arguments():
         self.documentation = False
 
         # data generation
-        self.n = 5000
+        self.n = 100
         self.alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
         self.char_dict = {}
         self.int_dict = {}
@@ -27,13 +25,18 @@ class Arguments():
         self.font_size = 50
         self.colorspace = 'RGB'
         self.container = False
-        self.path = 'data'
+        self.image_path = 'data'
+        self.train_path = 'data'
+        self.safe_override = False
 
         # data loading and processing
+        self.method = 'threshold'  # 'threshold' or 'mser'
+
         self.input_shape = 32
         self.load_path = 'data'
         self.cut_bottom = True
         self.cut_top = True
+
         # sauvola
         self.window = 31
         self.k = 0.1
@@ -67,6 +70,19 @@ class Arguments():
         self.t_A = 5
         self.t_asp = 5
         self.t_color = 20
+
+
+        # NN training
+        self.batch_size = 300
+        self.epochs = 500
+        self.lr = 0.003
+        self.momentum = 0.5
+        self.test_size = 0.2
+        self.seed = 123
+        self.log_interval = 1#100
+        self.shuffle = True
+        self.model_path = 'model_weights'
+
 
 if __name__ == '__main__':
 
