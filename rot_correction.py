@@ -92,8 +92,8 @@ def correct_rot(img, args):
     angle = - angle * 180 / np.pi
 
     # rotating image
-    img = rotate(img, angle)
 
+    img = rotate(img, angle)
     return img
 
 
@@ -103,7 +103,7 @@ if __name__ == "__main__":
     args.n_angles = 50
     args.n_bins = 100
 
-    img = load_img('data/5.jpg')
+    img = load_img('data_test/1.jpg')
     rotated = correct_rot(img, args)
 
     plt.imshow(img[0:150, 0:200], cmap='gray')

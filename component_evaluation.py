@@ -7,7 +7,7 @@ def by_bbox_size(components):
     '''returns a list of the components ordered by bbox size'''
 
     heap = []
-    for count, comp in enumerate(components.candidates):
+    for count, comp in enumerate(components.chars):
         b = (- comp.A, count, comp)
         heappush(heap, b)
 
@@ -49,9 +49,15 @@ def eliminate_insiders(components):
 
     survivors = labels.final_labels()
 
-    components.candidates = [by_size[i] for i in survivors]
+    components.chars = [by_size[i] for i in survivors]
 
     return
+
+
+def eliminate_tiny(components, threshold_factor=.2):
+
+    threshold = np.median(np.array([len(c.region) for c in components.chars])) * threshold_factor
+    components.chars = [c for c in components.chars if len(c.region) >= threshold]
 
 
 def filter_neighbors(components, args):
@@ -67,8 +73,8 @@ def filter_neighbors(components, args):
     for i in range(size):
         for j in range(i + 1, size):
 
-            a = components.candidates[i]
-            b = components.candidates[j]
+            a = components.chars[i]
+            b = components.chars[j]
 
             if args.distance:
                 t = args.C_d * min(max(a.w, a.h), max(b.w, b.h))
@@ -89,6 +95,6 @@ def filter_neighbors(components, args):
             n[j, i] = 1
 
     n_count = np.sum(n, axis=0)
-    components.candidates = [components.candidates[i] for i in range(size) if n_count[i] != 0]
+    components.chars = [components.chars[i] for i in range(size) if n_count[i] != 0]
 
     return

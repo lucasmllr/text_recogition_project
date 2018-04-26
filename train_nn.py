@@ -1,5 +1,4 @@
-import argparse
-import dill
+from arguments import Arguments
 import numpy as np
 import torch
 import torch.nn as nn
@@ -11,23 +10,12 @@ from torch.utils.data import DataLoader, TensorDataset
 from torch.utils.data.sampler import SubsetRandomSampler
 from torchvision import datasets, transforms, utils
 from torch.autograd import Variable
+import os
 
 from model import ConvolutionalNN
 
 
-class Args:
-    def __init__(self):
-        self.batch_size = 300
-        self.epochs = 50
-        self.lr = 0.001
-        self.momentum = 0.5
-        self.test_size = 0.1
-        self.seed = np.random.randint(32000)
-        self.log_interval = 100
-        self.shuffle = True
-
-
-class Chardata(Dataset):
+class CharDataset(Dataset):
     def __init__(self, data, target, label=None, transform=None):
         self.data_tensor = torch.from_numpy(data).type(torch.FloatTensor)
         self.target_tensor = torch.from_numpy(target).type(torch.LongTensor)
@@ -35,24 +23,24 @@ class Chardata(Dataset):
         self.transform = transform
 
     def __len__(self):
-        return self.target_tensor.shape[0]
+        return self.target_tensor.size()[0]
 
     def __getitem__(self, idx):
 
         data_sample = self.data_tensor[idx]
         if self.transform:
-            data_sample = self.transform(sample)
+            data_sample = self.transform(data_sample)
 
         target_sample = self.target_tensor[idx]
 
         return data_sample, target_sample
 
 
-def train(epoch, data_iterator, criterion, optimizer):
+def train(epoch, model, data_iterator, criterion, optimizer, args):
     model.train()
     for batch_idx, (data, target) in enumerate(data_iterator):
-        data, target = Variable(data.view(data.shape[0],1,32,32)), Variable(target)
-        optimizer.zero_grad
+        data, target = Variable(data.view(data.size()[0],1,32,32)), Variable(target)
+        optimizer.zero_grad()
         output = model(data)
         loss = criterion(output, target)
         loss.backward()
@@ -63,34 +51,33 @@ def train(epoch, data_iterator, criterion, optimizer):
                 100. * batch_idx / len(data_iterator), loss.data[0]))
 
 
-def test(data_iterator, criterion):
+def test(model, data_iterator, criterion):
     model.eval()
     test_loss = 0
     correct = 0
     accu = lambda x: x / len(data_iterator.dataset)
     for data, target in data_iterator:
-        data, target = Variable(data.view(data.shape[0], 1, 32, 32)), Variable(target)
+        data, target = Variable(data.view(data.size()[0], 1, 32, 32)), Variable(target)
         output = model(data)
         test_loss += criterion(output, target).data[0]  # sum up batch loss
-        pred = output.data.max(1, keepdim=True)[1]  # get the index of the max log-probability
+        pred = output.data.max(1)[1]  # get the index of the max log-probability
         correct += pred.eq(target.data.view_as(pred)).cpu().sum()
 
-    test_loss /= len(test_loader.sampler)
+    test_loss /= len(data_iterator.sampler)
     print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
         test_loss, correct, len(data_iterator.sampler),
         100. * correct / len(data_iterator.sampler)))
     return test_loss, accu(correct)
 
 
-if __name__ == '__main__':
-    args = Args()
+def train_and_test(args):
     torch.manual_seed(args.seed)
 
     # load the dataset
-    data = np.load('data/data.npy')
-    target = np.load('data/target.npy')
+    data = np.load(os.path.join(args.train_path, 'images.npy'))
+    target = np.load(os.path.join(args.train_path, 'gt.npy'))
 
-    data_character = Chardata(data=data, target=target)
+    data_character = CharDataset(data=data, target=target)
 
     num_samples = len(data_character)
     indices = list(range(num_samples))
@@ -108,14 +95,14 @@ if __name__ == '__main__':
     train_loader = DataLoader(data_character,
                               batch_size=args.batch_size,
                               sampler=train_sampler,
-                              # shuffle=True,
-                              drop_last=True)
+                              shuffle=True,
+                              drop_last=False)
 
     test_loader = DataLoader(data_character,
                              batch_size=args.batch_size,
                              sampler=test_sampler,
                              # shuffle=True,
-                             drop_last=True
+                             drop_last=False
                              )
 
     img_dim = 32 * 32
@@ -125,7 +112,19 @@ if __name__ == '__main__':
     criterion = nn.NLLLoss()
 
     for epoch in range(args.epochs):
-        train(epoch, train_loader, criterion, optimizer)
-        test(test_loader, criterion)
+        if epoch % 3 == 0 and epoch > 0:
+            print('reducing lr')
+            print()
+            for param_group in optimizer.param_groups:
+                param_group['lr'] *= .2
+        train(epoch, model, train_loader, criterion, optimizer, args)
+        test(model, test_loader, criterion)
         # Save results.
-        torch.save(model.state_dict(), 'data/ocr_torchdict.pth')
+        torch.save(model.state_dict(), os.path.join(args.model_path, 'weights.pth'))
+
+if __name__ == '__main__':
+    args = Arguments()
+    #args.n = 100
+    #args.image_path = 'test_data'
+    #args.train_path = 'test_data'
+    train_and_test(args)

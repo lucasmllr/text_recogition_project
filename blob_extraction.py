@@ -4,15 +4,16 @@ import processing
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 from copy import deepcopy
-import cv2 as cv
+from heapq import heappush, heappop
 from skimage.transform import rescale
 from arguments import Arguments
 from components import Components
 from component_evaluation import eliminate_insiders, filter_neighbors
 
 
-def find_blobs(img, args):
+def find_blobs(raw_img, args):
     '''function performing two dimensional connected component analysis on an image.
+def find_blobs(raw_img, args):
 
     Args:
         img (ndarray): original image to be analyzed
@@ -24,11 +25,10 @@ def find_blobs(img, args):
     '''
 
     # dimensions
-    height = img.shape[0]
-    width = img.shape[1]
+    height = raw_img.shape[0]
+    width = raw_img.shape[1]
 
-    raw = deepcopy(img)
-    img = processing.threshold(img, args)
+    img = processing.threshold(raw_img, args)
 
     # adding column of zeros to prevent left and right most blob
     # form being mistaken as one
@@ -69,8 +69,8 @@ def find_blobs(img, args):
                 stencil[i] = new_label
                 labels.add(new_label)
 
-    # uncomment to show labels after first pass
-    first_pass = deepcopy(stencil.reshape((height, width)))
+    # uncomment to print show labels after first pass
+    # first_pass = deepcopy(stencil.reshape((height, width)))
 
     # second pass to eliminate equivalences
     eq = labels.get_equivalents()
@@ -79,66 +79,76 @@ def find_blobs(img, args):
 
     # reshaping stencil
     stencil = stencil.reshape((height, width))
+    # SCIPY VARIANT
+    #stencil = measure.label(img, background=0)
 
-    # components
-    regions = []
-    bboxes = []
-    final_labels = labels.final_labels()
-
+    # count pixels in blobs, calculate median to filter blobs
+    final_labels = np.arange(1, np.max(stencil)+1)
+    pixel_counts = []
     for label in final_labels:
+        pixel_counts.append(np.sum(stencil == label))
+    pixel_counts = np.array(pixel_counts)
+    min_allowed_pixels = np.median(pixel_counts[pixel_counts > 0]) / 5  # arbitrary; seems to work well
 
-        if label == 0: continue  # background
+    # filter final lables and stencil
+    final_labels = np.array(final_labels)[pixel_counts >= min_allowed_pixels]
+    new_stencil = np.zeros_like(stencil)
+    for i, label in enumerate(final_labels):
+        new_stencil[stencil == label] = i+1
+    stencil = new_stencil
 
+    # construct boxes around letters
+    bounding_boxes = get_bboxes(stencil)
+    # chars = get_chars_from_boxes(raw, bounding_boxes)
+    # extract characters from image in correct order
+    #chars = []
+    #bounding_boxes = []
+    #while boxes:
+    #    box = heappop(boxes)
+    #    chars.append(raw[box[2]:box[3], box[0]:box[1]])
+    #    bounding_boxes.append(box)
+    return Components(boxes=bounding_boxes, img=raw_img, stencil=stencil)
+
+
+def get_bboxes(stencil, labels=None):
+    boxes = []
+    if labels is None:
+        labels = range(1, np.max(stencil)+1)
+    for label in labels:
         pixels = np.argwhere(stencil == label)
-        region = (pixels[:, 0], pixels[:, 1])
-        regions.append(region)
-
-        x_min = np.min(pixels[:, 0])
-        x_max = np.max(pixels[:, 0]) + 1
+        # check if blob is present
+        if len(pixels) == 0:
+            continue
         y_min = np.min(pixels[:, 1])
-        y_max = np.max(pixels[:, 1]) + 1
-        width = x_max - x_min
-        height = y_max - y_min
-        bboxes.append([y_min, x_min, height, width])
-
-    comps = Components(regions, bboxes, raw)
-
-    #eliminate_insiders(comps)
-    #filter_neighbors(comps, args)
-
-    return comps, stencil, first_pass
+        y_max = np.max(pixels[:, 1])
+        x_min = np.min(pixels[:, 0])
+        x_max = np.max(pixels[:, 0])
+        #heappush(boxes, (x_min, x_max, y_min, y_max))
+        boxes.append((x_min, x_max, y_min, y_max))
+    return np.array(boxes, dtype=np.int32)
 
 
 if __name__ == "__main__":
 
     args = Arguments()
 
-    img = cv.imread('fotos/ex02.jpg')
-    gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
-    gray = cv.resize(gray, None, fx=0.25, fy=0.25)
-    gray = np.divide(gray, np.max(gray))
+    img = processing.load_img('data_test/1.jpg')
 
-    #print('image range:', min(gray), max(gray))
-    #plt.imshow(gray, cmap='gray')
-    #plt.show()
+    scale = 1
+    orig = rescale(deepcopy(img), scale)
+    img = rescale(img, scale)
+    components = find_blobs(img, args)
+    boxes = components.bboxes()
+    stencil = components.get_stencil()
 
-    comps, _, _ = find_blobs(gray, args)
-
-    fig1 = plt.figure()
-    ax1 = fig1.add_subplot(111)
-    ax1.imshow(gray, cmap='gray')
-    for i, region in enumerate(comps.bboxes()):
-        x = region[0]
-        y = region[1]
-        width = region[2]
-        height = region[3]
-        rect = Rectangle((x, y), width, height, edgecolor='red', fill=False)
-        ax1.add_patch(rect)
-    ax1.set_xticks([])
-    ax1.set_yticks([])
-    #plt.savefig('plots/cvimg_bad_threshold.pdf', bbox_inches='tight')
+    print()
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.imshow(orig, cmap='gray')
+    for box in boxes:
+        rect = Rectangle((box[2], box[0]), box[3]-box[2], box[1]-box[0], fill=False, edgecolor='red')
+        ax.add_patch(rect)
     plt.show()
-
 
 
 

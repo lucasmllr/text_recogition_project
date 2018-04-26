@@ -1,0 +1,323 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>data_loading module &mdash; Text Recognition Project 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="line_extraction module" href="line_extraction.html" />
+    <link rel="prev" title="data_gen module" href="data_gen.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Text Recognition Project
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">project</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="DisjointSet.html">DisjointSet module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="arguments.html">arguments module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blob_extraction.html">blob_extraction module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="component_evaluation.html">component_evaluation module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="components.html">components module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_gen.html">data_gen module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">data_loading module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="line_extraction.html">line_extraction module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html">model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mser_extraction.html">mser_extraction module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pipeline.html">pipeline module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="processing.html">processing module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rot_correction.html">rot_correction module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="singlecharacter.html">singlecharacter module</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Text Recognition Project</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">project</a> &raquo;</li>
+        
+      <li>data_loading module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/source/data_loading.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-data_loading">
+<span id="data-loading-module"></span><h1>data_loading module<a class="headerlink" href="#module-data_loading" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="data_loading.ImageDataset">
+<em class="property">class </em><code class="descclassname">data_loading.</code><code class="descname">ImageDataset</code><span class="sig-paren">(</span><em>path='data'</em>, <em>size=28</em><span class="sig-paren">)</span><a class="headerlink" href="#data_loading.ImageDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">torch.utils.data.dataset.Dataset</span></code></p>
+<p>subclass of pytorch’s Dataset to provide extracted characters to a model.</p>
+<dl class="attribute">
+<dt id="data_loading.ImageDataset.path">
+<code class="descname">path</code><a class="headerlink" href="#data_loading.ImageDataset.path" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>String</em> – path containing the data</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="data_loading.ImageDataset.raws">
+<code class="descname">raws</code><a class="headerlink" href="#data_loading.ImageDataset.raws" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list of ndarrays</em> – images stored in a list</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="data_loading.ImageDataset.truth">
+<code class="descname">truth</code><a class="headerlink" href="#data_loading.ImageDataset.truth" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list of strings</em> – ground truth strings of images</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="data_loading.ImageDataset.size">
+<code class="descname">size</code><a class="headerlink" href="#data_loading.ImageDataset.size" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>integer</em> – height and width of input size for the model</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="data_loading.ImageDataset.blobs">
+<code class="descname">blobs</code><a class="headerlink" href="#data_loading.ImageDataset.blobs" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list of ndarrays</em> – contains size x size images of extracted letters</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="data_loading.ImageDataset.blob_truth">
+<code class="descname">blob_truth</code><a class="headerlink" href="#data_loading.ImageDataset.blob_truth" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list of strings</em> – ground truth for characters in blobs</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_loading.ImageDataset.extract_blobs">
+<code class="descname">extract_blobs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#data_loading.ImageDataset.extract_blobs" title="Permalink to this definition">¶</a></dt>
+<dd><p>function to perform blob extraction on raw images.
+Data is only used if blob extraction finds the right number of characters in an image.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_loading.ImageDataset.load_raws">
+<code class="descname">load_raws</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#data_loading.ImageDataset.load_raws" title="Permalink to this definition">¶</a></dt>
+<dd><p>loads raw images from the data directory and stores it as ndarrays</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list of ndarrays</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_loading.ImageDataset.load_truth">
+<code class="descname">load_truth</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#data_loading.ImageDataset.load_truth" title="Permalink to this definition">¶</a></dt>
+<dd><p>loads ground truth strings from “truth.txt” file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a list of strings</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="line_extraction.html" class="btn btn-neutral float-right" title="line_extraction module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="data_gen.html" class="btn btn-neutral" title="data_gen module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Roman Remme, Lucas-Raphael Mueller, Lucas Moeller.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>
