@@ -1,0 +1,362 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>DisjointSet module &mdash; OCR 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="arguments module" href="arguments.html" />
+    <link rel="prev" title="project" href="modules.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> OCR
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">project</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">DisjointSet module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="arguments.html">arguments module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bbox_based_rot_correction.html">bbox_based_rot_correction module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blob_extraction.html">blob_extraction module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="component_evaluation.html">component_evaluation module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="components.html">components module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_gen.html">data_gen module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_loading.html">data_loading module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="line_extraction.html">line_extraction module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html">model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mser_extraction.html">mser_extraction module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pipeline.html">pipeline module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="processing.html">processing module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rot_correction.html">rot_correction module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="train_nn.html">train_nn module</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">OCR</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">project</a> &raquo;</li>
+        
+      <li>DisjointSet module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/source/DisjointSet.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-DisjointSet">
+<span id="disjointset-module"></span><h1>DisjointSet module<a class="headerlink" href="#module-DisjointSet" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="DisjointSet.DisjointSet">
+<em class="property">class </em><code class="descclassname">DisjointSet.</code><code class="descname">DisjointSet</code><span class="sig-paren">(</span><em>n_labels=1</em><span class="sig-paren">)</span><a class="headerlink" href="#DisjointSet.DisjointSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>A class for a disjoint set data structure to manage the blob labels.
+Labels must be added in rising order starting from 1 and no integer value can be skipped.</p>
+<p>inspired by: <a class="reference external" href="https://gist.github.com/bruceoutdoors/3b99fd1c266b3718e1084352dbcb19c6">https://gist.github.com/bruceoutdoors/3b99fd1c266b3718e1084352dbcb19c6</a>
+Contrary to the above sets are not joint according to their rank, but according to whose root label is smaller,
+so that set representatives are always the smallest labels.</p>
+<dl class="method">
+<dt id="DisjointSet.DisjointSet.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>l</em><span class="sig-paren">)</span><a class="headerlink" href="#DisjointSet.DisjointSet.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a label l if it does not yet exist.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>l</strong> (<em>int</em>) – label to be added</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="DisjointSet.DisjointSet.connected">
+<code class="descname">connected</code><span class="sig-paren">(</span><em>l</em>, <em>m</em><span class="sig-paren">)</span><a class="headerlink" href="#DisjointSet.DisjointSet.connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks whether labels l and m belong to the same set.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>l</strong> (<em>int</em>) – one label</li>
+<li><strong>m</strong> (<em>int</em>) – another label</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">bool indicating whether it is the case</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="DisjointSet.DisjointSet.exists">
+<code class="descname">exists</code><span class="sig-paren">(</span><em>l</em><span class="sig-paren">)</span><a class="headerlink" href="#DisjointSet.DisjointSet.exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks whether label l exists.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>l</strong> (<em>int</em>) – label to be checked</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">bool indicating existence</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="DisjointSet.DisjointSet.final_labels">
+<code class="descname">final_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DisjointSet.DisjointSet.final_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of remaining labels after eliminating equivalents.
+In the returned list elements are labels now, not indices as before!</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DisjointSet.DisjointSet.find_root">
+<code class="descname">find_root</code><span class="sig-paren">(</span><em>l</em><span class="sig-paren">)</span><a class="headerlink" href="#DisjointSet.DisjointSet.find_root" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the root of the set that label l belongs to.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>l</strong> (<em>int</em>) – label whose root to find</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the root label</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="DisjointSet.DisjointSet.get_equivalents">
+<code class="descname">get_equivalents</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DisjointSet.DisjointSet.get_equivalents" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns a list in which the index represents the actual label and the entry at an index is the representative
+label for this labels equivalence class.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DisjointSet.DisjointSet.next">
+<code class="descname">next</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DisjointSet.DisjointSet.next" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the next unused label.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DisjointSet.DisjointSet.unite">
+<code class="descname">unite</code><span class="sig-paren">(</span><em>l</em>, <em>m</em><span class="sig-paren">)</span><a class="headerlink" href="#DisjointSet.DisjointSet.unite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Joins the sets of labels l and m keeping as a root the smallest element in both sets.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>l</strong> (<em>int</em>) – label in set one</li>
+<li><strong>m</strong> (<em>int</em>) – label in set two</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="arguments.html" class="btn btn-neutral float-right" title="arguments module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="modules.html" class="btn btn-neutral" title="project" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Remme, Mueller, Moeller.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

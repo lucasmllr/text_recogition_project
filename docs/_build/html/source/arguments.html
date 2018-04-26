@@ -1,0 +1,478 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>arguments module &mdash; OCR 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="bbox_based_rot_correction module" href="bbox_based_rot_correction.html" />
+    <link rel="prev" title="DisjointSet module" href="DisjointSet.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> OCR
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">project</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="DisjointSet.html">DisjointSet module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">arguments module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bbox_based_rot_correction.html">bbox_based_rot_correction module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blob_extraction.html">blob_extraction module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="component_evaluation.html">component_evaluation module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="components.html">components module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_gen.html">data_gen module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_loading.html">data_loading module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="line_extraction.html">line_extraction module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html">model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mser_extraction.html">mser_extraction module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pipeline.html">pipeline module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="processing.html">processing module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rot_correction.html">rot_correction module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="train_nn.html">train_nn module</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">OCR</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">project</a> &raquo;</li>
+        
+      <li>arguments module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/source/arguments.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-arguments">
+<span id="arguments-module"></span><h1>arguments module<a class="headerlink" href="#module-arguments" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="arguments.Arguments">
+<em class="property">class </em><code class="descclassname">arguments.</code><code class="descname">Arguments</code><a class="headerlink" href="#arguments.Arguments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>class holding all parameters for the segmentation and classification process.</p>
+<dl class="attribute">
+<dt id="arguments.Arguments.documentation">
+<code class="descname">documentation</code><a class="headerlink" href="#arguments.Arguments.documentation" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Bool</em> – if true some additional information is printed when running the algorithm</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.n">
+<code class="descname">n</code><a class="headerlink" href="#arguments.Arguments.n" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – number of generated images</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.alphabet">
+<code class="descname">alphabet</code><a class="headerlink" href="#arguments.Arguments.alphabet" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>string</em> – all possible characters</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.min_l">
+<code class="descname">min_l</code><a class="headerlink" href="#arguments.Arguments.min_l" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – min length of a line</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.max_l">
+<code class="descname">max_l</code><a class="headerlink" href="#arguments.Arguments.max_l" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – max length of a line</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.max_lines">
+<code class="descname">max_lines</code><a class="headerlink" href="#arguments.Arguments.max_lines" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – max number of lines</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.lower_case">
+<code class="descname">lower_case</code><a class="headerlink" href="#arguments.Arguments.lower_case" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Bool</em> – whether to use only lower case</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.shape">
+<code class="descname">shape</code><a class="headerlink" href="#arguments.Arguments.shape" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>tuple of ints</em> – image size</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.text_box">
+<code class="descname">text_box</code><a class="headerlink" href="#arguments.Arguments.text_box" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>tuple of ints</em> – size of text box in the image</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.pos">
+<code class="descname">pos</code><a class="headerlink" href="#arguments.Arguments.pos" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>tuple of float or None</em> – if tuple of floats it corresponds to the maximum fraction of shape the top left of
+corner of the text box is moved, if none no variation is applied</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.max_angle">
+<code class="descname">max_angle</code><a class="headerlink" href="#arguments.Arguments.max_angle" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float or int</em> – max abs rotation angle of text box</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.font">
+<code class="descname">font</code><a class="headerlink" href="#arguments.Arguments.font" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>string</em> – font of the text</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.colorspace">
+<code class="descname">colorspace</code><a class="headerlink" href="#arguments.Arguments.colorspace" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>string</em> – colorspace of the images</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.container">
+<code class="descname">container</code><a class="headerlink" href="#arguments.Arguments.container" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Bool</em> – if true images are not saved as jpg but stored in a numpy array</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.path">
+<code class="descname">path</code><a class="headerlink" href="#arguments.Arguments.path" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>string</em> – path to save the generated images to</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.input_shape">
+<code class="descname">input_shape</code><a class="headerlink" href="#arguments.Arguments.input_shape" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – input shape to the classification model</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.load_path">
+<code class="descname">load_path</code><a class="headerlink" href="#arguments.Arguments.load_path" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>string</em> – path to load data from</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.cut_bottom">
+<code class="descname">cut_bottom</code><a class="headerlink" href="#arguments.Arguments.cut_bottom" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em> – whether to cut below a threshold</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.cut_top">
+<code class="descname">cut_top</code><a class="headerlink" href="#arguments.Arguments.cut_top" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em> – whether to cut above the threshold</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.window">
+<code class="descname">window</code><a class="headerlink" href="#arguments.Arguments.window" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – window size for which a local threshold is calculated in the sauvola method</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.k">
+<code class="descname">k</code><a class="headerlink" href="#arguments.Arguments.k" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – model parameter for sauvola thresholding</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.r">
+<code class="descname">r</code><a class="headerlink" href="#arguments.Arguments.r" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – model parameter for sauvola thresholding</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.blob_t">
+<code class="descname">blob_t</code><a class="headerlink" href="#arguments.Arguments.blob_t" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – threshold in range [0, 1] to binarize a normalized image</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.line_t">
+<code class="descname">line_t</code><a class="headerlink" href="#arguments.Arguments.line_t" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – threshold to be applied to a normalized historgram resulting from a projection onto the y-axis
+in order to separate lines</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.n_angles">
+<code class="descname">n_angles</code><a class="headerlink" href="#arguments.Arguments.n_angles" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – number of angles evaluated in range [-angle, angle] to correct for rotatino of the text</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.n_bins">
+<code class="descname">n_bins</code><a class="headerlink" href="#arguments.Arguments.n_bins" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – number of bins placed on a centered ‘sensor array’ with the length of the image diagonal</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.angle">
+<code class="descname">angle</code><a class="headerlink" href="#arguments.Arguments.angle" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – abs of min and max angle evaluated for rotation correction</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.min_area">
+<code class="descname">min_area</code><a class="headerlink" href="#arguments.Arguments.min_area" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – min accepted area, i.e. number of included pixels for an MSER</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.max_area">
+<code class="descname">max_area</code><a class="headerlink" href="#arguments.Arguments.max_area" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – max accepted area for an MSER</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.delta">
+<code class="descname">delta</code><a class="headerlink" href="#arguments.Arguments.delta" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – model parameter for evaluation of stability value of a region</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.distance">
+<code class="descname">distance</code><a class="headerlink" href="#arguments.Arguments.distance" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em> – whether to include eucliedean distance of top left corners of bboxes of components into evaluation
+for neighbor criterion</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.dims">
+<code class="descname">dims</code><a class="headerlink" href="#arguments.Arguments.dims" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em> – whether to include area and aspect ratio into evaluation of neighbor criterion</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.color">
+<code class="descname">color</code><a class="headerlink" href="#arguments.Arguments.color" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em> – whether to include mean clolor into evaluation of neighbor criterion</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.t_A">
+<code class="descname">t_A</code><a class="headerlink" href="#arguments.Arguments.t_A" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float or int</em> – threshold on factor between areas of two components’ bboxes to be considered neighbors</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.t_asp">
+<code class="descname">t_asp</code><a class="headerlink" href="#arguments.Arguments.t_asp" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float or int</em> – threshold on factor between aspect ratios of two components’ bboxes to be considered neighbors</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.t_color">
+<code class="descname">t_color</code><a class="headerlink" href="#arguments.Arguments.t_color" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float or int</em> – threshold on abs mean color difference of two components to be considered neighbors</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.C_d">
+<code class="descname">C_d</code><a class="headerlink" href="#arguments.Arguments.C_d" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float or int</em> – model parameter for dynamic threshold of distance criterion</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="bbox_based_rot_correction.html" class="btn btn-neutral float-right" title="bbox_based_rot_correction module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="DisjointSet.html" class="btn btn-neutral" title="DisjointSet module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Remme, Mueller, Moeller.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>
