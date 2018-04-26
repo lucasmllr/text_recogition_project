@@ -1,10 +1,10 @@
-.. Text Recognition Project documentation master file, created by
-   sphinx-quickstart on Wed Apr 25 17:20:16 2018.
+.. OCR documentation master file, created by
+   sphinx-quickstart on Thu Apr 26 19:09:07 2018.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Text Recognition Project's documentation!
-====================================================
+Welcome to OCR's documentation!
+===============================
 
 .. toctree::
    :maxdepth: 2

@@ -6,6 +6,7 @@ project
 
    DisjointSet
    arguments
+   bbox_based_rot_correction
    blob_extraction
    component_evaluation
    components
@@ -17,4 +18,4 @@ project
    pipeline
    processing
    rot_correction
-   singlecharacter
+   train_nn

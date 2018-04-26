@@ -1,7 +1,7 @@
-data\_gen module
+train\_nn module
 ================
 
-.. automodule:: data_gen
+.. automodule:: train_nn
     :members:
     :undoc-members:
     :show-inheritance:

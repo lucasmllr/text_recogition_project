@@ -177,4 +177,3 @@ if __name__ == '__main__':
     args.method = 'threshold'
     img = load_img('IBANs/cropped/IMG_0870.jpg', args)
     print(read(img, args))
-

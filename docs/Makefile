@@ -4,7 +4,7 @@
 # You can set these variables from the command line.
 SPHINXOPTS    =
 SPHINXBUILD   = python -msphinx
-SPHINXPROJ    = TextRecognitionProject
+SPHINXPROJ    = OCR
 SOURCEDIR     = .
 BUILDDIR      = _build
 

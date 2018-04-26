@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# Text Recognition Project documentation build configuration file, created by
-# sphinx-quickstart on Wed Apr 25 17:20:16 2018.
+# OCR documentation build configuration file, created by
+# sphinx-quickstart on Thu Apr 26 19:09:07 2018.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -19,7 +19,6 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('.'))
 sys.path.insert(0, os.path.abspath('../'))
 
 
@@ -49,9 +48,9 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'Text Recognition Project'
-copyright = '2018, Roman Remme, Lucas-Raphael Mueller, Lucas Moeller'
-author = 'Roman Remme, Lucas-Raphael Mueller, Lucas Moeller'
+project = 'OCR'
+copyright = '2018, Remme, Mueller, Moeller'
+author = 'Remme, Mueller, Moeller'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -118,7 +117,7 @@ html_sidebars = {
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'TextRecognitionProjectdoc'
+htmlhelp_basename = 'OCRdoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -145,8 +144,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'TextRecognitionProject.tex', 'Text Recognition Project Documentation',
-     'Roman Remme, Lucas-Raphael Mueller, Lucas Moeller', 'manual'),
+    (master_doc, 'OCR.tex', 'OCR Documentation',
+     'Remme, Mueller, Moeller', 'manual'),
 ]
 
 
@@ -155,7 +154,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'textrecognitionproject', 'Text Recognition Project Documentation',
+    (master_doc, 'ocr', 'OCR Documentation',
      [author], 1)
 ]
 
@@ -166,7 +165,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'TextRecognitionProject', 'Text Recognition Project Documentation',
-     author, 'TextRecognitionProject', 'One line description of project.',
+    (master_doc, 'OCR', 'OCR Documentation',
+     author, 'OCR', 'One line description of project.',
      'Miscellaneous'),
 ]
