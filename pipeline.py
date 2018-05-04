@@ -19,9 +19,12 @@ import ntpath
 def read(img, args):
     '''
     'reads' the text on an image
-    :param img: image to be read
-    :param args: Arguments object
-    :return: predicted text on the image as list of strings
+    Args:
+        img: image to be read
+        args: Arguments object
+
+    Returns:
+        predicted text on the image as list of strings
     '''
 
     # blob extraction
@@ -75,9 +78,10 @@ def read(img, args):
 def generate_and_train(args):
     '''
     generates images and extracts individual chars, then trains the nn on the generated data.
-    :param args: Arguments object
-    :return: nothing
+    Args:
+        args: Arguments object
     '''
+
     data_gen.make_data(args)
     data_gen.save_char_data(args)
     train_nn.train_and_test(args)
@@ -86,11 +90,15 @@ def generate_and_train(args):
 def test_on_images(args):
     '''
     tests a trained model (specified by args.model_path) on the images labeled 1.jpg, 2.jpg.. in args.image_path
-    :param args: Arguments object
-    :return: #predicted lines, ratio of correctly predicted lines,
-    ratio of correctly predicted lines not considering case,
-    ratio of lines with a correctly predicted amount of characters
+    Args:
+        args: Arguments object
+
+    Returns:
+        predicted lines, ratio of correctly predicted lines,
+        ratio of correctly predicted lines not considering case,
+        ratio of lines with a correctly predicted amount of characters
     '''
+
     # get gt
     with open(os.path.join(args.image_path, 'truth.txt')) as f:
         content = f.readlines()
@@ -131,11 +139,12 @@ def test_on_images(args):
 def generate_distinct_font_data(args, prefix, font_files=None):
     '''
     generate images according to args for a list of different fonts. saves images of different fonts in separate folders
-    :param args: Arguments object
-    :param prefix: folder to save generated images in
-    :param font_files: list of paths of font files to use
-    :return: nothing
+    Args:
+        args: Arguments object
+        prefix: folder to save generated images in
+        font_files: list of paths of font files to use
     '''
+
     if font_files is None:
         font_files = data_gen.get_font_files()
     for font in font_files:
@@ -148,12 +157,13 @@ def generate_distinct_font_data(args, prefix, font_files=None):
 def test_distinct_font_data(args, prefix, font_files=None, output_file='font_results.txt'):
     '''
     tests the model on different font types and saves the result
-    :param args: Arguments object
-    :param prefix: folder in which folders of test images are saved
-    :param font_files: list of fonts to use
-    :param output_file: file to save results
-    :return: nothing
+    Args:
+        args: Arguments object
+        prefix: folder in which folders of test images are saved
+        font_files: list of fonts to use
+        output_file: file to save results
     '''
+
     if font_files is None:
         font_files = data_gen.get_font_files()
 

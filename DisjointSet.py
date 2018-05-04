@@ -129,8 +129,6 @@ class DisjointSet():
         Returns a list of remaining labels after eliminating equivalents.
         In the returned list elements are labels now, not indices as before!
         """
-        #Todo: ignore label zero in blob extraction
-
         return [self.parents[i] for i in range(self.n) if i == self.parents[i]]
 
 
