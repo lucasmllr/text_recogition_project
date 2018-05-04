@@ -5,12 +5,10 @@ class Arguments():
 
     Attributes:
 
-        Documentation:
-        -------------
+        #Documentation:
         documentation (Bool): if true some additional information is printed when running the algorithm
 
-        Data generation:
-        ---------------
+        #Data generation:
         n (int): number of generated images
         alphabet (string): all possible characters
         char_dict (dict):
@@ -32,43 +30,36 @@ class Arguments():
         train_path (string):
         safe_override (bool):
 
-        Data processing:
-        ---------------
+        #Data processing:
         method (string): method used for character extraction, either 'mser' or 'threshold'
         input_shape (int): input shape to the classification model
         load_path (string): path to load data from
 
-        Sauvola threshold:
-        -----------------
+        #Sauvola threshold:
         window (int): window size for which a local threshold is calculated in the sauvola method
         k (int): model parameter for sauvola thresholding
         r (int): model parameter for sauvola thresholding
 
-        Blob extraction:
-        ---------------
+        #Blob extraction:
         blob_t (float): threshold in range [0, 1] to binarize a normalized image
         min_pixels (int): minimum number of pixels in a component
 
-        Line extraction:
-        ----------------
+        #Line extraction:
         line_t (float): threshold to be applied to a normalized historgram resulting from a projection onto the y-axis
                         in order to separate lines
         space_threshold (float):
 
-        Rotation correction:
-        -------------------
+        #Rotation correction:
         n_angles (int): number of angles evaluated in range [-angle, angle] to correct for rotatino of the text
         n_bins (int): number of bins placed on a centered 'sensor array' with the length of the image diagonal
         angle (float): abs of min and max angle evaluated for rotation correction
 
-        MSER extraction:
-        ---------------
+        #MSER extraction:
         min_area (int): min accepted area, i.e. number of included pixels for an MSER
         max_area (int): max accepted area for an MSER
         delta (int): model parameter for evaluation of stability value of a region
 
-        Component evaluation:
-        ---------------------
+        #Component evaluation:
         distance (bool): whether to include eucliedean distance of top left corners of bboxes of components into evaluation
                         for neighbor criterion
         dims (bool): whether to include area and aspect ratio into evaluation of neighbor criterion
@@ -78,8 +69,7 @@ class Arguments():
         t_color (float or int): threshold on abs mean color difference of two components to be considered neighbors
         C_d (float or int): model parameter for dynamic threshold of distance criterion
 
-        Training of neural net:
-        ----------------------
+        #Training of neural net:
         batch_size (int):
         epochs (int):
         lr (float): learning rate

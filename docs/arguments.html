@@ -177,10 +177,20 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>class holding all parameters for the segmentation and classification process.</p>
 <dl class="attribute">
+<dt>
+<code class="descname">#Documentation</code></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="arguments.Arguments.documentation">
 <code class="descname">documentation</code><a class="headerlink" href="#arguments.Arguments.documentation" title="Permalink to this definition">¶</a></dt>
 <dd><p><em>Bool</em> – if true some additional information is printed when running the algorithm</p>
 </dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">#Data generation</code></dt>
+<dd></dd></dl>
 
 <dl class="attribute">
 <dt id="arguments.Arguments.n">
@@ -193,6 +203,17 @@
 <code class="descname">alphabet</code><a class="headerlink" href="#arguments.Arguments.alphabet" title="Permalink to this definition">¶</a></dt>
 <dd><p><em>string</em> – all possible characters</p>
 </dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.char_dict">
+<code class="descname">char_dict</code><a class="headerlink" href="#arguments.Arguments.char_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>dict</em></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.int_dict">
+<code class="descname">int_dict</code><a class="headerlink" href="#arguments.Arguments.int_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="attribute">
 <dt id="arguments.Arguments.min_l">
@@ -250,6 +271,12 @@ corner of the text box is moved, if none no variation is applied</p>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="arguments.Arguments.font_size">
+<code class="descname">font_size</code><a class="headerlink" href="#arguments.Arguments.font_size" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em></p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="arguments.Arguments.colorspace">
 <code class="descname">colorspace</code><a class="headerlink" href="#arguments.Arguments.colorspace" title="Permalink to this definition">¶</a></dt>
 <dd><p><em>string</em> – colorspace of the images</p>
@@ -262,9 +289,32 @@ corner of the text box is moved, if none no variation is applied</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="arguments.Arguments.path">
-<code class="descname">path</code><a class="headerlink" href="#arguments.Arguments.path" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>string</em> – path to save the generated images to</p>
+<dt id="arguments.Arguments.image_path">
+<code class="descname">image_path</code><a class="headerlink" href="#arguments.Arguments.image_path" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>string</em></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.train_path">
+<code class="descname">train_path</code><a class="headerlink" href="#arguments.Arguments.train_path" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>string</em></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.safe_override">
+<code class="descname">safe_override</code><a class="headerlink" href="#arguments.Arguments.safe_override" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">#Data processing</code></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.method">
+<code class="descname">method</code><a class="headerlink" href="#arguments.Arguments.method" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>string</em> – method used for character extraction, either ‘mser’ or ‘threshold’</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -280,16 +330,9 @@ corner of the text box is moved, if none no variation is applied</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="arguments.Arguments.cut_bottom">
-<code class="descname">cut_bottom</code><a class="headerlink" href="#arguments.Arguments.cut_bottom" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>bool</em> – whether to cut below a threshold</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="arguments.Arguments.cut_top">
-<code class="descname">cut_top</code><a class="headerlink" href="#arguments.Arguments.cut_top" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>bool</em> – whether to cut above the threshold</p>
-</dd></dl>
+<dt>
+<code class="descname">#Sauvola threshold</code></dt>
+<dd></dd></dl>
 
 <dl class="attribute">
 <dt id="arguments.Arguments.window">
@@ -310,10 +353,26 @@ corner of the text box is moved, if none no variation is applied</p>
 </dd></dl>
 
 <dl class="attribute">
+<dt>
+<code class="descname">#Blob extraction</code></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="arguments.Arguments.blob_t">
 <code class="descname">blob_t</code><a class="headerlink" href="#arguments.Arguments.blob_t" title="Permalink to this definition">¶</a></dt>
 <dd><p><em>float</em> – threshold in range [0, 1] to binarize a normalized image</p>
 </dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.min_pixels">
+<code class="descname">min_pixels</code><a class="headerlink" href="#arguments.Arguments.min_pixels" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – minimum number of pixels in a component</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">#Line extraction</code></dt>
+<dd></dd></dl>
 
 <dl class="attribute">
 <dt id="arguments.Arguments.line_t">
@@ -321,6 +380,17 @@ corner of the text box is moved, if none no variation is applied</p>
 <dd><p><em>float</em> – threshold to be applied to a normalized historgram resulting from a projection onto the y-axis
 in order to separate lines</p>
 </dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.space_threshold">
+<code class="descname">space_threshold</code><a class="headerlink" href="#arguments.Arguments.space_threshold" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">#Rotation correction</code></dt>
+<dd></dd></dl>
 
 <dl class="attribute">
 <dt id="arguments.Arguments.n_angles">
@@ -341,6 +411,11 @@ in order to separate lines</p>
 </dd></dl>
 
 <dl class="attribute">
+<dt>
+<code class="descname">#MSER extraction</code></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="arguments.Arguments.min_area">
 <code class="descname">min_area</code><a class="headerlink" href="#arguments.Arguments.min_area" title="Permalink to this definition">¶</a></dt>
 <dd><p><em>int</em> – min accepted area, i.e. number of included pixels for an MSER</p>
@@ -357,6 +432,11 @@ in order to separate lines</p>
 <code class="descname">delta</code><a class="headerlink" href="#arguments.Arguments.delta" title="Permalink to this definition">¶</a></dt>
 <dd><p><em>int</em> – model parameter for evaluation of stability value of a region</p>
 </dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">#Component evaluation</code></dt>
+<dd></dd></dl>
 
 <dl class="attribute">
 <dt id="arguments.Arguments.distance">
@@ -399,6 +479,65 @@ for neighbor criterion</p>
 <dt id="arguments.Arguments.C_d">
 <code class="descname">C_d</code><a class="headerlink" href="#arguments.Arguments.C_d" title="Permalink to this definition">¶</a></dt>
 <dd><p><em>float or int</em> – model parameter for dynamic threshold of distance criterion</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">#Training of neural net</code></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.batch_size">
+<code class="descname">batch_size</code><a class="headerlink" href="#arguments.Arguments.batch_size" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.epochs">
+<code class="descname">epochs</code><a class="headerlink" href="#arguments.Arguments.epochs" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.lr">
+<code class="descname">lr</code><a class="headerlink" href="#arguments.Arguments.lr" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – learning rate</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.momentum">
+<code class="descname">momentum</code><a class="headerlink" href="#arguments.Arguments.momentum" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.test_size">
+<code class="descname">test_size</code><a class="headerlink" href="#arguments.Arguments.test_size" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – fraction of training set used for testing</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.seed">
+<code class="descname">seed</code><a class="headerlink" href="#arguments.Arguments.seed" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – random seed</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.log_interval">
+<code class="descname">log_interval</code><a class="headerlink" href="#arguments.Arguments.log_interval" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.shuffle">
+<code class="descname">shuffle</code><a class="headerlink" href="#arguments.Arguments.shuffle" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em> – whether to shuffle training set</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="arguments.Arguments.model_path">
+<code class="descname">model_path</code><a class="headerlink" href="#arguments.Arguments.model_path" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>string</em> – path for dictionary of model weights</p>
 </dd></dl>
 
 </dd></dl>

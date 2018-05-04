@@ -175,8 +175,7 @@
 <dt id="pipeline.generate_and_train">
 <code class="descclassname">pipeline.</code><code class="descname">generate_and_train</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#pipeline.generate_and_train" title="Permalink to this definition">¶</a></dt>
 <dd><p>generates images and extracts individual chars, then trains the nn on the generated data.
-:param args: Arguments object
-:return: nothing</p>
+:param args: Arguments object</p>
 </dd></dl>
 
 <dl class="function">
@@ -185,8 +184,7 @@
 <dd><p>generate images according to args for a list of different fonts. saves images of different fonts in separate folders
 :param args: Arguments object
 :param prefix: folder to save generated images in
-:param font_files: list of paths of font files to use
-:return: nothing</p>
+:param font_files: list of paths of font files to use</p>
 </dd></dl>
 
 <dl class="function">
@@ -194,8 +192,15 @@
 <code class="descclassname">pipeline.</code><code class="descname">read</code><span class="sig-paren">(</span><em>img</em>, <em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#pipeline.read" title="Permalink to this definition">¶</a></dt>
 <dd><p>‘reads’ the text on an image
 :param img: image to be read
-:param args: Arguments object
-:return: predicted text on the image as list of strings</p>
+:param args: Arguments object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">predicted text on the image as list of strings</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -205,18 +210,24 @@
 :param args: Arguments object
 :param prefix: folder in which folders of test images are saved
 :param font_files: list of fonts to use
-:param output_file: file to save results
-:return: nothing</p>
+:param output_file: file to save results</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pipeline.test_on_images">
 <code class="descclassname">pipeline.</code><code class="descname">test_on_images</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#pipeline.test_on_images" title="Permalink to this definition">¶</a></dt>
 <dd><p>tests a trained model (specified by args.model_path) on the images labeled 1.jpg, 2.jpg.. in args.image_path
-:param args: Arguments object
-:return: #predicted lines, ratio of correctly predicted lines,
+:param args: Arguments object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">predicted lines, ratio of correctly predicted lines,
 ratio of correctly predicted lines not considering case,
-ratio of lines with a correctly predicted amount of characters</p>
+ratio of lines with a correctly predicted amount of characters</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>

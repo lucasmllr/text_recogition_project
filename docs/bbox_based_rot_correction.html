@@ -175,48 +175,90 @@
 <dt id="bbox_based_rot_correction.correction_angle">
 <code class="descclassname">bbox_based_rot_correction.</code><code class="descname">correction_angle</code><span class="sig-paren">(</span><em>components</em>, <em>args=None</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="headerlink" href="#bbox_based_rot_correction.correction_angle" title="Permalink to this definition">¶</a></dt>
 <dd><p>function to rotation correct a list of bounding boxes of characters, incapsulated in a components object.
-also outputs indices by which the boxes can be grouped into lines.
-:param components: components object to be processed
-:param args: Arguments object for options
-:param verbose: if set to True, debugging information is shown
-:return: rotation angle, labels grouping the boxes into lines</p>
+also outputs indices by which the boxes can be grouped into lines.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>components</strong> – components object to be processed</li>
+<li><strong>args</strong> – Arguments object for options</li>
+<li><strong>verbose</strong> – if set to True, debugging information is shown</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">rotation angle, labels grouping the boxes into lines</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="bbox_based_rot_correction.get_chars_from_boxes">
 <code class="descclassname">bbox_based_rot_correction.</code><code class="descname">get_chars_from_boxes</code><span class="sig-paren">(</span><em>img</em>, <em>boxes</em>, <em>padding=1</em><span class="sig-paren">)</span><a class="headerlink" href="#bbox_based_rot_correction.get_chars_from_boxes" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>extracts character sections from the image.</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="bbox_based_rot_correction.get_rescaled_chars">
 <code class="descclassname">bbox_based_rot_correction.</code><code class="descname">get_rescaled_chars</code><span class="sig-paren">(</span><em>components</em>, <em>args=None</em>, <em>separate_lines=False</em><span class="sig-paren">)</span><a class="headerlink" href="#bbox_based_rot_correction.get_rescaled_chars" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>…
+:param components:
+:param args:
+:param separate_lines:</p>
+<p>Returns:</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="bbox_based_rot_correction.get_rotation_corrected_blobs">
 <code class="descclassname">bbox_based_rot_correction.</code><code class="descname">get_rotation_corrected_blobs</code><span class="sig-paren">(</span><em>components</em>, <em>angle</em>, <em>labels</em>, <em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#bbox_based_rot_correction.get_rotation_corrected_blobs" title="Permalink to this definition">¶</a></dt>
-<dd><p>function to extract rotated char images grouped in lines
-:param components: components object to be rotated
-:param angle: angle to be rotated by
-:param labels: labels to group the chars into lines
-:param args: Arguments object
-:return: lines, a list of lists containing the individual chars of a line as images</p>
+<dd><p>Function to extract rotated char images grouped in lines.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>components</strong> – components object to be rotated</li>
+<li><strong>angle</strong> – angle to be rotated by</li>
+<li><strong>labels</strong> – labels to group the chars into lines</li>
+<li><strong>args</strong> – Arguments object</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">lines, a list of lists containing the individual chars of a line as images</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="bbox_based_rot_correction.rotated_components">
 <code class="descclassname">bbox_based_rot_correction.</code><code class="descname">rotated_components</code><span class="sig-paren">(</span><em>components</em>, <em>angle</em><span class="sig-paren">)</span><a class="headerlink" href="#bbox_based_rot_correction.rotated_components" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>…
+:param components:
+:param angle:</p>
+<p>Returns:</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="bbox_based_rot_correction.rotation_correct_and_line_order">
 <code class="descclassname">bbox_based_rot_correction.</code><code class="descname">rotation_correct_and_line_order</code><span class="sig-paren">(</span><em>components</em><span class="sig-paren">)</span><a class="headerlink" href="#bbox_based_rot_correction.rotation_correct_and_line_order" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>…
+:param components:</p>
+<p>Returns:</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="bbox_based_rot_correction.show_rotated">
 <code class="descclassname">bbox_based_rot_correction.</code><code class="descname">show_rotated</code><span class="sig-paren">(</span><em>load_path</em>, <em>args=None</em>, <em>indices='all'</em><span class="sig-paren">)</span><a class="headerlink" href="#bbox_based_rot_correction.show_rotated" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>…
+:param load_path:
+:param args:
+:param indices:</p>
+<p>Returns:</p>
+</dd></dl>
 
 </div>
 

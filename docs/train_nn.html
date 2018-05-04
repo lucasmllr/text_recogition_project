@@ -174,22 +174,84 @@
 <dt id="train_nn.CharDataset">
 <em class="property">class </em><code class="descclassname">train_nn.</code><code class="descname">CharDataset</code><span class="sig-paren">(</span><em>data</em>, <em>target</em>, <em>label=None</em>, <em>transform=None</em><span class="sig-paren">)</span><a class="headerlink" href="#train_nn.CharDataset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">torch.utils.data.dataset.Dataset</span></code></p>
+<p>subclass of pytorch’s Dataset to provide character data to a pytorch model</p>
+<dl class="attribute">
+<dt id="train_nn.CharDataset.data_tensor">
+<code class="descname">data_tensor</code><a class="headerlink" href="#train_nn.CharDataset.data_tensor" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Torch Tensor</em> – holds the images</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="train_nn.CharDataset.target_tensor">
+<code class="descname">target_tensor</code><a class="headerlink" href="#train_nn.CharDataset.target_tensor" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Torch Tensor</em> – holds the ground Truth</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="train_nn.CharDataset.label">
+<code class="descname">label</code><a class="headerlink" href="#train_nn.CharDataset.label" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="function">
 <dt id="train_nn.test">
 <code class="descclassname">train_nn.</code><code class="descname">test</code><span class="sig-paren">(</span><em>model</em>, <em>data_iterator</em>, <em>criterion</em><span class="sig-paren">)</span><a class="headerlink" href="#train_nn.test" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>evaluated a pytorch model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>model</strong> – pytorch model to be tested</li>
+<li><strong>data_iterator</strong> – pytorch DataLoader instance</li>
+<li><strong>criterion</strong> – instance of a pytorch Optimizer</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">test_loss, accuracy</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="function">
 <dt id="train_nn.train">
 <code class="descclassname">train_nn.</code><code class="descname">train</code><span class="sig-paren">(</span><em>epoch</em>, <em>model</em>, <em>data_iterator</em>, <em>criterion</em>, <em>optimizer</em>, <em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#train_nn.train" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>runs the training for a pytorch model in a single epoch.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>epoch</strong> – Epoch of training</li>
+<li><strong>model</strong> – pytorch model to be trained</li>
+<li><strong>data_iterator</strong> – pytorch DataLoader instance</li>
+<li><strong>criterion</strong> – instance of a pytorch Loss function</li>
+<li><strong>optimizer</strong> – instance of a pytorch Optimizer</li>
+<li><strong>args</strong> – Arguments instance</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="function">
 <dt id="train_nn.train_and_test">
 <code class="descclassname">train_nn.</code><code class="descname">train_and_test</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#train_nn.train_and_test" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>runs a training and testing routine for a pytorch model that is created.
+The models state_dict is saved to args.model_path.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>args</strong> – Arguments instance</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </div>
 

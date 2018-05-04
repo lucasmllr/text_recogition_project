@@ -233,12 +233,24 @@
 <dl class="method">
 <dt id="components.Component.extract">
 <code class="descname">extract</code><span class="sig-paren">(</span><em>padding=1</em>, <em>min_height=0</em><span class="sig-paren">)</span><a class="headerlink" href="#components.Component.extract" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>extracts section of the component’s bbox plus a buffer from the image.
+:param padding: additional padding of the bbox
+:param min_height:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">an image of the extracted region</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="components.Component.get_rect">
 <code class="descname">get_rect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#components.Component.get_rect" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>returns a matplotlib Rectange patch for of component’s bbox.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -262,42 +274,99 @@
 <dl class="method">
 <dt id="components.Components.bboxes">
 <code class="descname">bboxes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#components.Components.bboxes" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>returns a list of bboxes of all stored components.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="components.Components.extract">
 <code class="descname">extract</code><span class="sig-paren">(</span><em>args=None</em>, <em>use_line_heights=True</em><span class="sig-paren">)</span><a class="headerlink" href="#components.Components.extract" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>returns a list of rescaled images of the extracted components in the image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>args</strong> – Arguments instance</li>
+<li><strong>use_line_heights</strong> (<em>bool</em>) – whether to use line height as height. if flase the images are rescaled to args.input_shape</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a list of reshaped images of all components</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="components.Components.extract_lines">
 <code class="descname">extract_lines</code><span class="sig-paren">(</span><em>args=None</em>, <em>use_line_heights=True</em><span class="sig-paren">)</span><a class="headerlink" href="#components.Components.extract_lines" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>extracts images for lines of text found in the image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>args</strong> – Arguments instance</li>
+<li><strong>use_line_heights</strong> – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a list of image of lines</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="components.Components.generate_stencil">
 <code class="descname">generate_stencil</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#components.Components.generate_stencil" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>creates a stencil from self.regions.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="components.Components.get_spaces">
 <code class="descname">get_spaces</code><span class="sig-paren">(</span><em>threshold_factor=0.25</em><span class="sig-paren">)</span><a class="headerlink" href="#components.Components.get_spaces" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>finds space positions based on the horizontal distances between components and a threshold computed from the
+median horizontal spacing.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>threshold_factor</strong> – factor for median to determine threshold</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">list of character positions after which to add spaces</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="components.Components.get_stencil">
 <code class="descname">get_stencil</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#components.Components.get_stencil" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>creates and returns a stencil from self.regions</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a stencil of the components</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="components.Components.median_bbox_width">
 <code class="descname">median_bbox_width</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#components.Components.median_bbox_width" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>returns median of compontent’s bbox heights.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="components.Components.regions">
 <code class="descname">regions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#components.Components.regions" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>returns a list of regions of all stored components. A region is a list of coordinate tubles.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="components.Components.regions_by_size">
@@ -308,17 +377,36 @@
 <dl class="method">
 <dt id="components.Components.regions_from_stencil">
 <code class="descname">regions_from_stencil</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#components.Components.regions_from_stencil" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>extracts regions from a self.stencil.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a list of regions, where a region is a list of coordinate tubles.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="components.Components.set_lines">
 <code class="descname">set_lines</code><span class="sig-paren">(</span><em>lines</em><span class="sig-paren">)</span><a class="headerlink" href="#components.Components.set_lines" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>…</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="components.Components.show_img">
 <code class="descname">show_img</code><span class="sig-paren">(</span><em>axes=None</em><span class="sig-paren">)</span><a class="headerlink" href="#components.Components.show_img" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>shows self.img with bboxes of components in self.chars</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>axes</strong> (<em>matplotlib axes instance</em>) – if not None plot is added to this axes instance</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 

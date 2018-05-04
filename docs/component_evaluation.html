@@ -174,25 +174,68 @@
 <dl class="function">
 <dt id="component_evaluation.by_bbox_size">
 <code class="descclassname">component_evaluation.</code><code class="descname">by_bbox_size</code><span class="sig-paren">(</span><em>components</em><span class="sig-paren">)</span><a class="headerlink" href="#component_evaluation.by_bbox_size" title="Permalink to this definition">¶</a></dt>
-<dd><p>returns a list of the components ordered by bbox size</p>
+<dd><p>orders components by bbox size.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>components</strong> – Instance of the Components class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a list of components in order of the bbox size</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="component_evaluation.eliminate_insiders">
 <code class="descclassname">component_evaluation.</code><code class="descname">eliminate_insiders</code><span class="sig-paren">(</span><em>components</em><span class="sig-paren">)</span><a class="headerlink" href="#component_evaluation.eliminate_insiders" title="Permalink to this definition">¶</a></dt>
 <dd><p>eliminates all components whose bounding boxes lie inside of others. The components object is manipulated in place</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>components</strong> – Components instance</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="component_evaluation.eliminate_tiny">
 <code class="descclassname">component_evaluation.</code><code class="descname">eliminate_tiny</code><span class="sig-paren">(</span><em>components</em>, <em>threshold_factor=0.2</em><span class="sig-paren">)</span><a class="headerlink" href="#component_evaluation.eliminate_tiny" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>eliminates components (in pace) that foll below a threshold of a minimum number of pixels determined from the median.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>components</strong> – Components instance</li>
+<li><strong>threshold_factor</strong> – facctor to multiply median by to get the threhsold</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="function">
 <dt id="component_evaluation.filter_neighbors">
 <code class="descclassname">component_evaluation.</code><code class="descname">filter_neighbors</code><span class="sig-paren">(</span><em>components</em>, <em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#component_evaluation.filter_neighbors" title="Permalink to this definition">¶</a></dt>
 <dd><p>eliminates all components that have no neighbors as specified by the corresponding parameters in args.
 The components object is manipulated in place.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>components</strong> – Components instance</li>
+<li><strong>args</strong> – Arguments instance</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
