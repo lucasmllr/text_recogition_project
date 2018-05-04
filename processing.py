@@ -37,10 +37,8 @@ def threshold(img, args):
     above = img > args.blob_t
 
     result = np.empty(img.shape, dtype=img.dtype)
-    if args.cut_bottom:
-        result[below] = 0
-    if args.cut_top:
-        result[above] = 1
+    result[below] = 0
+    result[above] = 1
 
     return result
 

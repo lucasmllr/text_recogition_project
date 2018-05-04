@@ -13,7 +13,6 @@ from component_evaluation import eliminate_insiders, filter_neighbors
 
 def find_blobs(raw_img, args):
     '''function performing two dimensional connected component analysis on an image.
-def find_blobs(raw_img, args):
 
     Args:
         img (ndarray): original image to be analyzed
@@ -111,6 +110,15 @@ def find_blobs(raw_img, args):
 
 
 def get_bboxes(stencil, labels=None):
+    '''
+    find the bounding boxes in a stencil of labeled regions.
+    Args:
+        stencil (ndarray): image with different pixel values for each region
+        labels: region labels in the image
+
+    Returns:
+        a list of bboxes in the format [x_min, x_max, y_min, y_max]
+    '''
     boxes = []
     if labels is None:
         labels = range(1, np.max(stencil)+1)

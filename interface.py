@@ -33,7 +33,6 @@ def interface():
         pyperclip.copy(out)
 
 
-
 if __name__ == '__main__':
 
     interface()

@@ -4,7 +4,14 @@ from DisjointSet import DisjointSet
 
 
 def by_bbox_size(components):
-    '''returns a list of the components ordered by bbox size'''
+    '''orders components by bbox size.
+
+    Args:
+        components: Instance of the Components class
+
+    Returns:
+        a list of components in order of the bbox size
+    '''
 
     heap = []
     for count, comp in enumerate(components.chars):
@@ -35,7 +42,11 @@ def is_inside(a, b):
 
 
 def eliminate_insiders(components):
-    '''eliminates all components whose bounding boxes lie inside of others. The components object is manipulated in place'''
+    '''eliminates all components whose bounding boxes lie inside of others. The components object is manipulated in place
+
+    Args:
+        components: Components instance
+    '''
 
     by_size = by_bbox_size(components)
 
@@ -55,15 +66,25 @@ def eliminate_insiders(components):
 
 
 def eliminate_tiny(components, threshold_factor=.2):
+    '''
+    eliminates components (in pace) that foll below a threshold of a minimum number of pixels determined from the median.
 
+    Args:
+        components: Components instance
+        threshold_factor: facctor to multiply median by to get the threhsold
+    '''
     threshold = np.median(np.array([len(c.region) for c in components.chars])) * threshold_factor
     components.chars = [c for c in components.chars if len(c.region) >= threshold]
 
 
 def filter_neighbors(components, args):
     '''eliminates all components that have no neighbors as specified by the corresponding parameters in args.
-    The components object is manipulated in place.'''
+    The components object is manipulated in place.
 
+    Args:
+        components: Components instance
+        args: Arguments instance
+    '''
     size = len(components)
     n = np.zeros((size, size), dtype=np.int)
 

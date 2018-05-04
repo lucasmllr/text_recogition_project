@@ -15,7 +15,6 @@ def extract_mser(img, args):
     Args:
         img (ndarray): image from which MSERs are to be extracted
         args (Arguments instance):
-        filter (Bool): whether to filter the extracted MSERs
 
     Returns:
         an instance of the Components class

@@ -11,6 +11,7 @@ import os
 
 
 def get_chars_from_boxes(img, boxes, padding=1): # TODO: replace
+    '''extracts character sections from the image.'''
     chars = []
     for box in boxes:
         chars.append(img[max(0, box[0] - padding):min(box[1] + padding, img.shape[0]),
@@ -22,10 +23,14 @@ def correction_angle(components, args=None, verbose=False):
     '''
     function to rotation correct a list of bounding boxes of characters, incapsulated in a components object.
     also outputs indices by which the boxes can be grouped into lines.
-    :param components: components object to be processed
-    :param args: Arguments object for options
-    :param verbose: if set to True, debugging information is shown
-    :return: rotation angle, labels grouping the boxes into lines
+
+    Args:
+        components: components object to be processed
+        args: Arguments object for options
+        verbose: if set to True, debugging information is shown
+
+    Returns:
+        rotation angle, labels grouping the boxes into lines
     '''
     boxes = components.bboxes()
     n_blobs = len(boxes)
@@ -100,12 +105,16 @@ def correction_angle(components, args=None, verbose=False):
 
 def get_rotation_corrected_blobs(components, angle, labels, args):
     '''
-    function to extract rotated char images grouped in lines
-    :param components: components object to be rotated
-    :param angle: angle to be rotated by
-    :param labels: labels to group the chars into lines
-    :param args: Arguments object
-    :return: lines, a list of lists containing the individual chars of a line as images
+    Function to extract rotated char images grouped in lines.
+
+    Args:
+        components: components object to be rotated
+        angle: angle to be rotated by
+        labels: labels to group the chars into lines
+        args: Arguments object
+
+    Returns:
+        lines, a list of lists containing the individual chars of a line as images
     '''
     img = components.img #TODO: remove this
     if img.dtype != np.float64:
@@ -147,6 +156,14 @@ def get_rotation_corrected_blobs(components, angle, labels, args):
 
 
 def rotation_correct_and_line_order(components):
+    '''
+    ...
+    Args:
+        components:
+
+    Returns:
+
+    '''
     angle, line_labels = correction_angle(components)
     components = rotated_components(components, angle)
     boxes = np.array(components.bboxes())
@@ -162,6 +179,15 @@ def rotation_correct_and_line_order(components):
 
 
 def rotated_components(components, angle):
+    '''
+    ...
+    Args:
+        components:
+        angle:
+
+    Returns:
+
+    '''
     img = components.img
     stencil = components.get_stencil()
     rotated_stencil = rotate(stencil, angle*180/np.pi, order=0)
@@ -171,6 +197,16 @@ def rotated_components(components, angle):
 
 
 def get_rescaled_chars(components, args=None, separate_lines=False):
+    '''
+    ...
+    Args:
+        components:
+        args:
+        separate_lines:
+
+    Returns:
+
+    '''
 
     if args is None:
         args = Arguments()
@@ -195,6 +231,16 @@ def get_rescaled_chars(components, args=None, separate_lines=False):
 
 # function for testing
 def show_rotated(load_path, args=None, indices='all'):
+    '''
+    ...
+    Args:
+        load_path:
+        args:
+        indices:
+
+    Returns:
+
+    '''
     if args is None:
         args = Arguments()
     for i, file in enumerate(os.listdir(load_path)):
