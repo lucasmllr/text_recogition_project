@@ -16,6 +16,15 @@ from model import ConvolutionalNN
 
 
 class CharDataset(Dataset):
+    '''
+    subclass of pytorch's Dataset to provide character data to a pytorch model
+
+    Attributes:
+        data_tensor (Torch Tensor): holds the images
+        target_tensor (Torch Tensor): holds the ground Truth
+        label:
+    '''
+
     def __init__(self, data, target, label=None, transform=None):
         self.data_tensor = torch.from_numpy(data).type(torch.FloatTensor)
         self.target_tensor = torch.from_numpy(target).type(torch.LongTensor)
@@ -26,6 +35,14 @@ class CharDataset(Dataset):
         return self.target_tensor.size()[0]
 
     def __getitem__(self, idx):
+        '''loads the image, GT tuple with index idx from the data. overrides the respective Dataset method.
+
+        Args:
+            idx (int): index in data_tensor and target_tensor
+
+        Returns:
+            image, GT
+        '''
 
         data_sample = self.data_tensor[idx]
         if self.transform:
@@ -37,6 +54,18 @@ class CharDataset(Dataset):
 
 
 def train(epoch, model, data_iterator, criterion, optimizer, args):
+    '''
+    runs the training for a pytorch model in a single epoch.
+
+    Args:
+        epoch: Epoch of training
+        model: pytorch model to be trained
+        data_iterator: pytorch DataLoader instance
+        criterion: instance of a pytorch Loss function
+        optimizer: instance of a pytorch Optimizer
+        args: Arguments instance
+    '''
+
     model.train()
     for batch_idx, (data, target) in enumerate(data_iterator):
         data, target = Variable(data.view(data.size()[0],1,32,32)), Variable(target)
@@ -52,6 +81,17 @@ def train(epoch, model, data_iterator, criterion, optimizer, args):
 
 
 def test(model, data_iterator, criterion):
+    '''
+    evaluated a pytorch model.
+
+    Args:
+        model: pytorch model to be tested
+        data_iterator: pytorch DataLoader instance
+        criterion: instance of a pytorch Optimizer
+
+    Returns:
+        test_loss, accuracy
+    '''
     model.eval()
     test_loss = 0
     correct = 0
@@ -71,6 +111,14 @@ def test(model, data_iterator, criterion):
 
 
 def train_and_test(args):
+    '''
+    runs a training and testing routine for a pytorch model that is created.
+    The models state_dict is saved to args.model_path.
+
+    Args:
+        args: Arguments instance
+    '''
+
     torch.manual_seed(args.seed)
 
     # load the dataset
