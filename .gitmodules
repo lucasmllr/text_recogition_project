@@ -1,0 +1,3 @@
+[submodule "python-stdnum"]
+	path = python-stdnum
+	url = https://github.com/arthurdejong/python-stdnum.git
