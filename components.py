@@ -38,8 +38,9 @@ class Component():
         self.y = self.bbox[2]
         self.w = self.bbox[1] - bbox[0]
         self.h = self.bbox[3] - bbox[2]
+        #if self.h==0 or self.w==0: print(bbox)
         self.A = self.w * self.h
-        self.asp = self.w / self.h
+        #self.asp = self.w / self.h
         self.img = img
         self.color = np.mean(self.img[self.region[:, 1], self.region[:, 0]])
 

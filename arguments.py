@@ -62,7 +62,8 @@ class Arguments():
         #Component evaluation:
         distance (bool): whether to include eucliedean distance of top left corners of bboxes of components into evaluation
                         for neighbor criterion
-        dims (bool): whether to include area and aspect ratio into evaluation of neighbor criterion
+        area (bool): whether to include area into evaluation of neighbor criterion
+        asp (bool): whether to include aspect ratio into evaluation of neighbor criterion
         color (bool): whether to include mean clolor into evaluation of neighbor criterion
         t_A (float or int): threshold on factor between areas of two components' bboxes to be considered neighbors
         t_asp (float or int): threshold on factor between aspect ratios of two components' bboxes to be considered neighbors
@@ -142,7 +143,8 @@ class Arguments():
         #component evaluation
         #neighbors
         self.distance = True
-        self.dims = True
+        self.area = True
+        self.asp = False
         self.color = True
         self.t_A = 5
         self.t_asp = 5

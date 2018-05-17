@@ -36,17 +36,22 @@ def read(img, args):
         assert False
 
     if args.documentation:
-        plt.figure()
-        plt.title('Original Image with detected Bounding-Boxes')
-        components.show_img()
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        ax.set_xticks([])
+        ax.set_yticks([])
+        #plt.title('Original Image with detected Bounding-Boxes')
+        components.show_img(axes=ax)
+        plt.savefig('IBANs/ex/ex5.png', bbox_inches='tight', dpi=150)
+        plt.show()
 
     # rotation correction, line and char extraction
     components = bbox_based_rot_correction.rotation_correct_and_line_order(components)
 
-    if args.documentation:
-        plt.figure()
-        plt.title('Rotation-Corrected Image with detected Bounding-Boxes')
-        components.show_img()
+    #if args.documentation:
+    #    plt.figure()
+    #    plt.title('Rotation-Corrected Image with detected Bounding-Boxes')
+    #    components.show_img()
 
     lines = components.extract_lines(args)
     spaces = components.get_spaces(args.space_threshold)
@@ -67,10 +72,10 @@ def read(img, args):
                 chars += ' '
         result.append(chars)
 
-        if args.documentation:
-            plt.imshow(np.concatenate(line, axis=1))
-            plt.title(f'Line {i}, Prediction: {chars}')
-            plt.show()
+        #if args.documentation:
+        #    plt.imshow(np.concatenate(line, axis=1))
+        #    plt.title(f'Line {i}, Prediction: {chars}')
+        #    plt.show()
 
     return result
 
@@ -184,6 +189,6 @@ if __name__ == '__main__':
 
     args = Arguments()
     args.documentation = True
-    args.method = 'threshold'
-    img = load_img('IBANs/cropped/IMG_0870.jpg', args)
+    args.method = 'mser'
+    img = load_img('IBANs/cropped/IMG_0892.jpg', args)
     print(read(img, args))

@@ -102,9 +102,11 @@ def filter_neighbors(components, args):
                 if np.sqrt((a.x - b.x)**2 + (a.y - b.y)**2) > t:
                     continue
 
-            if args.dims:
+            if args.area:
                 if max(a.A, b.A) / min(a.A, b.A) > args.t_A:
                     continue
+
+            if args.asp:
                 if max(a.asp, b.asp) / min(a.asp, b.asp) > args.t_asp:
                     continue
 
