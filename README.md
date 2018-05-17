@@ -5,15 +5,15 @@ Classification is done by a small convolutional neural network.
 
 ## Dependencies
 The code is written in python 3.6 and requires the following packages: 
-numpy, scipy, sklearn, pillow, pytorch, , opencv, matplotlib, os, pyperclip
+numpy, scipy, sklearn, pillow, pytorch, opencv, matplotlib, os, pyperclip
 
 ## Installation
-To use the program clone this repository, navigate to it in the terminal and start the interface with the following cammand:
+To use the program clone this repository, navigate to it in the terminal and run the interface:
 
-´´´
-python interface.py
-´´´
+'''
+$python interface.py
+'''
 
 ## Documentation
-A documentation is available on this repositories GitHub page:
+A documentation is available on this repositories GitHub page [here](https://lucasmllr.github.io/text_recogition_project/)
 
