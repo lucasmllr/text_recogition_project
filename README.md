@@ -11,9 +11,7 @@ numpy, scipy, sklearn, pillow, pytorch, opencv, matplotlib, os, pyperclip
 ## Installation
 To use the program clone this repository, navigate to it in the terminal and run the interface:
 
-´´´sh
 $ python interface.py
-´´´
 
 ## Documentation
 A documentation is available on this repositorie's GitHub page [here](https://lucasmllr.github.io/text_recogition_project/)
