@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>processing module &mdash; OCR 1.0 documentation</title>
+  <title>rot_correction module &mdash; Document Recognition Project 1.0 documentation</title>
   
 
   
@@ -25,15 +25,15 @@
   
 
   
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="rot_correction module" href="rot_correction.html" />
-    <link rel="prev" title="pipeline module" href="pipeline.html" /> 
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="test module" href="test.html" />
+    <link rel="prev" title="processing module" href="processing.html" /> 
 
   
-  <script src="_static/js/modernizr.min.js"></script>
+  <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -49,7 +49,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> OCR
+            <a href="../index.html" class="icon icon-home"> Document Recognition Project
           
 
           
@@ -66,7 +66,7 @@
 
           
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -94,12 +94,15 @@
 <li class="toctree-l2"><a class="reference internal" href="components.html">components module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data_gen.html">data_gen module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data_loading.html">data_loading module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="detect_iban.html">detect_iban module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interface.html">interface module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="line_extraction.html">line_extraction module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="model.html">model module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mser_extraction.html">mser_extraction module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pipeline.html">pipeline module</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">processing module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rot_correction.html">rot_correction module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="processing.html">processing module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">rot_correction module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test.html">test module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="train_nn.html">train_nn module</a></li>
 </ul>
 </li>
@@ -117,7 +120,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">OCR</a>
+          <a href="../index.html">Document Recognition Project</a>
         
       </nav>
 
@@ -146,17 +149,17 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html">Docs</a> &raquo;</li>
         
           <li><a href="modules.html">project</a> &raquo;</li>
         
-      <li>processing module</li>
+      <li>rot_correction module</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/processing.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/source/rot_correction.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -169,30 +172,31 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-processing">
-<span id="processing-module"></span><h1>processing module<a class="headerlink" href="#module-processing" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-rot_correction">
+<span id="rot-correction-module"></span><h1>rot_correction module<a class="headerlink" href="#module-rot_correction" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
-<dt id="processing.load_img">
-<code class="descclassname">processing.</code><code class="descname">load_img</code><span class="sig-paren">(</span><em>path</em>, <em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#processing.load_img" title="Permalink to this definition">¶</a></dt>
-<dd><p>loads an image, normalizes and inverts it and returs it as an ndarray</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="processing.rescale">
-<code class="descclassname">processing.</code><code class="descname">rescale</code><span class="sig-paren">(</span><em>img</em>, <em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#processing.rescale" title="Permalink to this definition">¶</a></dt>
-<dd><p>rescales img to the inout shape of the model defined in args.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="processing.sauvola_threshold">
-<code class="descclassname">processing.</code><code class="descname">sauvola_threshold</code><span class="sig-paren">(</span><em>img</em>, <em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#processing.sauvola_threshold" title="Permalink to this definition">¶</a></dt>
-<dd><p>returns a binary image resulting from performing sauvola thresholding on img with parameters defined in args.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="processing.threshold">
-<code class="descclassname">processing.</code><code class="descname">threshold</code><span class="sig-paren">(</span><em>img</em>, <em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#processing.threshold" title="Permalink to this definition">¶</a></dt>
-<dd><p>returs a binary image of img with parameters defined in args.</p>
+<dt id="rot_correction.correct_rot">
+<code class="descclassname">rot_correction.</code><code class="descname">correct_rot</code><span class="sig-paren">(</span><em>img</em>, <em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#rot_correction.correct_rot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to rotate an input image according to the minimum entropy of its projection along the horizontal axis.
+Entropy is evaluated on a grid.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>img</strong> (<em>ndarray</em>) – 2d image array</li>
+<li><strong>args</strong> (<em>Arguments instance</em>) – out of which the following are required
+args.n_angles (int): number of projection angles
+args.n_bins (int): number of bins for projection histograms. Should be odd.
+args.angle (float): abs of min and max angle (degrees) in whose boundaries n_angles projections are evaluated.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">An ndarray of the rotated image padded with zeros</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -205,10 +209,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="rot_correction.html" class="btn btn-neutral float-right" title="rot_correction module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="test.html" class="btn btn-neutral float-right" title="test module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="pipeline.html" class="btn btn-neutral" title="pipeline module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="processing.html" class="btn btn-neutral" title="processing module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -217,7 +221,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Remme, Mueller, Moeller.
+        &copy; Copyright 2018, Roman Remme, Lucas-Raphael Mueller, Lucas Moeller.
 
     </p>
   </div>
@@ -238,7 +242,7 @@
 
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
+            URL_ROOT:'../',
             VERSION:'1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
@@ -247,15 +251,15 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
 
   
 
   
   
-    <script type="text/javascript" src="_static/js/theme.js"></script>
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
   
 
   <script type="text/javascript">

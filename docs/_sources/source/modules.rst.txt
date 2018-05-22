@@ -12,10 +12,13 @@ project
    components
    data_gen
    data_loading
+   detect_iban
+   interface
    line_extraction
    model
    mser_extraction
    pipeline
    processing
    rot_correction
+   test
    train_nn

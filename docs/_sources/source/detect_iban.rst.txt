@@ -1,0 +1,7 @@
+detect\_iban module
+===================
+
+.. automodule:: detect_iban
+    :members:
+    :undoc-members:
+    :show-inheritance:

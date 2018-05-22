@@ -1,17 +1,66 @@
-.. OCR documentation master file, created by
-   sphinx-quickstart on Fri Apr 27 20:38:49 2018.
+.. Document Recognition PROJECT documentation master file, created by
+   sphinx-quickstart on Tue May 22 18:45:46 2018.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to OCR's documentation!
-===============================
+Document Recognition Project Documentation
+========================================================
+This is the documentation for the optical character recognition project hosted
+here. It was created as a student project. For details on the used
+algorithms and results please refer to this report.
+For an overview of the code structure see further below.
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   modules.rst
+   source/modules
 
+Code structure:
+-----------------
+The code is structured as follows:
+
+At the top is the :doc:`pipeline.py <source/pipeline>` script whose
+function read() takes as input an image, runs the segmentation, rotation and
+classification algorithms on it and returns a list of strings as result.
+
+:doc:`interface.py <source/interface>` provides a terminal interface for the read() function.
+
+:doc:`arguments.py <source/arguments>` holds a class defining all parameters of the program.
+
+:doc:`blob_extraction.py <source/blob_extraction>` contains the simple connected component analysis algorithm
+to propose letter candidates.
+
+:doc:`mser_extraction.py <source/mser_extraction>` is the more advances maximally stable extremal regions extractor
+to propose letter candidates.
+
+:doc:`components.py <source/components>` contains classes to store character candidates proposed by either
+of the above two segmentation algorithms. All subsequent operations are done on
+an object of the Components class.
+
+:doc:`component_evaluation.py <source/component_evaluation>` contains functions to work on the Components class
+including the heuristic filtering of character candidates.
+
+:doc:`bbox_based_rot_correction.py <source/bbox_based_rot_correction>` is the faster, character-based rotation algorithm
+
+:doc:`rot_correction.py <source/rot_correction>` is the slower pixel-based rotation algorithm.
+
+:doc:`line_extraction.py <source/line_extraction>` is the projection based line segmentation algorithm that is
+only used in combination with the pixel based rotation.
+
+:doc:`model.py <source/model>` holds the architecture of the CNN used to classify character candidates.
+
+:doc:`train_nn.py <source/train_nn>` contains functions to train and test the CNN for classification.
+
+:doc:`data_gen.py <source/data_gen>` includes all methods to generate our artificial images.
+
+:doc:`detect_iban.py <source/detect_iban>` contains methods to find an IBAN in a string.
+
+:doc:`test.py <source/test>` runs the read() function on a directory containing jpgs and prints
+extracted IBANs to the console.
+
+:doc:`evaluation.ipynb <source/evaluation>` visualizes the proceeding of the full algorithm for an example
+image.
 
 Indices and tables
 ==================

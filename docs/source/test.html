@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>mser_extraction module &mdash; OCR 1.0 documentation</title>
+  <title>test module &mdash; Document Recognition Project 1.0 documentation</title>
   
 
   
@@ -25,15 +25,15 @@
   
 
   
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="pipeline module" href="pipeline.html" />
-    <link rel="prev" title="model module" href="model.html" /> 
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="train_nn module" href="train_nn.html" />
+    <link rel="prev" title="rot_correction module" href="rot_correction.html" /> 
 
   
-  <script src="_static/js/modernizr.min.js"></script>
+  <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -49,7 +49,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> OCR
+            <a href="../index.html" class="icon icon-home"> Document Recognition Project
           
 
           
@@ -66,7 +66,7 @@
 
           
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -94,12 +94,15 @@
 <li class="toctree-l2"><a class="reference internal" href="components.html">components module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data_gen.html">data_gen module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data_loading.html">data_loading module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="detect_iban.html">detect_iban module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interface.html">interface module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="line_extraction.html">line_extraction module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="model.html">model module</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">mser_extraction module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mser_extraction.html">mser_extraction module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pipeline.html">pipeline module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="processing.html">processing module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rot_correction.html">rot_correction module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">test module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="train_nn.html">train_nn module</a></li>
 </ul>
 </li>
@@ -117,7 +120,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">OCR</a>
+          <a href="../index.html">Document Recognition Project</a>
         
       </nav>
 
@@ -146,17 +149,17 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html">Docs</a> &raquo;</li>
         
           <li><a href="modules.html">project</a> &raquo;</li>
         
-      <li>mser_extraction module</li>
+      <li>test module</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/mser_extraction.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/source/test.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -169,24 +172,23 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-mser_extraction">
-<span id="mser-extraction-module"></span><h1>mser_extraction module<a class="headerlink" href="#module-mser_extraction" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-test">
+<span id="test-module"></span><h1>test module<a class="headerlink" href="#module-test" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
-<dt id="mser_extraction.extract_mser">
-<code class="descclassname">mser_extraction.</code><code class="descname">extract_mser</code><span class="sig-paren">(</span><em>img</em>, <em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#mser_extraction.extract_mser" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function using mser module from the openCV library to extract maximally stable extremal regions.
-Additionally MSERs that lie inside others or have no neighbors are eliminated.</p>
+<dt id="test.test">
+<code class="descclassname">test.</code><code class="descname">test</code><span class="sig-paren">(</span><em>dir</em>, <em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#test.test" title="Permalink to this definition">¶</a></dt>
+<dd><p>tests the pipeline on a folder containing images and prints IBANs out the ibans found.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>img</strong> (<em>ndarray</em>) – image from which MSERs are to be extracted</li>
-<li><strong>args</strong> (<em>Arguments instance</em>) – </li>
+<li><strong>dir</strong> – directory containing jpg images.</li>
+<li><strong>args</strong> – Arguments object</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">an instance of the Components class</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">nothing</p>
 </td>
 </tr>
 </tbody>
@@ -203,10 +205,10 @@ Additionally MSERs that lie inside others or have no neighbors are eliminated.</
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="pipeline.html" class="btn btn-neutral float-right" title="pipeline module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="train_nn.html" class="btn btn-neutral float-right" title="train_nn module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="model.html" class="btn btn-neutral" title="model module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="rot_correction.html" class="btn btn-neutral" title="rot_correction module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -215,7 +217,7 @@ Additionally MSERs that lie inside others or have no neighbors are eliminated.</
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Remme, Mueller, Moeller.
+        &copy; Copyright 2018, Roman Remme, Lucas-Raphael Mueller, Lucas Moeller.
 
     </p>
   </div>
@@ -236,7 +238,7 @@ Additionally MSERs that lie inside others or have no neighbors are eliminated.</
 
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
+            URL_ROOT:'../',
             VERSION:'1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
@@ -245,15 +247,15 @@ Additionally MSERs that lie inside others or have no neighbors are eliminated.</
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
 
   
 
   
   
-    <script type="text/javascript" src="_static/js/theme.js"></script>
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
   
 
   <script type="text/javascript">

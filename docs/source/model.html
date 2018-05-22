@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>line_extraction module &mdash; OCR 1.0 documentation</title>
+  <title>model module &mdash; Document Recognition Project 1.0 documentation</title>
   
 
   
@@ -25,15 +25,15 @@
   
 
   
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="model module" href="model.html" />
-    <link rel="prev" title="data_loading module" href="data_loading.html" /> 
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="mser_extraction module" href="mser_extraction.html" />
+    <link rel="prev" title="line_extraction module" href="line_extraction.html" /> 
 
   
-  <script src="_static/js/modernizr.min.js"></script>
+  <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -49,7 +49,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> OCR
+            <a href="../index.html" class="icon icon-home"> Document Recognition Project
           
 
           
@@ -66,7 +66,7 @@
 
           
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -94,12 +94,15 @@
 <li class="toctree-l2"><a class="reference internal" href="components.html">components module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data_gen.html">data_gen module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data_loading.html">data_loading module</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">line_extraction module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="model.html">model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="detect_iban.html">detect_iban module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interface.html">interface module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="line_extraction.html">line_extraction module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">model module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mser_extraction.html">mser_extraction module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pipeline.html">pipeline module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="processing.html">processing module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rot_correction.html">rot_correction module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test.html">test module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="train_nn.html">train_nn module</a></li>
 </ul>
 </li>
@@ -117,7 +120,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">OCR</a>
+          <a href="../index.html">Document Recognition Project</a>
         
       </nav>
 
@@ -146,17 +149,17 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html">Docs</a> &raquo;</li>
         
           <li><a href="modules.html">project</a> &raquo;</li>
         
-      <li>line_extraction module</li>
+      <li>model module</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/line_extraction.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/source/model.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -169,28 +172,21 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-line_extraction">
-<span id="line-extraction-module"></span><h1>line_extraction module<a class="headerlink" href="#module-line_extraction" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
-<dt id="line_extraction.extract_lines">
-<code class="descclassname">line_extraction.</code><code class="descname">extract_lines</code><span class="sig-paren">(</span><em>img</em>, <em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#line_extraction.extract_lines" title="Permalink to this definition">¶</a></dt>
-<dd><p>extracts lines from an image with horizontally orientated text.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>img</strong> (<em>ndarray</em>) – image from which to extract lines</li>
-<li><strong>args</strong> (<em>Arguments instance</em>) – </li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a list of ndarrays containing the extracted lines,
-a list of bounding boxes of the lines in the original image in the format [x_min, y_min, height, width]</p>
-</td>
-</tr>
-</tbody>
-</table>
+  <div class="section" id="module-model">
+<span id="model-module"></span><h1>model module<a class="headerlink" href="#module-model" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="model.ConvolutionalNN">
+<em class="property">class </em><code class="descclassname">model.</code><code class="descname">ConvolutionalNN</code><span class="sig-paren">(</span><em>args=None</em><span class="sig-paren">)</span><a class="headerlink" href="#model.ConvolutionalNN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<p>subclass of pytorch’s nn.Module class to create a NN with two convolutional layers followed by four fully connected
+ones. Max-pooling is performed after the conv layers and ReLU is used as an activation funciton. The last layer is
+a softmax funcitno.</p>
+<dl class="method">
+<dt id="model.ConvolutionalNN.forward">
+<code class="descname">forward</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#model.ConvolutionalNN.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>defines the forward pass through the NN.</p>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -203,10 +199,10 @@ a list of bounding boxes of the lines in the original image in the format [x_min
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="model.html" class="btn btn-neutral float-right" title="model module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="mser_extraction.html" class="btn btn-neutral float-right" title="mser_extraction module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="data_loading.html" class="btn btn-neutral" title="data_loading module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="line_extraction.html" class="btn btn-neutral" title="line_extraction module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -215,7 +211,7 @@ a list of bounding boxes of the lines in the original image in the format [x_min
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Remme, Mueller, Moeller.
+        &copy; Copyright 2018, Roman Remme, Lucas-Raphael Mueller, Lucas Moeller.
 
     </p>
   </div>
@@ -236,7 +232,7 @@ a list of bounding boxes of the lines in the original image in the format [x_min
 
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
+            URL_ROOT:'../',
             VERSION:'1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
@@ -245,15 +241,15 @@ a list of bounding boxes of the lines in the original image in the format [x_min
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
 
   
 
   
   
-    <script type="text/javascript" src="_static/js/theme.js"></script>
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
   
 
   <script type="text/javascript">

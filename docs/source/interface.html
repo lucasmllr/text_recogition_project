@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>model module &mdash; OCR 1.0 documentation</title>
+  <title>interface module &mdash; Document Recognition Project 1.0 documentation</title>
   
 
   
@@ -25,15 +25,15 @@
   
 
   
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="mser_extraction module" href="mser_extraction.html" />
-    <link rel="prev" title="line_extraction module" href="line_extraction.html" /> 
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="line_extraction module" href="line_extraction.html" />
+    <link rel="prev" title="detect_iban module" href="detect_iban.html" /> 
 
   
-  <script src="_static/js/modernizr.min.js"></script>
+  <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
@@ -49,7 +49,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> OCR
+            <a href="../index.html" class="icon icon-home"> Document Recognition Project
           
 
           
@@ -66,7 +66,7 @@
 
           
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -94,12 +94,15 @@
 <li class="toctree-l2"><a class="reference internal" href="components.html">components module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data_gen.html">data_gen module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="data_loading.html">data_loading module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="detect_iban.html">detect_iban module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">interface module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="line_extraction.html">line_extraction module</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html">model module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mser_extraction.html">mser_extraction module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pipeline.html">pipeline module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="processing.html">processing module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rot_correction.html">rot_correction module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test.html">test module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="train_nn.html">train_nn module</a></li>
 </ul>
 </li>
@@ -117,7 +120,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">OCR</a>
+          <a href="../index.html">Document Recognition Project</a>
         
       </nav>
 
@@ -146,17 +149,17 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html">Docs</a> &raquo;</li>
         
           <li><a href="modules.html">project</a> &raquo;</li>
         
-      <li>model module</li>
+      <li>interface module</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/model.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/source/interface.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -169,21 +172,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-model">
-<span id="model-module"></span><h1>model module<a class="headerlink" href="#module-model" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
-<dt id="model.ConvolutionalNN">
-<em class="property">class </em><code class="descclassname">model.</code><code class="descname">ConvolutionalNN</code><span class="sig-paren">(</span><em>args=None</em><span class="sig-paren">)</span><a class="headerlink" href="#model.ConvolutionalNN" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">torch.nn.modules.module.Module</span></code></p>
-<p>subclass of pytorch’s nn.Module class to create a NN with two convolutional layers followed by four fully connected
-ones. Max-pooling is performed after the conv layers and ReLU is used as an activation funciton. The last layer is
-a softmax funcitno.</p>
-<dl class="method">
-<dt id="model.ConvolutionalNN.forward">
-<code class="descname">forward</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#model.ConvolutionalNN.forward" title="Permalink to this definition">¶</a></dt>
-<dd><p>defines the forward pass through the NN.</p>
-</dd></dl>
-
+  <div class="section" id="module-interface">
+<span id="interface-module"></span><h1>interface module<a class="headerlink" href="#module-interface" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="interface.interface">
+<code class="descclassname">interface.</code><code class="descname">interface</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#interface.interface" title="Permalink to this definition">¶</a></dt>
+<dd><p>provides a terminal interface to execute the read function with an image path.
+It prints out the result in the terminal and optionally extracts an IBAN.</p>
 </dd></dl>
 
 </div>
@@ -196,10 +191,10 @@ a softmax funcitno.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="mser_extraction.html" class="btn btn-neutral float-right" title="mser_extraction module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="line_extraction.html" class="btn btn-neutral float-right" title="line_extraction module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="line_extraction.html" class="btn btn-neutral" title="line_extraction module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="detect_iban.html" class="btn btn-neutral" title="detect_iban module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -208,7 +203,7 @@ a softmax funcitno.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Remme, Mueller, Moeller.
+        &copy; Copyright 2018, Roman Remme, Lucas-Raphael Mueller, Lucas Moeller.
 
     </p>
   </div>
@@ -229,7 +224,7 @@ a softmax funcitno.</p>
 
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
+            URL_ROOT:'../',
             VERSION:'1.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
@@ -238,15 +233,15 @@ a softmax funcitno.</p>
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
 
   
 
   
   
-    <script type="text/javascript" src="_static/js/theme.js"></script>
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
   
 
   <script type="text/javascript">

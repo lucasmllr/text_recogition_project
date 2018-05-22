@@ -1,0 +1,292 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>data_gen module &mdash; Document Recognition Project 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="data_loading module" href="data_loading.html" />
+    <link rel="prev" title="components module" href="components.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Document Recognition Project
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">project</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="DisjointSet.html">DisjointSet module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="arguments.html">arguments module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bbox_based_rot_correction.html">bbox_based_rot_correction module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blob_extraction.html">blob_extraction module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="component_evaluation.html">component_evaluation module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="components.html">components module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">data_gen module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_loading.html">data_loading module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="detect_iban.html">detect_iban module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interface.html">interface module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="line_extraction.html">line_extraction module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html">model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mser_extraction.html">mser_extraction module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pipeline.html">pipeline module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="processing.html">processing module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rot_correction.html">rot_correction module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="test.html">test module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="train_nn.html">train_nn module</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Document Recognition Project</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">project</a> &raquo;</li>
+        
+      <li>data_gen module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/source/data_gen.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-data_gen">
+<span id="data-gen-module"></span><h1>data_gen module<a class="headerlink" href="#module-data_gen" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="data_gen.convertToNumpy">
+<code class="descclassname">data_gen.</code><code class="descname">convertToNumpy</code><span class="sig-paren">(</span><em>data</em>, <em>target</em><span class="sig-paren">)</span><a class="headerlink" href="#data_gen.convertToNumpy" title="Permalink to this definition">¶</a></dt>
+<dd><p>converts an already generated data and target to numpy arrays …</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="data_gen.generate_char_data">
+<code class="descclassname">data_gen.</code><code class="descname">generate_char_data</code><span class="sig-paren">(</span><em>load_path</em>, <em>args=None</em><span class="sig-paren">)</span><a class="headerlink" href="#data_gen.generate_char_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>…</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="data_gen.get_font_files">
+<code class="descclassname">data_gen.</code><code class="descname">get_font_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#data_gen.get_font_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>searches for for font files from a root directory ‘fonts’</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="data_gen.make_data">
+<code class="descclassname">data_gen.</code><code class="descname">make_data</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#data_gen.make_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>generates a dataset consisting of artificial images as generated by make_image plus a truth.txt file.
+Specification is done through the parameters in args.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="data_gen.make_image">
+<code class="descclassname">data_gen.</code><code class="descname">make_image</code><span class="sig-paren">(</span><em>args</em>, <em>string</em>, <em>font=None</em><span class="sig-paren">)</span><a class="headerlink" href="#data_gen.make_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>creates an artificial image from a string as generated by make_string and the parameters defined in args.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="data_gen.make_string">
+<code class="descclassname">data_gen.</code><code class="descname">make_string</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#data_gen.make_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>generates a random string with parameters defined in args.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="data_gen.save_char_data">
+<code class="descclassname">data_gen.</code><code class="descname">save_char_data</code><span class="sig-paren">(</span><em>args=None</em><span class="sig-paren">)</span><a class="headerlink" href="#data_gen.save_char_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>…</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="data_loading.html" class="btn btn-neutral float-right" title="data_loading module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="components.html" class="btn btn-neutral" title="components module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Roman Remme, Lucas-Raphael Mueller, Lucas Moeller.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>
