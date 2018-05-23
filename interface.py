@@ -11,7 +11,7 @@ def interface():
 
     path = input('please provide a path to an image containing text relative to this directory [example]\n> ')
     if path=='':
-        path = ('IBANs/cropped/IMG_0872.jpg')
+        path = ('example.jpg')
     while not os.path.exists(path):
         path = input('This path doesn\'t exist. please provide a valid one [example]\n> ')
 
