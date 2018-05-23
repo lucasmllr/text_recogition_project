@@ -6,8 +6,8 @@
 Document Recognition Project Documentation
 ========================================================
 This is the documentation for the optical character recognition project hosted
-here. It was created as a student project. For details on the used
-algorithms and results please refer to this report.
+on `GitHub <https://github.com/lucasmllr/text_recogition_project>`_. It was created as a student project. For details on the used
+algorithms and results please refer to this :download:`report <report.pdf>`.
 For an overview of the code structure see further below.
 
 .. toctree::
