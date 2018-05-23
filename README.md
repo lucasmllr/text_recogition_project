@@ -17,7 +17,7 @@ $ python interface.py
 A [documentation](https://lucasmllr.github.io/text_recogition_project/) is available on this repository's GitHub page.
 
 ## Report
-For a theoretical background on the used algorithms and for results see the [report](https://github.com/lucasmllr/text_recogition_project/raw/master/report.pdf) and for a visualization of the individual steps take a look at this [notebook](text_recogition_project/Evaluate.ipynb).
+For a theoretical background on the used algorithms and for results see the [report](https://github.com/lucasmllr/text_recogition_project/raw/master/report.pdf) and for a visualization of the individual steps take a look at this [notebook](https://github.com/lucasmllr/text_recogition_project/blob/master/Evaluate.ipynb).
 
 ## Authors
 Roman Remme, Lucas-Raphael Mueller, Lucas Moeller
