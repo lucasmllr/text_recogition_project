@@ -6,7 +6,17 @@ Classification is done by a small convolutional neural network.
 
 ## Dependencies
 The code is written in python 3.6 and requires the following packages: 
-numpy, scipy, sklearn, pillow, pytorch, opencv, matplotlib, os, pyperclip
+
+- NumPy
+- SciPy
+- scikit-learn
+- [Pillow](https://pillow.readthedocs.io/en/5.1.x/)
+- PyTorch
+- [OpenCV](https://pypi.org/project/opencv-python/)
+- Matplotlib
+- os
+- [pyperclip](https://pypi.org/project/pyperclip/)
+
 
 ## Installation
 To use the program clone this repository, navigate to it in the terminal and run the interface:
