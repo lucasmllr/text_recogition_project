@@ -14,5 +14,11 @@ To use the program clone this repository, navigate to it in the terminal and run
 $ python interface.py
 
 ## Documentation
-A documentation is available on this repositorie's GitHub page [here](https://lucasmllr.github.io/text_recogition_project/)
+A documentation is available on this repositorie's GitHub page [here](https://lucasmllr.github.io/text_recogition_project/).
+
+## Report
+For a theoretical background on the used algorithms as well as results see the [report](https://github.com/lucasmllr/text_recogition_project/raw/master/report.pdf).
+
+## Authors
+Roman Remme, Lucas-Raphael Mueller, Lucas Moeller
 
